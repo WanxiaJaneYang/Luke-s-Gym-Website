@@ -6,6 +6,7 @@ import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import com.lukefitness.lukegymbackend.utils.Result;
 import com.lukefitness.lukegymbackend.utils.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +17,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired(required = false)
+    @Autowired
     UserService userService;
 
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public Result<User> register(@RequestBody User user){
+        System.out.println("get register request, user name: "+user.getName());
         User userTemp = userService.registerService(user);
         if(userTemp!=null){
             return Result.success(userTemp);
