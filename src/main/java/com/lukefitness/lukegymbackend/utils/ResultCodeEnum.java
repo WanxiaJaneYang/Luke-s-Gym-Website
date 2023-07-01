@@ -7,6 +7,7 @@ public enum ResultCodeEnum {
 
     // Client error codes
     BAD_REQUEST(400, "Bad Request"),
+    USER_ALREADY_EXISTS(400, "User Already Exists"),
     UNAUTHORIZED(401, "Unauthorized"),
     FORBIDDEN(403, "Forbidden"),
     NOT_FOUND(404, "Not Found"),
