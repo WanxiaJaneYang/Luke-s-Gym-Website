@@ -15,11 +15,11 @@ public class JWTUtils {
     private static String secret;
     private static Integer expirationTime;
 
-    public static void setSecret(String secret) {
+    public void setSecret(String secret) {
         JWTUtils.secret = secret;
     }
 
-    public static void setExpirationTime(Integer expirationTime) {
+    public void setExpirationTime(Integer expirationTime) {
         JWTUtils.expirationTime = expirationTime;
     }
 
