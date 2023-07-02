@@ -13,6 +13,7 @@ public class TrainerServiceImp implements TrainerService {
 
     @Autowired
     TrainerDao trainerDao;
+    @Autowired
     PasswordEncoder passwordEncoder;
     @Override
     public Trainer registerTrainer(Trainer trainer) throws Exception {
