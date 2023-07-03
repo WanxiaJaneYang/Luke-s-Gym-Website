@@ -9,5 +9,4 @@ public class Trainer {
     private String email;
     private String password;
     private boolean is_admin;
-
 }

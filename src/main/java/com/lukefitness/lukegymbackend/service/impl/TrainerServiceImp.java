@@ -47,13 +47,14 @@ public class TrainerServiceImp implements TrainerService {
         if(trainerGetByName==null){
             throw new UserNotExistException();
         }else{
+            String pwdInDB = trainerGetByName.getPassword();
             String hashedPassword=passwordEncoder.encode(password);
-            Trainer trainerFromDB=trainerDao.trainerLogin(username,hashedPassword);
-            if(trainerFromDB==null){
+            if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
-                return trainerFromDB;
+                return trainerGetByName;
             }
+
         }
     }
 }

@@ -15,11 +15,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info().title("Luke Gym Backend API")
                         .description("Luke Gym Backend API implemented with Spring Boot RESTful service and documented using springdoc-openapi and OpenAPI 3.0")
-                        .version("1.0"));
-    }
-
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
+                        .version("1.0"))
                 .components(
                         new Components()
                                 .addSecuritySchemes(
@@ -29,5 +25,6 @@ public class OpenApiConfig {
                                                 .scheme("bearer")
                                                 .bearerFormat("JWT")));
     }
+
 //    @Operation(security = { @SecurityRequirement(name = "bearer-key") }) add to the protected api
 }
