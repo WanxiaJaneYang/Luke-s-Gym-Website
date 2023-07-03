@@ -4,13 +4,12 @@ import com.lukefitness.lukegymbackend.models.User;
 import com.lukefitness.lukegymbackend.service.UserService;
 import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import com.lukefitness.lukegymbackend.utils.MessageEnum;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +23,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody User user){
+    @Operation(summary = "test api: Register a new user")
+    public ResponseEntity register(@Parameter(description = "user json, including name, email, user_type and password") @PathVariable("user") @RequestBody User user){
         System.out.println("get register request, user name: "+user.getName());
         User userTemp = userService.registerService(user);
         if(userTemp!=null){
