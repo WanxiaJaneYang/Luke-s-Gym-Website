@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lukefitness.lukegymbackend.dao.TraineeDao">
+    <insert id="traineeRegister" parameterType="com.lukefitness.lukegymbackend.models.Trainee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO trainee (username, password, email)
+        VALUES (#{username}, #{password}, #{email})
+    </insert>
+
+    <select id="getTraineeByUsername" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainee">
+        SELECT * FROM trainee WHERE username = #{username}
+    </select>
+</mapper>
