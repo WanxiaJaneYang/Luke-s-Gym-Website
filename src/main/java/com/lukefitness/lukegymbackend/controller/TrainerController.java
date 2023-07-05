@@ -1,5 +1,7 @@
 package com.lukefitness.lukegymbackend.controller;
 
+import com.lukefitness.lukegymbackend.exception.BadRequestException;
+import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -47,10 +49,10 @@ public class TrainerController {
             trainerMap.put("username", trainerTemp.getUsername());
             trainerMap.put("email", trainerTemp.getEmail());
             return Response.successCreated(trainerMap);
-        }catch (RuntimeException e){
-            return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
+        }catch (BadRequestException e){
+            return Response.badRequest(e.getMessage());
         }catch (Exception e){
-            return Response.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return Response.internalServerError(e.getMessage());
         }
     }
 
@@ -67,6 +69,7 @@ public class TrainerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully logged in as a trainer",content = {@Content(schema = @Schema(implementation = Trainer.class))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "404", description = "Trainer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity trainerLogin(@RequestBody Trainer trainer){
@@ -79,11 +82,12 @@ public class TrainerController {
             resultMap.put("email", trainerTemp.getEmail());
             resultMap.put("token", token);
             return Response.success(resultMap);
-        }catch (RuntimeException e){
+        }catch (BadRequestException e) {
             return Response.error(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }catch (NotFoundException e){
+            return Response.notFound(e.getMessage());
         }catch (Exception e){
-            e.printStackTrace();
-            return Response.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return Response.internalServerError(e.getMessage());
         }
     }
 

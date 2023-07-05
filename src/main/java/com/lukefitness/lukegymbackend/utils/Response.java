@@ -26,6 +26,16 @@ public class Response extends ResponseEntity {
         return ResponseEntity.status(status).body(response);
     }
 
+    public static ResponseEntity badRequest(String message) {
+        return error(HttpStatus.BAD_REQUEST, message);
+    }
 
+    public static ResponseEntity notFound(String message) {
+        return error(HttpStatus.NOT_FOUND, message);
+    }
+
+    public static ResponseEntity internalServerError(String message) {
+        return error(HttpStatus.INTERNAL_SERVER_ERROR, message);
+    }
 
 }

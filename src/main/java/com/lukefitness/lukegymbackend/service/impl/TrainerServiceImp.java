@@ -42,7 +42,7 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
-    public Trainer trainerLogin(String username, String password) {
+    public Trainer trainerLogin(String username, String password) throws Exception {
         Trainer trainerGetByName = trainerDao.getTrainerByName(username);
         if(trainerGetByName==null){
             throw new UserNotExistException();

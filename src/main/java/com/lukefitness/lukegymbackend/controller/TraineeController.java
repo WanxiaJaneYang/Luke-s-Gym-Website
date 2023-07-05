@@ -1,5 +1,7 @@
 package com.lukefitness.lukegymbackend.controller;
 
+import com.lukefitness.lukegymbackend.exception.BadRequestException;
+import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.JWTUtils;
@@ -34,6 +36,7 @@ public class TraineeController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully login as a trainee, the response includes id and a token"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/login")
@@ -43,10 +46,12 @@ public class TraineeController {
             String token = JWTUtils.getToken(String.valueOf(traineeFromDb.getId()), traineeFromDb.getUsername(), "trainee");
             Map<String, String> result=Map.of("token", token, "username", trainee.getUsername(), "id", String.valueOf(trainee.getId()));
             return Response.success(result);
-        } catch (RuntimeException e) {
-            return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (BadRequestException e) {
+            return Response.badRequest(e.getMessage());
+        }catch(NotFoundException e){
+            return Response.notFound(e.getMessage());
         } catch (Exception e) {
-            return Response.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return Response.internalServerError(e.getMessage());
         }
     }
 
@@ -62,7 +67,7 @@ public class TraineeController {
             content=@Content(
                     schema=@Schema(implementation = Trainee.class),
                     mediaType = "application/json",
-                    examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee1\",\"password\":\"123456\"}"
+                    examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee1\",\"email\":\"trainee@example.com\",\"password\":\"123456\"}"
                     ))))
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Successfully register a trainee",content = {@Content(examples =@ExampleObject(value= "{\"username\":\"trainee1\",\"id\":\"1\"") )}),
@@ -75,10 +80,10 @@ public class TraineeController {
             Trainee traineeTemp = traineeService.traineeRegister(trainee);
             Map<String,Object> result=Map.of("id", traineeTemp.getId(), "username", traineeTemp.getUsername());
             return Response.successCreated(result);
-        }catch (RuntimeException e){
-            return Response.error(HttpStatus.BAD_REQUEST, e.getMessage());
+        }catch (BadRequestException e){
+            return Response.badRequest(e.getMessage());
         }catch (Exception e){
-            return Response.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return Response.internalServerError(e.getMessage());
         }
     }
 }
