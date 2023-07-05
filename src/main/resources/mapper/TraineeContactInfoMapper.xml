@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lukefitness.lukegymbackend.dao.TraineeContactInfoDao">
+    <insert id="insertTraineeContactInfo" parameterType="int" >
+        INSERT INTO trainee_contact_info (trainee_id)
+        VALUES (#{traineeId})
+    </insert>
+
+    <update id="updateTraineeContactInfo" parameterType="com.lukefitness.lukegymbackend.models.TraineeContactInfo" >
+        UPDATE trainee_contact_info
+        SET
+            full_name = #{fullName},
+            occupation = #{occupation},
+            date_of_birth=#{dateOfBirth},
+            phone = #{phone},
+            address = #{address},
+            state = #{state},
+            postal_code = #{postalCode},
+            emergency_contact_name = #{emergencyContactName},
+            emergency_contact_phone = #{emergencyContactPhone}
+        WHERE trainee_id = #{traineeId}
+    </update>
+    
+    <select id="getTraineeContactInfoByTraineeId" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
+        SELECT * FROM trainee_contact_info WHERE trainee_id = #{traineeId}
+    </select>
+</mapper>

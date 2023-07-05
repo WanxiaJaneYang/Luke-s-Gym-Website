@@ -1,9 +1,11 @@
 package com.lukefitness.lukegymbackend.service;
 
+import com.lukefitness.lukegymbackend.exception.BadRequestException;
+import com.lukefitness.lukegymbackend.exception.UserNotExistException;
 import com.lukefitness.lukegymbackend.models.Trainee;
 
 public interface TraineeService {
-    Trainee traineeLogin(String username, String password);
-    Trainee getTraineeByUsername(String username);
+    Trainee traineeLogin(String username, String password) throws Exception;
+    Trainee getTraineeByUsername(String username) throws UserNotExistException, BadRequestException, Exception;
     Trainee traineeRegister(Trainee trainee) throws Exception;
 }
