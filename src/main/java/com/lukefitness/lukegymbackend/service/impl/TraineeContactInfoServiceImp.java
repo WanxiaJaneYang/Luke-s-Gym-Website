@@ -8,6 +8,7 @@ import com.lukefitness.lukegymbackend.service.TraineeContactInfoService;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLDataException;
 
@@ -16,6 +17,7 @@ public class TraineeContactInfoServiceImp implements TraineeContactInfoService {
     @Autowired TraineeContactInfoDao traineeContactInfoDao;
 
     @Override
+    @Transactional
     public TraineeContactInfo updateTraineeContact(int traineeId,TraineeContactInfo traineeContactInfo) throws BadRequestException {
         try{
             traineeContactInfoDao.getTraineeContactInfoByTraineeId(traineeId);

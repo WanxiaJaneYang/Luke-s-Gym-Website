@@ -9,6 +9,7 @@ import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TraineeServiceImp implements TraineeService {
@@ -18,6 +19,7 @@ public class TraineeServiceImp implements TraineeService {
     TraineeContactInfoDao traineeContactInfoDao;
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Override
     public Trainee traineeLogin(String username, String password) throws Exception {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
@@ -40,6 +42,7 @@ public class TraineeServiceImp implements TraineeService {
         }
     }
 
+    @Transactional
     @Override
     public Trainee traineeRegister(Trainee trainee) throws Exception {
         try{
