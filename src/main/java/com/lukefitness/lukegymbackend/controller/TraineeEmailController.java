@@ -4,6 +4,9 @@ import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,17 @@ public class TraineeEmailController {
     @Autowired
     EmailService emailService;
 
+    @Operation(summary = "Send verify email to trainee by trainee id",
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "traineeId", description = "id of the trainee", required = true, example = "6"),
+            }
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully sent verify email"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/{traineeId}/verify")
     public ResponseEntity<?> sendVerifyEmail(@PathVariable int traineeId) {
         try {
@@ -29,6 +43,19 @@ public class TraineeEmailController {
         }
     }
 
+
+    @Operation(summary = "send reset email to trainee",
+            parameters = {
+                    @Parameter(description = "username of the trainee", required = false, example = "wanxiaJaneYang"),
+                    @Parameter(description ="email of the trainee",required =false,example ="wanxiayang86@gmailcom")
+            }
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully sent reset password email"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee username or email not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/reset-password")
     public ResponseEntity<?> sendResetEmail(@RequestParam String username, @RequestParam String email) {
         try {
