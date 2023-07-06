@@ -11,4 +11,12 @@
     <select id="getTraineeByUsername" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainee">
         SELECT * FROM trainee WHERE username = #{username}
     </select>
+
+    <select id="getTraineeById" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.Trainee">
+        SELECT * FROM trainee WHERE id = #{id}
+    </select>
+
+    <select id="getTraineeByEmail" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainee">
+        SELECT * FROM trainee WHERE email = #{email}
+    </select>
 </mapper>

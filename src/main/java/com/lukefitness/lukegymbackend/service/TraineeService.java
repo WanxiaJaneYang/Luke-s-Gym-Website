@@ -8,4 +8,7 @@ public interface TraineeService {
     Trainee traineeLogin(String username, String password) throws Exception;
     Trainee getTraineeByUsername(String username) throws UserNotExistException, BadRequestException, Exception;
     Trainee traineeRegister(Trainee trainee) throws Exception;
+
+    Trainee getTraineeById(int traineeId);
+    Trainee getTraineeByEmail(String email);
 }

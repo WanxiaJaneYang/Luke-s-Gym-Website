@@ -15,4 +15,12 @@
     <select id="trainerLogin" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
         SELECT * FROM trainer WHERE username = #{username} AND password = #{password}
     </select>
+
+    <select id="getTrainerById" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.Trainer">
+        SELECT * FROM trainer WHERE id = #{id}
+    </select>
+
+    <select id="getTrainerByEmail" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
+        SELECT * FROM trainer WHERE email = #{email}
+    </select>
 </mapper>
