@@ -2,6 +2,7 @@ package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.exception.*;
+import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
-    public Trainer getTrainerByName(String username) {
+    public Trainer getTrainerByUsername(String username) {
         return trainerDao.getTrainerByName(username);
     }
 
@@ -45,7 +46,7 @@ public class TrainerServiceImp implements TrainerService {
     public Trainer trainerLogin(String username, String password) throws Exception {
         Trainer trainerGetByName = trainerDao.getTrainerByName(username);
         if(trainerGetByName==null){
-            throw new UserNotExistException();
+            throw new NotFoundException("Trainer username not found");
         }else{
             String pwdInDB = trainerGetByName.getPassword();
             String hashedPassword=passwordEncoder.encode(password);
@@ -55,6 +56,26 @@ public class TrainerServiceImp implements TrainerService {
                 return trainerGetByName;
             }
 
+        }
+    }
+
+    @Override
+    public Trainer getTrainerById(int id) {
+        Trainer trainer=trainerDao.getTrainerById(id);
+        if(trainer==null){
+            throw new NotFoundException("Trainer id not found");
+        }else{
+            return trainer;
+        }
+    }
+
+    @Override
+    public Trainer getTrainerByEmail(String email) {
+        Trainer trainer=trainerDao.getTrainerByEmail(email);
+        if(trainer==null){
+            throw new NotFoundException("Trainer email not found");
+        }else{
+            return trainer;
         }
     }
 }

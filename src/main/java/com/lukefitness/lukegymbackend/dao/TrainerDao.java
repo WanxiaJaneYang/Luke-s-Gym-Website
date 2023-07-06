@@ -8,4 +8,6 @@ public interface TrainerDao {
     Integer registerTrainer(Trainer trainer);
     Trainer getTrainerByName(String username);
     Trainer trainerLogin(String username, String password);
+    Trainer getTrainerById(int id);
+    Trainer getTrainerByEmail(String email);
 }

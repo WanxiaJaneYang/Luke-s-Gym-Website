@@ -5,6 +5,9 @@ import com.lukefitness.lukegymbackend.models.Trainer;
 
 public interface TrainerService {
     Trainer registerTrainer(Trainer trainer) throws Exception;
-    Trainer getTrainerByName(String username) throws BadRequestException;
+    Trainer getTrainerByUsername(String username) throws BadRequestException;
     Trainer trainerLogin(String username, String password) throws BadRequestException, Exception;
+    Trainer getTrainerById(int id);
+    Trainer getTrainerByEmail(String email);
+
 }

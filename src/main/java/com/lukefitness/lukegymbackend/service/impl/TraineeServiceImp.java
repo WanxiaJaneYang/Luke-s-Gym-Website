@@ -36,7 +36,7 @@ public class TraineeServiceImp implements TraineeService {
     public Trainee getTraineeByUsername(String username) throws Exception {
         Trainee trainee=traineeDao.getTraineeByUsername(username);
         if(trainee==null){
-            throw new UserNotExistException();
+            throw new NotFoundException("Username not found");
         }else{
             return trainee;
         }
@@ -62,6 +62,26 @@ public class TraineeServiceImp implements TraineeService {
             }else{
                 throw e;
             }
+        }
+    }
+
+    @Override
+    public Trainee getTraineeById(int traineeId) {
+        Trainee trainee=traineeDao.getTraineeById(traineeId);
+        if (trainee==null){
+            throw new NotFoundException("Trainee id not found");
+        }else{
+            return trainee;
+        }
+    }
+
+    @Override
+    public Trainee getTraineeByEmail(String email) {
+        Trainee trainee=traineeDao.getTraineeByEmail(email);
+        if (trainee==null){
+            throw new NotFoundException("Trainee email not found");
+        }else{
+            return trainee;
         }
     }
 }
