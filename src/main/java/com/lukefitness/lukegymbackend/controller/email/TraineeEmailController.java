@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller;
+package com.lukefitness.lukegymbackend.controller.email;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
@@ -6,20 +6,23 @@ import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email/trainee")
+@Tag(name = "Email controller")
 public class TraineeEmailController {
     @Autowired
     EmailService emailService;
 
     @Operation(summary = "Send verify email to trainee by trainee id",
             parameters = {
-                    @io.swagger.v3.oas.annotations.Parameter(name = "traineeId", description = "id of the trainee", required = true, example = "6"),
+                    @io.swagger.v3.oas.annotations.Parameter(in =ParameterIn.PATH ,name = "traineeId", description = "id of the trainee", required = true, example = "6"),
             }
     )
     @ApiResponses(value = {
@@ -46,8 +49,8 @@ public class TraineeEmailController {
 
     @Operation(summary = "send reset email to trainee",
             parameters = {
-                    @Parameter(description = "username of the trainee", required = false, example = "wanxiaJaneYang"),
-                    @Parameter(description ="email of the trainee",required =false,example ="wanxiayang86@gmailcom")
+                    @Parameter(in = ParameterIn.QUERY,name = "username",description = "username of the trainee", required = false, example = "wanxiaJaneYang"),
+                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",required =false,example ="wanxiayang86@gmailcom")
             }
     )
     @ApiResponses(value = {

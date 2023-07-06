@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller;
+package com.lukefitness.lukegymbackend.controller.trainer;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
