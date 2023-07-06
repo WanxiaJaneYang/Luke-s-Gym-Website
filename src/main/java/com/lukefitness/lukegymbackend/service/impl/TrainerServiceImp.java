@@ -39,7 +39,12 @@ public class TrainerServiceImp implements TrainerService {
 
     @Override
     public Trainer getTrainerByUsername(String username) {
-        return trainerDao.getTrainerByName(username);
+        Trainer trainer=trainerDao.getTrainerByName(username);
+        if(trainer==null){
+            throw new NotFoundException("Trainer username not found");
+        }else{
+            return trainer;
+        }
     }
 
     @Override
