@@ -52,9 +52,8 @@ public class Email {
                 "<h1>Hi "+username+"</h1>" +
                 "<p>We received a request to reset your password for your account associated with this e-mail address.</p>" +
                 "<p>If you made this request, please click on the link below or paste this into your browser to complete the process:</p>" +
-                "<p><a href=\""+resetPasswordLinkWithToken+"\">Reset Password</a></p>" +
-                "<p>Your verification code is:<span style=\"background-color:yellow\">"+token+"</span></p>" +
-                "<p>This code will expire in 15 minutes.</p>" +
+                "<p><a href=\""+resetPasswordLinkWithToken+"\">"+resetPasswordLinkWithToken+"</a></p>" +
+                "<p>This link will expire in 15 minutes.</p>" +
                 "<p>If you did not request a password reset, please ignore this email</p>" +
                 "<p>Thanks,</p>" +
                 "<p>Luke Fitness</p>";
@@ -69,8 +68,8 @@ public class Email {
                 "<h1>Hi "+username+"</h1>" +
                 "<p>Thanks for signing up for Luke Fitness! We're excited to have you as an early user.</p>" +
                 "<p>Before you can start using your account, you need to verify your email address by clicking the link below:</p>" +
-                "<p><a href=\""+verifyEmailLinkWithToken+"\">Verify Email Address</a></p>" +
-                "<p>Your verification code is:<span style=\"background-color:yellow\">"+token+"</span></p>" +
+                "<p><a href=\""+verifyEmailLinkWithToken+"\">"+verifyEmailLinkWithToken+"</a></p>" +
+                "<p>This link will expire in 15 minutes.</p>" +
                 "<p>If you did not sign up for Luke Fitness, please ignore this email</p>" +
                 "<p>Thanks,</p>" +
                 "<p>Luke Fitness</p>";
