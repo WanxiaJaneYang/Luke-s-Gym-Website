@@ -21,9 +21,9 @@ public class TraineeContactInfoServiceImp implements TraineeContactInfoService {
     public TraineeContactInfo updateTraineeContact(int traineeId,TraineeContactInfo traineeContactInfo) throws BadRequestException {
         try{
             traineeContactInfoDao.getTraineeContactInfoByTraineeId(traineeId);
-            traineeContactInfo.setTraineeId(traineeId);
+            traineeContactInfo.setTrainee_id(traineeId);
             traineeContactInfoDao.updateTraineeContactInfo(traineeContactInfo);
-            return traineeContactInfoDao.getTraineeContactInfoByTraineeId(traineeContactInfo.getTraineeId());
+            return traineeContactInfoDao.getTraineeContactInfoByTraineeId(traineeContactInfo.getTrainee_id());
         }catch (PersistenceException e){
             throw new BadRequestException(e.getMessage());
         }

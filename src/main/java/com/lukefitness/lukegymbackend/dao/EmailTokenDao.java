@@ -10,4 +10,5 @@ public interface EmailTokenDao {
     public void insertEmailToken(EmailToken emailToken);
     public EmailToken getEmailToken(EmailToken emailToken);
     public void deleteEmailToken();
+    public void deleteEmailTokenById(int id);
 }

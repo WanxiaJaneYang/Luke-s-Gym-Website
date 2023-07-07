@@ -10,4 +10,5 @@ public interface TrainerDao {
     Trainer trainerLogin(String username, String password);
     Trainer getTrainerById(int id);
     Trainer getTrainerByEmail(String email);
+    void setEmailVerified(int id);
 }

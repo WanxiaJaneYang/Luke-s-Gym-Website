@@ -6,14 +6,14 @@ import java.time.LocalDate;
 
 @Data
 public class TraineeContactInfo {
-    private int traineeId;
-    private String postalCode;
+    private int trainee_id;
+    private String postal_code;
     private String phone;
-    private String fullName;
+    private String full_name;
     private String occupation;
     private String address;
     private String state;
-    private String emergencyContactName;
-    private String emergencyContactPhone;
-    private LocalDate dateOfBirth;
+    private String emergency_contact_name;
+    private String emergency_contact_phone;
+    private LocalDate date_of_birth;
 }
