@@ -6,6 +6,7 @@ import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.models.EmailToken;
 import com.lukefitness.lukegymbackend.service.VerifyService;
+import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -53,19 +55,25 @@ public class VerifyServiceImp implements VerifyService {
         if(tokenRecord.getUser_type().equals("trainer")){
             trainerDao.setEmailVerified(tokenRecord.getUser_id());
         }else if(tokenRecord.getUser_type().equals("trainee")) {
-            trainerDao.setEmailVerified(tokenRecord.getUser_id());
+            traineeDao.setEmailVerified(tokenRecord.getUser_id());
         }
     }
 
     @Override
     public Map<String, Object> verifyResetPw(int tokenId, String token) {
         EmailToken tokenRecord = verifyToken(tokenId, token);
+        Map<String, Object> map;
         if (tokenRecord.getUser_type().equals("trainer")) {
-            return Map.of("userType", "trainer", "id", tokenRecord.getUser_id());
+            map= Map.of("userType", "trainer", "id", tokenRecord.getUser_id());
         } else if (tokenRecord.getUser_type().equals("trainee")) {
-            return Map.of("userType", "trainee", "id", tokenRecord.getUser_id());
-        } else {
+            map= Map.of("userType", "trainee", "id", tokenRecord.getUser_id());
+        } else if(tokenRecord.getUser_type().equals("admin")){
+            map= Map.of("userType", "admin", "id", tokenRecord.getUser_id());
+        }else {
             throw new BadRequestException("Invalid token");
         }
+        String loginToken= JWTUtils.getToken(String.valueOf(tokenRecord.getUser_id()),tokenRecord.getUsername(),tokenRecord.getUser_type());
+        map.put("token",loginToken);
+        return map;
     }
 }

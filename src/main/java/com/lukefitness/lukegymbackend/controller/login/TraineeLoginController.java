@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/trainee/login")
+@RequestMapping("/login/trainee")
 @Tag(name = "Login/Register Controller")
 public class TraineeLoginController {
     @Autowired
@@ -46,19 +46,11 @@ public class TraineeLoginController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> traineeLogin(@RequestBody Trainee trainee) {
-        try {
-            Trainee traineeFromDb = traineeService.traineeLogin(trainee.getUsername(), trainee.getPassword());
-            String token = JWTUtils.getToken(String.valueOf(traineeFromDb.getId()), traineeFromDb.getUsername(), "trainee");
-            Map<String, String> result=Map.of("token", token, "username", trainee.getUsername(), "id", String.valueOf(trainee.getId()));
-            return Response.success(result);
-        } catch (BadRequestException e) {
-            return Response.badRequest(e.getMessage());
-        }catch(NotFoundException e){
-            return Response.notFound(e.getMessage());
-        } catch (Exception e) {
-            return Response.internalServerError(e.getMessage());
-        }
+    public ResponseEntity<?> traineeLogin(@RequestBody Trainee trainee) throws Exception {
+        Trainee traineeFromDb = traineeService.traineeLogin(trainee.getUsername(), trainee.getPassword());
+        String token = JWTUtils.getToken(String.valueOf(traineeFromDb.getId()), traineeFromDb.getUsername(), "trainee");
+        Map<String, String> result=Map.of("token", token, "username", traineeFromDb.getUsername(), "id", String.valueOf(traineeFromDb.getId()));
+        return Response.success(result);
     }
 
 }

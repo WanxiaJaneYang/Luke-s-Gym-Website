@@ -43,4 +43,7 @@ public class Response extends ResponseEntity {
         return error(HttpStatus.INTERNAL_SERVER_ERROR, message);
     }
 
+    public static ResponseEntity<?> unauthorized(String message) {
+        return error(HttpStatus.UNAUTHORIZED, message);
+    }
 }

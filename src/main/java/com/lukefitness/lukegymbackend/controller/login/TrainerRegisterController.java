@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/trainer")
+@RequestMapping("/register/trainer")
 @Tag(name = "Login/Register Controller")
 public class TrainerRegisterController {
     @Autowired
     TrainerService trainerService;
 
-    @PostMapping("/register")
+    @PostMapping
     @Operation(summary = "Register a new trainer",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainer json, including username, email, password and admin",
                     required = true,
