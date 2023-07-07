@@ -2,12 +2,18 @@ package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.exception.*;
-import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsException;
+import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
+import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
+import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class TrainerServiceImp implements TrainerService {
@@ -48,8 +54,9 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
-    public Trainer trainerLogin(String username, String password) throws Exception {
+    public Map<String,Object> trainerLogin(String username, String password) throws Exception {
         Trainer trainerGetByName = trainerDao.getTrainerByName(username);
+        Map<String,Object> map=new HashMap<>();
         if(trainerGetByName==null){
             throw new NotFoundException("Trainer username not found");
         }else{
@@ -58,10 +65,14 @@ public class TrainerServiceImp implements TrainerService {
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
-                return trainerGetByName;
+                String token= JWTUtils.getToken(trainerGetByName);
+                map.put("id",trainerGetByName.getId());
+                map.put("username",trainerGetByName.getUsername());
+                map.put("email",trainerGetByName.getEmail());
+                map.put("token",token);
             }
-
         }
+        return map;
     }
 
     @Override

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/trainee/register")
+@RequestMapping("/register/trainee")
 @Tag(name = "Login/Register Controller")
 public class TraineeRegisterController {
     @Autowired

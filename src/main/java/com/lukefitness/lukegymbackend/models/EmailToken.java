@@ -25,7 +25,11 @@ public class EmailToken {
         this.token=EmailTokenGenerator.generate();
         this.expiration_date=EmailTokenGenerator.getExpirationDate();
         if (user instanceof Trainer){
-            this.user_type="trainer";
+            if (((Trainer) user).is_admin()){
+                this.user_type="admin";
+            }else {
+                this.user_type="trainer";
+            }
         }else if(user instanceof Trainee){
             this.user_type="trainee";
         }

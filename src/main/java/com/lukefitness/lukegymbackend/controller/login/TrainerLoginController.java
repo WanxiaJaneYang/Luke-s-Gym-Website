@@ -4,7 +4,6 @@ import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
-import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,13 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/trainer")
+@RequestMapping("/login/trainer")
 @Tag(name = "Login/Register Controller")
 public class TrainerLoginController {
     @Autowired
     TrainerService trainerService;
-    @PostMapping("/login")
+
     @Operation(summary = "Login as a trainer",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainer json, including username and password",
                     required = true,
@@ -46,22 +47,10 @@ public class TrainerLoginController {
             @ApiResponse(responseCode = "404", description = "Trainer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity trainerLogin(@RequestBody Trainer trainer){
-        try {
-            Trainer trainerTemp = trainerService.trainerLogin(trainer.getUsername(), trainer.getPassword());
-            String token = JWTUtils.getToken(String.valueOf(trainerTemp.getId()), trainerTemp.getUsername(), String.valueOf(trainerTemp.is_admin()));
-            HashMap<String, Object> resultMap = new HashMap<>();
-            resultMap.put("id", trainerTemp.getId());
-            resultMap.put("username", trainerTemp.getUsername());
-            resultMap.put("email", trainerTemp.getEmail());
-            resultMap.put("token", token);
-            return Response.success(resultMap);
-        }catch (BadRequestException e) {
-            return Response.error(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }catch (NotFoundException e){
-            return Response.notFound(e.getMessage());
-        }catch (Exception e){
-            return Response.internalServerError(e.getMessage());
-        }
+    @PostMapping
+    public ResponseEntity trainerLogin(@RequestBody Trainer trainer) throws Exception {
+        Map<String, Object> resultMap = trainerService.trainerLogin(trainer.getUsername(), trainer.getPassword());
+        return Response.success(resultMap);
+
     }
 }
