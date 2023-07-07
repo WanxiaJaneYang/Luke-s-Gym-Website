@@ -5,25 +5,25 @@
 <mapper namespace="com.lukefitness.lukegymbackend.dao.TraineeContactInfoDao">
     <insert id="insertTraineeContactInfo" parameterType="int" >
         INSERT INTO trainee_contact_info (trainee_id)
-        VALUES (#{traineeId})
+        VALUES (#{trainee_id})
     </insert>
 
     <update id="updateTraineeContactInfo" parameterType="com.lukefitness.lukegymbackend.models.TraineeContactInfo" >
         UPDATE trainee_contact_info
         SET
-            full_name = #{fullName},
+            full_name = #{full_name},
             occupation = #{occupation},
-            date_of_birth=#{dateOfBirth},
+            date_of_birth=#{date_of_birth},
             phone = #{phone},
             address = #{address},
             state = #{state},
-            postal_code = #{postalCode},
-            emergency_contact_name = #{emergencyContactName},
-            emergency_contact_phone = #{emergencyContactPhone}
-        WHERE trainee_id = #{traineeId}
+            postal_code = #{postal_code},
+            emergency_contact_name = #{emergency_contact_name},
+            emergency_contact_phone = #{emergency_contact_phone}
+        WHERE trainee_id = #{trainee_id}
     </update>
     
     <select id="getTraineeContactInfoByTraineeId" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
-        SELECT * FROM trainee_contact_info WHERE trainee_id = #{traineeId}
+        SELECT * FROM trainee_contact_info WHERE trainee_id = #{trainee_id}
     </select>
 </mapper>

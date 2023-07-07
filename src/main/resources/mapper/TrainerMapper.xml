@@ -20,6 +20,10 @@
         SELECT * FROM trainer WHERE id = #{id}
     </select>
 
+    <update id="setEmailVerified" parameterType="int">
+        UPDATE trainer SET email_verified = true WHERE id = #{id}
+    </update>
+
     <select id="getTrainerByEmail" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
         SELECT * FROM trainer WHERE email = #{email}
     </select>

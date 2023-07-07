@@ -5,14 +5,18 @@
 <mapper namespace="com.lukefitness.lukegymbackend.dao.EmailTokenDao">
     <insert id="insertEmailToken" parameterType="com.lukefitness.lukegymbackend.models.EmailToken" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO email_tokens (user_id, user_type, username, token, expiration_date)
-        VALUES (#{userId}, #{userType}, #{username}, #{token}, #{expirationDate})
+        VALUES (#{user_id}, #{user_type}, #{username}, #{token}, #{expiration_date})
     </insert>
 
     <select id="getEmailToken" parameterType="com.lukefitness.lukegymbackend.models.EmailToken" resultType="com.lukefitness.lukegymbackend.models.EmailToken">
-        SELECT * FROM email_tokens WHERE user_type = #{userType} AND user_name = #{username} AND token = #{token}
+        SELECT * FROM email_tokens WHERE id = #{id} AND token = #{token}
     </select>
 
     <delete id="deleteEmailToken" >
         DELETE FROM email_tokens WHERE expiration_date &lt; NOW()
+    </delete>
+
+    <delete id="deleteEmailTokenById" parameterType="int">
+        DELETE FROM email_tokens WHERE id = #{id}
     </delete>
 </mapper>

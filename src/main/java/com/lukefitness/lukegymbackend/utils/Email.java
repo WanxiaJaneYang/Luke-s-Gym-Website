@@ -1,5 +1,6 @@
 package com.lukefitness.lukegymbackend.utils;
 
+import com.lukefitness.lukegymbackend.models.EmailToken;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.Trainer;
 
@@ -44,9 +45,9 @@ public class Email {
         this.text = text;
     }
 
-    public static Email getResetPasswordEmail(String to, String username, String token) {
+    public static Email getResetPasswordEmail(String to, String username,int tokenId, String token) {
         String subject = "Password Reset Request";
-        String resetPasswordLinkWithToken = resetPasswordLink+"?token="+token;
+        String resetPasswordLinkWithToken = resetPasswordLink+"?id="+tokenId+"&token="+token;
         String text="" +
                 "<h1>Hi "+username+"</h1>" +
                 "<p>We received a request to reset your password for your account associated with this e-mail address.</p>" +
@@ -61,9 +62,9 @@ public class Email {
         return email;
     }
 
-    public static Email getVerifyEmailAddressEmail(String to, String username, String token){
+    public static Email getVerifyEmailAddressEmail(String to, String username,int tokenId, String token){
         String subject = "Please Verify Your Email Address";
-        String verifyEmailLinkWithToken = verifyEmailLink+"?token="+token;
+        String verifyEmailLinkWithToken = verifyEmailLink+"?id="+tokenId+"&token="+token;
         String text="" +
                 "<h1>Hi "+username+"</h1>" +
                 "<p>Thanks for signing up for Luke Fitness! We're excited to have you as an early user.</p>" +
@@ -76,31 +77,31 @@ public class Email {
         return new Email(to, subject, text);
     }
 
-    public static Email getVerifyEmailByTrainer(Trainer trainer){
+    public static Email getVerifyEmailByTrainer(Trainer trainer, EmailToken tokenRecord){
         String to = trainer.getEmail();
         String username = trainer.getUsername();
-        String token= EmailTokenGenerator.generate();
-        return getVerifyEmailAddressEmail(to, username, token);
+        String token= tokenRecord.getToken();
+        return getVerifyEmailAddressEmail(to, username,tokenRecord.getId(), token);
     }
 
-    public static Email getResetPwEmailByTrainer(Trainer trainer){
+    public static Email getResetPwEmailByTrainer(Trainer trainer, EmailToken tokenRecord){
         String to = trainer.getEmail();
         String username = trainer.getUsername();
-        String token= EmailTokenGenerator.generate();
-        return getResetPasswordEmail(to, username, token);
+        String token= tokenRecord.getToken();
+        return getResetPasswordEmail(to, username, tokenRecord.getId(), token);
     }
 
-    public static Email getVerifyEmailByTrainee(Trainee trainee){
+    public static Email getVerifyEmailByTrainee(Trainee trainee, EmailToken tokenRecord){
         String to = trainee.getEmail();
         String username = trainee.getUsername();
-        String token= EmailTokenGenerator.generate();
-        return getVerifyEmailAddressEmail(to, username, token);
+        String token= tokenRecord.getToken();
+        return getVerifyEmailAddressEmail(to, username, tokenRecord.getId(),token);
     }
 
-    public static Email getResetPwEmailByTrainee(Trainee trainee){
+    public static Email getResetPwEmailByTrainee(Trainee trainee, EmailToken tokenRecord){
         String to = trainee.getEmail();
         String username = trainee.getUsername();
-        String token= EmailTokenGenerator.generate();
-        return getResetPasswordEmail(to, username, token);
+        String token= tokenRecord.getToken();
+        return getResetPasswordEmail(to, username, tokenRecord.getId(), token);
     }
 }

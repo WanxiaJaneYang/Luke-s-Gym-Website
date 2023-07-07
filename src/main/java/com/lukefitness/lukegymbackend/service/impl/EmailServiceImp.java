@@ -63,15 +63,14 @@ public class EmailServiceImp implements EmailService {
         }else{
             trainee=traineeService.getTraineeById(Integer.parseInt(map.get("traineeId")));
         }
-        // get email by emailType
-        if (map.get("emailType").equals("resetPassword")){
-            email=Email.getResetPwEmailByTrainee(trainee);
-        }else{
-            email=Email.getVerifyEmailByTrainee(trainee);
-        }
-
         EmailToken emailToken=new EmailToken(trainee);
         emailTokenDao.insertEmailToken(emailToken);
+        // get email by emailType
+        if (map.get("emailType").equals("resetPassword")){
+            email=Email.getResetPwEmailByTrainee(trainee,emailToken);
+        }else{
+            email=Email.getVerifyEmailByTrainee(trainee,emailToken);
+        }
         sendEmail(email);
     }
 
@@ -106,15 +105,14 @@ public class EmailServiceImp implements EmailService {
         }else{
             trainer = trainerService.getTrainerById(Integer.parseInt(map.get("trainerId")));
         }
-
-        //get the email by emailType
-        if (map.get("emailType").equals("resetPassword")){
-            email=Email.getResetPwEmailByTrainer(trainer);
-        }else{
-            email=Email.getVerifyEmailByTrainer(trainer);
-        }
         EmailToken emailToken=new EmailToken(trainer);
         emailTokenDao.insertEmailToken(emailToken);
+        //get the email by emailType
+        if (map.get("emailType").equals("resetPassword")){
+            email=Email.getResetPwEmailByTrainer(trainer, emailToken);
+        }else{
+            email=Email.getVerifyEmailByTrainer(trainer, emailToken);
+        }
         sendEmail(email);
     }
     @Override

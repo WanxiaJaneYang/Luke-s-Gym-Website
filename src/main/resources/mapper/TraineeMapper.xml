@@ -19,4 +19,8 @@
     <select id="getTraineeByEmail" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainee">
         SELECT * FROM trainee WHERE email = #{email}
     </select>
+
+    <update id="setEmailVerified" parameterType="int">
+        UPDATE trainee SET email_verified = true WHERE id = #{id}
+    </update>
 </mapper>

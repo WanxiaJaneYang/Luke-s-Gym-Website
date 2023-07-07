@@ -31,7 +31,7 @@ public class TraineeEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/{traineeId}/verify")
+    @PostMapping("/{traineeId}/verifyEmailAddress")
     public ResponseEntity<?> sendVerifyEmail(@PathVariable int traineeId) {
         try {
             emailService.sendVerifyEmailToTrainee(traineeId);
