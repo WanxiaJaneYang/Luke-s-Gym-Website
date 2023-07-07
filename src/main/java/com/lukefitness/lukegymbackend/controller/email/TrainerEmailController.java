@@ -30,7 +30,7 @@ public class TrainerEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainer id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/{trainerId}/verify")
+    @PostMapping("/{trainerId}/send-verify-email")
     public ResponseEntity<?> sendVerifyEmail(@PathVariable int trainerId) {
         try {
             emailService.sendVerifyEmailToTrainer(trainerId);
@@ -57,7 +57,7 @@ public class TrainerEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/reset-password")
-    public ResponseEntity<?> sendResetEmail(@RequestParam String username, @RequestParam String email) {
+    public ResponseEntity<?> sendResetEmail(@RequestParam(required = false) String username, @RequestParam(required = false) String email) {
         try {
             if (username != null && !username.isEmpty()) {
                 emailService.sendResetPwEmailToTrainerByUsername(username);

@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.trainee;
+package com.lukefitness.lukegymbackend.controller.login;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
@@ -8,6 +8,7 @@ import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/trainee/login")
-@Tag(name = "Trainee controller")
+@Tag(name = "Login/Register Controller")
 public class TraineeLoginController {
     @Autowired
     TraineeService traineeService;
@@ -30,10 +31,16 @@ public class TraineeLoginController {
                     content=@Content(
                             schema=@Schema(implementation = Trainee.class),
                             mediaType = "application/json",
-                            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee1\",\"password\":\"123456\"}"
+                            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee5\",\"password\":\"123456\"}"
                     ))))
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully login as a trainee, the response includes id and a token"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200",
+                    description = "Successfully login as a trainee",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Map.class),
+                            examples = @ExampleObject(value="{\"data\": {\"username\": \"trainee5\",\"id\": \"0\",\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRyYWluZWU1IiwidXNlclJvbGUiOiJ0cmFpbmVlIiwidXNlcklkIjoiNCIsImV4cCI6MTY4ODcxMTI3N30.9KHPPD024GY1Tn11sTaoY365GSrPW_dCYH4pMPI-SNY\"}}")
+                    )}
+            ),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")

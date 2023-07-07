@@ -31,7 +31,7 @@ public class TraineeEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/{traineeId}/verifyEmailAddress")
+    @PostMapping("/{traineeId}/send-verify-email")
     public ResponseEntity<?> sendVerifyEmail(@PathVariable int traineeId) {
         try {
             emailService.sendVerifyEmailToTrainee(traineeId);
@@ -50,7 +50,7 @@ public class TraineeEmailController {
     @Operation(summary = "send reset email to trainee",
             parameters = {
                     @Parameter(in = ParameterIn.QUERY,name = "username",description = "username of the trainee", required = false, example = "wanxiaJaneYang"),
-                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",required =false,example ="wanxiayang86@gmailcom")
+                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",required =false,example ="wanxiayang86@gmail.com")
             }
     )
     @ApiResponses(value = {
@@ -60,7 +60,7 @@ public class TraineeEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/reset-password")
-    public ResponseEntity<?> sendResetEmail(@RequestParam String username, @RequestParam String email) {
+    public ResponseEntity<?> sendResetEmail(@RequestParam(required = false) String username, @RequestParam(required = false) String email) {
         try {
             if (username != null && !username.isEmpty()) {
                 emailService.sendResetPwEmailToTraineeByUsername(username);

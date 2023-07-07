@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.trainee;
+package com.lukefitness.lukegymbackend.controller.login;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.models.Trainee;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/trainee/register")
-@Tag(name = "Trainee controller")
+@Tag(name = "Login/Register Controller")
 public class TraineeRegisterController {
     @Autowired
     TraineeService traineeService;
@@ -27,12 +27,11 @@ public class TraineeRegisterController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainee json, including username and password",
                     required = true,
                     content=@Content(
-                            schema=@Schema(implementation = Trainee.class),
                             mediaType = "application/json",
                             examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee1\",\"email\":\"trainee@example.com\",\"password\":\"123456\"}"
                             ))))
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Successfully register a trainee",content = {@Content(examples =@ExampleObject(value= "{\"username\":\"trainee1\",\"id\":\"1\"") )}),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Successfully register a trainee",content = {@Content(examples =@ExampleObject(value= "{\"data\": {\"username\": \"trainee6\",\"id\": 7}}") )}),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
