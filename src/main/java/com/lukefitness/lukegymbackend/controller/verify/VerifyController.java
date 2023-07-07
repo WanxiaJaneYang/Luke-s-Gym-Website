@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.email;
+package com.lukefitness.lukegymbackend.controller.verify;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.service.VerifyService;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/email")
-@Tag(name = "Email controller")
+@RequestMapping("/verify")
+@Tag(name = "verify controller")
 public class VerifyController {
     @Autowired
     VerifyService verifyService;
-    @PostMapping("/verifyEmail")
+    @PostMapping("/email")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully verified email"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request:like invalid token id or token expired"),
@@ -45,7 +45,7 @@ public class VerifyController {
         }
     }
 
-    @PostMapping("/verifyResetPw")
+    @PostMapping("/resetPw")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully verified reset password",
                     content = @io.swagger.v3.oas.annotations.media.Content(
