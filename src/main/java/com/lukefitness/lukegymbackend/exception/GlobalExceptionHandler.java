@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> handleNotFoundException(NotFoundException e){
+
         return Response.notFound(e.getMessage());
     }
 
@@ -25,6 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e){
+        e.printStackTrace();
         return Response.internalServerError(e.getMessage());
     }
 }

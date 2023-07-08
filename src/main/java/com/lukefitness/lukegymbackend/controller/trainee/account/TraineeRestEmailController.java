@@ -1,7 +1,6 @@
-package com.lukefitness.lukegymbackend.controller.email;
+package com.lukefitness.lukegymbackend.controller.trainee.account;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email/trainee")
-@Tag(name = "Email controller")
+@Tag(name = "Trainee-Account Controller")
 public class TraineeRestEmailController {
     @Autowired
     EmailService emailService;
-    @Operation(summary = "send reset email to trainee",
+    @Operation(summary = "send reset password email to trainee",
             parameters = {
-                    @Parameter(in = ParameterIn.QUERY,name = "username",description = "username of the trainee", required = false, example = "wanxiaJaneYang"),
-                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",required =false,example ="wanxiayang86@gmail.com")
+                    @Parameter(in = ParameterIn.QUERY,name = "username",description = "username of the trainee",  example = "wanxiaJaneYang"),
+                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",example ="wanxiayang86@gmail.com")
             }
     )
     @ApiResponses(value = {
@@ -31,7 +30,7 @@ public class TraineeRestEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee username or email not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/reset-password")
+    @PostMapping("/send-restpw-email")
     public ResponseEntity<?> sendResetEmail(@RequestParam(required = false) String username, @RequestParam(required = false) String email) throws Exception {
         if (username != null && !username.isEmpty()) {
             emailService.sendResetPwEmailToTraineeByUsername(username);

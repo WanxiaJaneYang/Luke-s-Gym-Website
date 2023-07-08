@@ -24,10 +24,9 @@ public class TraineeServiceImp implements TraineeService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public Trainee traineeLogin(String username, String password) throws Exception {
+    public Trainee traineeLogin(String username, String password) {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
         String pwdInDB = traineeGetByUsername.getPassword();
-        String hashedPassword=passwordEncoder.encode(password);
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
@@ -36,7 +35,7 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public Trainee getTraineeByUsername(String username) throws Exception {
+    public Trainee getTraineeByUsername(String username){
         Trainee trainee=traineeDao.getTraineeByUsername(username);
         if(trainee==null){
             throw new NotFoundException("Username not found");
@@ -47,7 +46,7 @@ public class TraineeServiceImp implements TraineeService {
 
     @Transactional
     @Override
-    public Trainee traineeRegister(Trainee trainee) throws Exception {
+    public Trainee traineeRegister(Trainee trainee) {
         try{
             trainee.setPassword(passwordEncoder.encode(trainee.getPassword()));
             traineeDao.traineeRegister(trainee);
@@ -85,6 +84,30 @@ public class TraineeServiceImp implements TraineeService {
             throw new NotFoundException("Trainee email not found");
         }else{
             return trainee;
+        }
+    }
+
+    @Override
+    public void updateTraineePassword(int id, String password) {
+        Trainee trainee=traineeDao.getTraineeById(id);
+        if (trainee==null){
+            throw new NotFoundException("Trainee id not found");
+        }else{
+            trainee.setPassword(passwordEncoder.encode(password));
+            traineeDao.updateTraineePassword(trainee);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateTraineeEmail(int id, String email) {
+        Trainee trainee=traineeDao.getTraineeById(id);
+        if (trainee==null){
+            throw new NotFoundException("Trainee id not found");
+        }else{
+            trainee.setEmail(email);
+            traineeDao.setEmailUnverified(id);
+            traineeDao.updateTraineeEmail(trainee);
         }
     }
 }

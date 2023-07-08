@@ -1,7 +1,5 @@
-package com.lukefitness.lukegymbackend.controller.trainee;
+package com.lukefitness.lukegymbackend.controller.trainee.profile;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.TraineeContactInfo;
 import com.lukefitness.lukegymbackend.service.TraineeContactInfoService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/trainee/{traineeId}/contact-info")
-@Tag(name = "Trainee controller")
+@Tag(name = "Trainee Profile controller")
 public class TraineeContactInfoController {
     @Autowired
     TraineeContactInfoService traineeContactInfoService;

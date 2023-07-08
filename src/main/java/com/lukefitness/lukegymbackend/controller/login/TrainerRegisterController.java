@@ -7,7 +7,6 @@ import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class TrainerRegisterController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
 
-    public ResponseEntity trainerRegister(@RequestBody Trainer trainer){
+    public ResponseEntity<?> trainerRegister(@RequestBody Trainer trainer){
         try {
             trainer.set_admin(false);
             Trainer trainerTemp = trainerService.registerTrainer(trainer);

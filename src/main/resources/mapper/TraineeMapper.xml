@@ -23,4 +23,16 @@
     <update id="setEmailVerified" parameterType="int">
         UPDATE trainee SET email_verified = true WHERE id = #{id}
     </update>
+
+    <update id="setEmailUnverified" parameterType="int">
+        UPDATE trainee SET email_verified = false WHERE id = #{id}
+    </update>
+
+    <update id="updateTraineePassword" parameterType="com.lukefitness.lukegymbackend.models.Trainee">
+        UPDATE trainee SET password = #{password} WHERE id = #{id}
+    </update>
+
+    <update id="updateTraineeEmail" parameterType="com.lukefitness.lukegymbackend.models.Trainee">
+        UPDATE trainee SET email = #{email} WHERE id = #{id}
+    </update>
 </mapper>

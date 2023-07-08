@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.trainer;
+package com.lukefitness.lukegymbackend.controller.trainee.account;
 
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -15,27 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/trainer/{trainerId}/send-verify-email")
-@Tag(name = "Trainer-Account Controller")
-public class TrainerVerifyEmailController {
+@RequestMapping("/trainee/{traineeId}/send-verify-email")
+@Tag(name = "Trainee-Account Controller")
+public class TraineeVerifyEmailController {
     @Autowired
     EmailService emailService;
 
-    @Operation(summary = "Send verify email to trainer by trainer id",
+    @Operation(summary = "Send verify email to trainee by trainee id",
             parameters = {
-                    @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.PATH,name = "trainerId", description = "id of the trainer", required = true, example = "19"),
+                    @io.swagger.v3.oas.annotations.Parameter(in = ParameterIn.PATH ,name = "traineeId", description = "id of the trainee", required = true, example = "6"),
             },
             security = @SecurityRequirement(name = "bearer-key")
     )
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully sent verify email"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainer id not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> sendVerifyEmail(@PathVariable int trainerId) {
-            emailService.sendVerifyEmailToTrainer(trainerId);
-            return Response.success("Email sent successfully");
+    public ResponseEntity<?> sendVerifyEmail(@PathVariable int traineeId) throws Exception {
+        emailService.sendVerifyEmailToTrainee(traineeId);
+        return Response.success("Email sent successfully");
     }
 }

@@ -1,7 +1,6 @@
-package com.lukefitness.lukegymbackend.controller.email;
+package com.lukefitness.lukegymbackend.controller.admin;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,16 +12,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/email/trainer")
-@Tag(name = "Email controller")
-public class TrainerRestEmailController {
+@RequestMapping("/email/admin")
+@Tag(name = "Admin-Account Controller")
+public class SendRstPwEmailToAdminController {
     @Autowired
     EmailService emailService;
 
-    @Operation(summary = "Send reset password email to trainer by username or email",
+    @Operation(summary = "Send reset password email to admin by username or email",
             parameters = {
-                    @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.QUERY,name = "username", description = "username of the trainer", required = false, example = "WanxiaJaneYang"),
-                    @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.QUERY,name = "email", description = "email of the trainer", required = false, example = "wanxiayang86@gmail.com"),
+                    @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.QUERY,name = "username", description = "username of the trainer", example = "WanxiaJaneYang"),
+                    @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.QUERY,name = "email", description = "email of the trainer",  example = "wanxiayang86@gmail.com"),
             }
     )
     @ApiResponses(value = {
@@ -31,7 +30,7 @@ public class TrainerRestEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Username or email not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/reset-password")
+    @PostMapping("/send-restpw-email")
     public ResponseEntity<?> sendResetEmail(@RequestParam(required = false) String username, @RequestParam(required = false) String email) {
         if (username != null && !username.isEmpty()) {
             emailService.sendResetPwEmailToTrainerByUsername(username);

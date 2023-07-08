@@ -1,7 +1,5 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -12,14 +10,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -48,7 +44,7 @@ public class TrainerLoginController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity trainerLogin(@RequestBody Trainer trainer) throws Exception {
+    public ResponseEntity<?> trainerLogin(@RequestBody Trainer trainer) throws Exception {
         Map<String, Object> resultMap = trainerService.trainerLogin(trainer.getUsername(), trainer.getPassword());
         return Response.success(resultMap);
 

@@ -10,5 +10,9 @@ public interface TraineeDao {
     Trainee getTraineeById(int id);
     Trainee getTraineeByEmail(String email);
     void setEmailVerified(int id);
+    void setEmailUnverified(int id);
+    void updateTraineePassword(Trainee trainee);
+    void updateTraineeEmail(Trainee trainee);
+
 
 }
