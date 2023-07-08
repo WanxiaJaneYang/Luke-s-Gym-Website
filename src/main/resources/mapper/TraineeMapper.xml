@@ -35,4 +35,32 @@
     <update id="updateTraineeEmail" parameterType="com.lukefitness.lukegymbackend.models.Trainee">
         UPDATE trainee SET email = #{email} WHERE id = #{id}
     </update>
+
+    <select id="getTraineesByPage" resultMap="TraineeMap">
+        SELECT * FROM trainee
+        ORDER BY id
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="getTraineesBySearchUsername" parameterType="String" resultMap="TraineeMap">
+        SELECT * FROM trainee
+        WHERE LOWER(username) LIKE LOWER(CONCAT('%', #{username}, '%'))
+        ORDER BY id
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="getTraineesBySearchEmail" parameterType="String" resultMap="TraineeMap">
+        SELECT * FROM trainee
+        WHERE LOWER(email) LIKE LOWER(CONCAT('%', #{email}, '%'))
+        ORDER BY id
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <resultMap id="TraineeMap" type="com.lukefitness.lukegymbackend.models.Trainee">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="emailVerified" column="email_verified"/>
+    </resultMap>
+
 </mapper>

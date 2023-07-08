@@ -9,10 +9,13 @@ import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsExce
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class TraineeServiceImp implements TraineeService {
@@ -108,6 +111,42 @@ public class TraineeServiceImp implements TraineeService {
             trainee.setEmail(email);
             traineeDao.setEmailUnverified(id);
             traineeDao.updateTraineeEmail(trainee);
+        }
+    }
+
+    @Override
+    public List<Trainee> getTraineesByPage(int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        List<Trainee> trainees=traineeDao.getTraineesByPage(rowBounds);
+        if (trainees==null||trainees.size()==0){
+            throw new NotFoundException("Trainees not found");
+        }else{
+            return trainees;
+        }
+    }
+
+    @Override
+    public List<Trainee> getTraineesBySearchUsername(String username, int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        List<Trainee> trainees=traineeDao.getTraineesBySearchUsername(username,rowBounds);
+        if (trainees==null||trainees.size()==0){
+            throw new NotFoundException("Trainees not found");
+        }else{
+            return trainees;
+        }
+    }
+
+    @Override
+    public List<Trainee> getTraineesBySearchEmail(String email, int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        List<Trainee> trainees=traineeDao.getTraineesBySearchEmail(email,rowBounds);
+        if (trainees==null||trainees.size()==0){
+            throw new NotFoundException("Trainees not found");
+        }else{
+            return trainees;
         }
     }
 }

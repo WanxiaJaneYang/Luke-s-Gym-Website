@@ -21,6 +21,10 @@ public class Response extends ResponseEntity {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    public static ResponseEntity success(String message, Object data) {
+        Map<String, Object> response = Map.of("message", message, "data", data);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
     public static ResponseEntity successCreated(Object data) {
         Map<String, Object> response = Map.of("data", data);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

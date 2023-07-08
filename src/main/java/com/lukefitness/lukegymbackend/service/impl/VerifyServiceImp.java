@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -50,13 +49,26 @@ public class VerifyServiceImp implements VerifyService {
     TraineeDao traineeDao;
     @Transactional
     @Override
-    public void verifyEmail(int tokenId, String token) {
+    public Map<String, Object> verifyEmail(int tokenId, String token) {
         EmailToken tokenRecord=verifyToken(tokenId, token);
         if(tokenRecord.getUser_type().equals("trainer")){
             trainerDao.setEmailVerified(tokenRecord.getUser_id());
         }else if(tokenRecord.getUser_type().equals("trainee")) {
             traineeDao.setEmailVerified(tokenRecord.getUser_id());
         }
+        Map<String, Object> map;
+        if (tokenRecord.getUser_type().equals("trainer")) {
+            map= Map.of("userType", "trainer", "id", tokenRecord.getUser_id());
+        } else if (tokenRecord.getUser_type().equals("trainee")) {
+            map= Map.of("userType", "trainee", "id", tokenRecord.getUser_id());
+        } else if(tokenRecord.getUser_type().equals("admin")){
+            map= Map.of("userType", "admin", "id", tokenRecord.getUser_id());
+        }else {
+            throw new BadRequestException("Invalid token");
+        }
+        String loginToken= JWTUtils.getToken(String.valueOf(tokenRecord.getUser_id()),tokenRecord.getUsername(),tokenRecord.getUser_type());
+        map.put("token",loginToken);
+        return map;
     }
 
     @Override

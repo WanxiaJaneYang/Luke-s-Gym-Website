@@ -34,15 +34,9 @@ public class VerifyController {
                     @io.swagger.v3.oas.annotations.Parameter(name = "token", description = "token", required = true)
             })
     public ResponseEntity<?> verifyEmail(@RequestParam int tokenId, @RequestParam String token) {
-        try {
-            verifyService.verifyEmail(tokenId, token);
-            return Response.success("Email verified successfully");
-        } catch (BadRequestException e) {
-            return Response.badRequest(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.internalServerError(e.getMessage());
-        }
+        Map<String, Object> map=verifyService.verifyEmail(tokenId, token);
+        return Response.success("Successfully verified email", map);
+
     }
 
     @PostMapping("/resetPw")
@@ -67,14 +61,7 @@ public class VerifyController {
             }
     )
     public ResponseEntity<?> verifyResetPw(@RequestParam int tokenId, @RequestParam String token) {
-        try {
-            Map<String,Object> verifyResult =verifyService.verifyResetPw(tokenId, token);
-            return Response.success(verifyResult);
-        } catch (BadRequestException e) {
-            return Response.badRequest(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.internalServerError(e.getMessage());
-        }
+        Map<String,Object> verifyResult =verifyService.verifyResetPw(tokenId, token);
+        return Response.success("Successfully verified reset password", verifyResult);
     }
 }
