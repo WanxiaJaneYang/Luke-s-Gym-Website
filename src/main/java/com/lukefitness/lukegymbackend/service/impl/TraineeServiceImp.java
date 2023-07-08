@@ -7,8 +7,10 @@ import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsExc
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
 import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
+import com.lukefitness.lukegymbackend.utils.PageParam;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -115,10 +117,10 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public List<Trainee> getTraineesByPage(int page, int size) {
+    public List<TraineeResponse> getTraineesByPage(int page, int size) {
         int offset=(page-1)*size;
         RowBounds rowBounds=new RowBounds(offset,size);
-        List<Trainee> trainees=traineeDao.getTraineesByPage(rowBounds);
+        List<TraineeResponse> trainees=traineeDao.getTraineesByPage(rowBounds);
         if (trainees==null||trainees.size()==0){
             throw new NotFoundException("Trainees not found");
         }else{
@@ -127,10 +129,12 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public List<Trainee> getTraineesBySearchUsername(String username, int page, int size) {
+    public List<TraineeResponse> getTraineesBySearchUsername(String username, int page, int size) {
         int offset=(page-1)*size;
         RowBounds rowBounds=new RowBounds(offset,size);
-        List<Trainee> trainees=traineeDao.getTraineesBySearchUsername(username,rowBounds);
+        System.out.println("in service");
+        System.out.println("username: "+username);
+        List<TraineeResponse> trainees=traineeDao.getTraineesBySearchUsername(username,rowBounds);
         if (trainees==null||trainees.size()==0){
             throw new NotFoundException("Trainees not found");
         }else{
@@ -139,10 +143,10 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public List<Trainee> getTraineesBySearchEmail(String email, int page, int size) {
+    public List<TraineeResponse> getTraineesBySearchEmail(String email, int page, int size) {
         int offset=(page-1)*size;
         RowBounds rowBounds=new RowBounds(offset,size);
-        List<Trainee> trainees=traineeDao.getTraineesBySearchEmail(email,rowBounds);
+        List<TraineeResponse> trainees=traineeDao.getTraineesBySearchEmail(email,rowBounds);
         if (trainees==null||trainees.size()==0){
             throw new NotFoundException("Trainees not found");
         }else{

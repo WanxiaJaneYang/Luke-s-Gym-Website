@@ -1,6 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.admin.trainee;
 
 import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,13 +29,14 @@ public class GetTraineeController {
             }
     )
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved trainees"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved trainees",
+                    content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TraineeResponse.class))),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/list")
     public ResponseEntity<?> getTrainees(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        List<Trainee> result=traineeService.getTraineesByPage(pageNumber, pageSize);
+        List<TraineeResponse> result=traineeService.getTraineesByPage(pageNumber, pageSize);
         return Response.success(result);
     }
 
@@ -45,14 +47,15 @@ public class GetTraineeController {
             }
     )
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved trainee"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved trainee",
+                    content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TraineeResponse.class))),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{traineeId}")
     public ResponseEntity<?> getTraineeById(@PathVariable int traineeId) {
-        Trainee result=traineeService.getTraineeById(traineeId);
+        TraineeResponse result=new TraineeResponse(traineeService.getTraineeById(traineeId));
         return Response.success(result);
     }
 
@@ -64,7 +67,8 @@ public class GetTraineeController {
             }
     )
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved trainee"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved trainee",
+                    content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TraineeResponse.class))),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
@@ -75,11 +79,11 @@ public class GetTraineeController {
                                                   @RequestParam int pageNumber,
                                                   @RequestParam int pageSize) {
         if(username!=null) {
-            List<Trainee> result=traineeService.getTraineesBySearchUsername(username, pageNumber, pageSize);
+            List<TraineeResponse> result=traineeService.getTraineesBySearchUsername(username, pageNumber, pageSize);
             return Response.success(result);
         }
         else if(email!=null) {
-            List<Trainee> result=traineeService.getTraineesBySearchEmail(email, pageNumber, pageSize);
+            List<TraineeResponse> result=traineeService.getTraineesBySearchEmail(email, pageNumber, pageSize);
             return Response.success(result);
         }
         else
