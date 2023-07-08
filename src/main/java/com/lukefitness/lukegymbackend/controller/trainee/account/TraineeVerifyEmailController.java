@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.trainee;
+package com.lukefitness.lukegymbackend.controller.trainee.account;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/trainee/{traineeId}/send-verify-email")
-@Tag(name = "Email controller")
+@Tag(name = "Trainee-Account Controller")
 public class TraineeVerifyEmailController {
     @Autowired
     EmailService emailService;

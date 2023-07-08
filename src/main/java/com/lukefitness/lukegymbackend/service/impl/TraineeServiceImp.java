@@ -87,4 +87,28 @@ public class TraineeServiceImp implements TraineeService {
             return trainee;
         }
     }
+
+    @Override
+    public void updateTraineePassword(int id, String password) {
+        Trainee trainee=traineeDao.getTraineeById(id);
+        if (trainee==null){
+            throw new NotFoundException("Trainee id not found");
+        }else{
+            trainee.setPassword(passwordEncoder.encode(password));
+            traineeDao.updateTraineePassword(trainee);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateTraineeEmail(int id, String email) {
+        Trainee trainee=traineeDao.getTraineeById(id);
+        if (trainee==null){
+            throw new NotFoundException("Trainee id not found");
+        }else{
+            trainee.setEmail(email);
+            traineeDao.setEmailUnverified(id);
+            traineeDao.updateTraineeEmail(trainee);
+        }
+    }
 }

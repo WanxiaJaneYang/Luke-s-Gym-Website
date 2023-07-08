@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/trainer/{trainerId}/send-verify-email")
-@Tag(name = "Email controller")
+@Tag(name = "Trainer-Account Controller")
 public class TrainerVerifyEmailController {
     @Autowired
     EmailService emailService;
