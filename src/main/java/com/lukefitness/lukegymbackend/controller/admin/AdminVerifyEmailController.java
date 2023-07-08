@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping({"/admin/send-verify-email", "/admin/send-verify-email"})
+@RequestMapping("/admin/send-verify-email")
 @Tag(name = "Admin-Account Controller")
 public class AdminVerifyEmailController {
     @Autowired
     EmailService emailService;
 
-    @Operation(summary = "Send verify email to trainer by trainer id",
+    @Operation(summary = "Send verify email address email to trainer by trainer id",
             security = @SecurityRequirement(name = "bearer-key")
     )
     @ApiResponses(value = {
