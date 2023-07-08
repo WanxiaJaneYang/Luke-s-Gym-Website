@@ -1,7 +1,5 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -46,7 +44,7 @@ public class TrainerLoginController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity trainerLogin(@RequestBody Trainer trainer) throws Exception {
+    public ResponseEntity<?> trainerLogin(@RequestBody Trainer trainer) throws Exception {
         Map<String, Object> resultMap = trainerService.trainerLogin(trainer.getUsername(), trainer.getPassword());
         return Response.success(resultMap);
 

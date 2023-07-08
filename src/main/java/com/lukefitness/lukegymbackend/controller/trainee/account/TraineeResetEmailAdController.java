@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.trainee.account;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.models.request.trainee.TraineeEmailReq;
+import com.lukefitness.lukegymbackend.models.request.Email;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,10 +29,10 @@ public class TraineeResetEmailAdController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> resetEmail(@PathVariable int traineeId, @RequestBody TraineeEmailReq traineeEmailReq) {
-        if(traineeEmailReq == null || traineeEmailReq.getEmail() == null || traineeEmailReq.getEmail().isEmpty())
+    public ResponseEntity<?> resetEmail(@PathVariable int traineeId, @RequestBody Email email) {
+        if(email == null || email.getEmail() == null || email.getEmail().isEmpty())
             throw new BadRequestException("Email is required");
-        traineeService.updateTraineeEmail(traineeId, traineeEmailReq.getEmail());
+        traineeService.updateTraineeEmail(traineeId, email.getEmail());
         return Response.success("Email reset successfully");
     }
 }

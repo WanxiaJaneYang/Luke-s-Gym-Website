@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.trainer;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.models.request.trainer.TrainerPwReq;
+import com.lukefitness.lukegymbackend.models.request.Password;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,10 +30,10 @@ public class TrainerRestPwController{
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> resetPassword(@PathVariable int trainerId, @RequestBody TrainerPwReq trainerPwReq){
-        if(trainerPwReq == null || trainerPwReq.getPassword() == null || trainerPwReq.getPassword().isEmpty())
+    public ResponseEntity<?> resetPassword(@PathVariable int trainerId, @RequestBody Password password){
+        if(password == null || password.getPassword() == null || password.getPassword().isEmpty())
             throw new BadRequestException("Password is required");
-        trainerService.updateTrainerPassword(trainerId, trainerPwReq.getPassword());
+        trainerService.updateTrainerPassword(trainerId, password.getPassword());
         return Response.success("Password reset successfully");
     }
 }

@@ -1,7 +1,6 @@
 package com.lukefitness.lukegymbackend.controller.trainee.account;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,8 +20,8 @@ public class TraineeRestEmailController {
     EmailService emailService;
     @Operation(summary = "send reset password email to trainee",
             parameters = {
-                    @Parameter(in = ParameterIn.QUERY,name = "username",description = "username of the trainee", required = false, example = "wanxiaJaneYang"),
-                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",required =false,example ="wanxiayang86@gmail.com")
+                    @Parameter(in = ParameterIn.QUERY,name = "username",description = "username of the trainee",  example = "wanxiaJaneYang"),
+                    @Parameter(in = ParameterIn.QUERY,name = "email",description ="email of the trainee",example ="wanxiayang86@gmail.com")
             }
     )
     @ApiResponses(value = {

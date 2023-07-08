@@ -1,7 +1,6 @@
 package com.lukefitness.lukegymbackend.controller.admin;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.models.request.Password;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
