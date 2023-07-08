@@ -12,4 +12,6 @@ public interface TrainerService {
     Trainer getTrainerById(int id);
     Trainer getTrainerByEmail(String email);
 
+    void updateTrainerPassword(int id, String password);
+    void updateTrainerEmail(int id, String email);
 }

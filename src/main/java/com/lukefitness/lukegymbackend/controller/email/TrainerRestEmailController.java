@@ -31,7 +31,7 @@ public class TrainerRestEmailController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Username or email not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/reset-password")
+    @PostMapping("/send-restpw-email")
     public ResponseEntity<?> sendResetEmail(@RequestParam(required = false) String username, @RequestParam(required = false) String email) {
         if (username != null && !username.isEmpty()) {
             emailService.sendResetPwEmailToTrainerByUsername(username);

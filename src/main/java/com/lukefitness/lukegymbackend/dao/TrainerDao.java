@@ -7,8 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface TrainerDao {
     Integer registerTrainer(Trainer trainer);
     Trainer getTrainerByName(String username);
-    Trainer trainerLogin(String username, String password);
     Trainer getTrainerById(int id);
     Trainer getTrainerByEmail(String email);
     void setEmailVerified(int id);
+    void setEmailUnverified(int id);
+
+    void updateTrainerPassword(Trainer trainer);
+    void updateTrainerEmail(Trainer trainer);
 }

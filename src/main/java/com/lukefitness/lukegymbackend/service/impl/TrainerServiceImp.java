@@ -11,6 +11,7 @@ import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +62,6 @@ public class TrainerServiceImp implements TrainerService {
             throw new NotFoundException("Trainer username not found");
         }else{
             String pwdInDB = trainerGetByName.getPassword();
-            String hashedPassword=passwordEncoder.encode(password);
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
@@ -92,6 +92,31 @@ public class TrainerServiceImp implements TrainerService {
             throw new NotFoundException("Trainer email not found");
         }else{
             return trainer;
+        }
+    }
+
+    @Override
+    public void updateTrainerPassword(int id, String password) {
+        Trainer trainer=trainerDao.getTrainerById(id);
+        if(trainer==null){
+            throw new NotFoundException("Trainer id not found");
+        }else{
+            String hashedPassword=passwordEncoder.encode(password);
+            trainer.setPassword(hashedPassword);
+            trainerDao.updateTrainerPassword(trainer);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateTrainerEmail(int id, String email) {
+        Trainer trainer=trainerDao.getTrainerById(id);
+        if(trainer==null){
+            throw new NotFoundException("Trainer id not found");
+        }else{
+            trainer.setEmail(email);
+            trainerDao.updateTrainerEmail(trainer);
+            trainerDao.setEmailUnverified(id);
         }
     }
 }
