@@ -27,7 +27,6 @@ public class TraineeServiceImp implements TraineeService {
     public Trainee traineeLogin(String username, String password) throws Exception {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
         String pwdInDB = traineeGetByUsername.getPassword();
-        String hashedPassword=passwordEncoder.encode(password);
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
@@ -36,7 +35,7 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public Trainee getTraineeByUsername(String username) throws Exception {
+    public Trainee getTraineeByUsername(String username){
         Trainee trainee=traineeDao.getTraineeByUsername(username);
         if(trainee==null){
             throw new NotFoundException("Username not found");
@@ -47,7 +46,7 @@ public class TraineeServiceImp implements TraineeService {
 
     @Transactional
     @Override
-    public Trainee traineeRegister(Trainee trainee) throws Exception {
+    public Trainee traineeRegister(Trainee trainee) {
         try{
             trainee.setPassword(passwordEncoder.encode(trainee.getPassword()));
             traineeDao.traineeRegister(trainee);

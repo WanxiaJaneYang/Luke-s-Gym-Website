@@ -24,7 +24,7 @@ public class TrainerServiceImp implements TrainerService {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Override
-    public Trainer registerTrainer(Trainer trainer) throws Exception {
+    public Trainer registerTrainer(Trainer trainer) {
         try{
             String hashedPassword=passwordEncoder.encode(trainer.getPassword());
             trainer.setPassword(hashedPassword);
@@ -39,7 +39,7 @@ public class TrainerServiceImp implements TrainerService {
             }else if(e.getMessage().contains("null")){
                 throw new KeywordCannotBeNullException(e.getMessage());
             }else{
-                throw new Exception(e.getMessage());
+                throw e;
             }
         }
     }
@@ -55,7 +55,7 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
-    public Map<String,Object> trainerLogin(String username, String password) throws Exception {
+    public Map<String,Object> trainerLogin(String username, String password){
         Trainer trainerGetByName = trainerDao.getTrainerByName(username);
         Map<String,Object> map=new HashMap<>();
         if(trainerGetByName==null){

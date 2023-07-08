@@ -42,7 +42,7 @@ public class TrainerRegisterController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
 
-    public ResponseEntity trainerRegister(@RequestBody Trainer trainer){
+    public ResponseEntity<?> trainerRegister(@RequestBody Trainer trainer){
         try {
             trainer.set_admin(false);
             Trainer trainerTemp = trainerService.registerTrainer(trainer);
