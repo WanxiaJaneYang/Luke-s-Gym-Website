@@ -69,8 +69,8 @@ public class GetTraineeController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @GetMapping
-    public ResponseEntity<?> getTraineeByUsername(@RequestParam(required = false) String username,
+    @GetMapping("/search")
+    public ResponseEntity<?> searchTrainee(@RequestParam(required = false) String username,
                                                   @RequestParam(required = false) String email,
                                                   @RequestParam int pageNumber,
                                                   @RequestParam int pageSize) {
