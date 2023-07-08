@@ -24,7 +24,7 @@ public class TraineeServiceImp implements TraineeService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public Trainee traineeLogin(String username, String password) throws Exception {
+    public Trainee traineeLogin(String username, String password) {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
         String pwdInDB = traineeGetByUsername.getPassword();
         if(!passwordEncoder.matches(password,pwdInDB)){
