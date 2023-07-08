@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.admin;
+package com.lukefitness.lukegymbackend.controller.admin.account;
 
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;

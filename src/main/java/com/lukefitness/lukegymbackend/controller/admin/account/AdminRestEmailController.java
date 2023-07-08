@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.admin;
+package com.lukefitness.lukegymbackend.controller.admin.account;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.models.request.Email;
