@@ -30,6 +30,11 @@ public class Response extends ResponseEntity {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    public static ResponseEntity successCreated(String message, Object data) {
+        Map<String, Object> response = Map.of("message", message, "data", data);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
     public static ResponseEntity error(HttpStatus status, String message) {
         Map<String, Object> response = Map.of("error", message);
         return ResponseEntity.status(status).body(response);

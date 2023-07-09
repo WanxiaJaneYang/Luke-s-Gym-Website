@@ -1,6 +1,9 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
 import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,9 +47,19 @@ public class TrainerLoginController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> trainerLogin(@RequestBody Trainer trainer) throws Exception {
-        Map<String, Object> resultMap = trainerService.trainerLogin(trainer.getUsername(), trainer.getPassword());
-        return Response.success(resultMap);
-
+    public ResponseEntity<?> trainerLogin(@RequestBody TrainerRegisterReq trainerLoginReq){
+        TrainerLoginResponse response;
+        if (trainerLoginReq.getPassword()==null){
+            return Response.badRequest("Password cannot be null");
+        }
+        if (trainerLoginReq.getEmail()==null && trainerLoginReq.getUsername()==null){
+            return Response.badRequest("Email or username cannot be null");
+        }
+        if(trainerLoginReq.getUsername()==null){
+            response = trainerService.trainerLoginByEmail(trainerLoginReq.getEmail(), trainerLoginReq.getPassword());
+        }else{
+            response = trainerService.trainerLogin(trainerLoginReq.getUsername(), trainerLoginReq.getPassword());
+        }
+        return Response.success("Successfully logged in as a trainer", response);
     }
 }

@@ -7,10 +7,11 @@ import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsExc
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
 import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
+import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
-import com.lukefitness.lukegymbackend.utils.PageParam;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,13 +30,13 @@ public class TraineeServiceImp implements TraineeService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public Trainee traineeLogin(String username, String password) {
+    public TraineeLoginResponse traineeLogin(String username, String password) {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
         String pwdInDB = traineeGetByUsername.getPassword();
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
-            return traineeGetByUsername;
+            return new TraineeLoginResponse(traineeGetByUsername);
         }
     }
 
@@ -51,12 +52,14 @@ public class TraineeServiceImp implements TraineeService {
 
     @Transactional
     @Override
-    public Trainee traineeRegister(Trainee trainee) {
+    public TraineeResponse traineeRegister(UserRegisterReq traineeRegisterReq) {
         try{
-            trainee.setPassword(passwordEncoder.encode(trainee.getPassword()));
+            traineeRegisterReq.setPassword(passwordEncoder.encode(traineeRegisterReq.getPassword()));
+            Trainee trainee=new Trainee(traineeRegisterReq);
             traineeDao.traineeRegister(trainee);
             traineeContactInfoDao.insertTraineeContactInfo(trainee.getId());
-            return getTraineeByUsername(trainee.getUsername());
+            TraineeResponse traineeResponse=new TraineeResponse(trainee);
+            return traineeResponse;
         }catch (Exception e){
             e.printStackTrace();
             if (e.getMessage().contains("key 'username'")){
@@ -151,6 +154,17 @@ public class TraineeServiceImp implements TraineeService {
             throw new NotFoundException("Trainees not found");
         }else{
             return trainees;
+        }
+    }
+
+    @Override
+    public TraineeLoginResponse traineeLoginByEmail(String email, String password) {
+        Trainee traineeGetByEmail = getTraineeByEmail(email);
+        String pwdInDB = traineeGetByEmail.getPassword();
+        if(!passwordEncoder.matches(password,pwdInDB)){
+            throw new LoginFailException();
+        }else {
+            return new TraineeLoginResponse(traineeGetByEmail);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,8 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/register/trainee")
@@ -28,23 +26,20 @@ public class TraineeRegisterController {
                     required = true,
                     content=@Content(
                             mediaType = "application/json",
+                            schema = @Schema(implementation = UserRegisterReq.class),
                             examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee1\",\"email\":\"trainee@example.com\",\"password\":\"123456\"}"
                             ))))
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Successfully register a trainee",content = {@Content(examples =@ExampleObject(value= "{\"data\": {\"username\": \"trainee6\",\"id\": 7}}") )}),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Successfully register a trainee",content = {@Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = TraineeResponse.class),
+                    examples =@ExampleObject(value= "{\"data\": {\"username\": \"trainee6\",\"id\": 7}}") )}),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> traineeRegister(@RequestBody Trainee trainee) {
-        try{
-            Trainee traineeTemp = traineeService.traineeRegister(trainee);
-            Map<String,Object> result=Map.of("id", traineeTemp.getId(), "username", traineeTemp.getUsername());
-            return Response.successCreated(result);
-        }catch (BadRequestException e){
-            return Response.badRequest(e.getMessage());
-        }catch (Exception e){
-            return Response.internalServerError(e.getMessage());
-        }
+    public ResponseEntity<?> traineeRegister(@RequestBody UserRegisterReq trainee) {
+        TraineeResponse response = traineeService.traineeRegister(trainee);
+        return Response.successCreated(response);
     }
 }

@@ -6,15 +6,15 @@ import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsExc
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
 import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
+import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
-import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class TrainerServiceImp implements TrainerService {
@@ -24,12 +24,13 @@ public class TrainerServiceImp implements TrainerService {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Override
-    public Trainer registerTrainer(Trainer trainer) {
+    public TrainerResponse registerTrainer(TrainerRegisterReq trainerRegisterReq) {
         try{
-            String hashedPassword=passwordEncoder.encode(trainer.getPassword());
-            trainer.setPassword(hashedPassword);
+            String hashedPassword=passwordEncoder.encode(trainerRegisterReq.getPassword());
+            trainerRegisterReq.setPassword(hashedPassword);
+            Trainer trainer=new Trainer(trainerRegisterReq);
             trainerDao.registerTrainer(trainer);
-            return trainer;
+            return new TrainerResponse(trainer);
         }catch (Exception e){
             e.printStackTrace();
             if (e.getMessage().contains("key 'username'")){
@@ -55,24 +56,18 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
-    public Map<String,Object> trainerLogin(String username, String password){
-        Trainer trainerGetByName = trainerDao.getTrainerByName(username);
-        Map<String,Object> map=new HashMap<>();
-        if(trainerGetByName==null){
+    public TrainerLoginResponse trainerLogin(String username, String password){
+        Trainer trainerGetByUsername = trainerDao.getTrainerByName(username);
+        if(trainerGetByUsername==null){
             throw new NotFoundException("Trainer username not found");
         }else{
-            String pwdInDB = trainerGetByName.getPassword();
+            String pwdInDB = trainerGetByUsername.getPassword();
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
-                String token= JWTUtils.getToken(trainerGetByName);
-                map.put("id",trainerGetByName.getId());
-                map.put("username",trainerGetByName.getUsername());
-                map.put("email",trainerGetByName.getEmail());
-                map.put("token",token);
+                return new TrainerLoginResponse(trainerGetByUsername);
             }
         }
-        return map;
     }
 
     @Override
@@ -117,6 +112,21 @@ public class TrainerServiceImp implements TrainerService {
             trainer.setEmail(email);
             trainerDao.updateTrainerEmail(trainer);
             trainerDao.setEmailUnverified(id);
+        }
+    }
+
+    @Override
+    public TrainerLoginResponse trainerLoginByEmail(String email, String password) {
+        Trainer trainerGetByEmail = trainerDao.getTrainerByEmail(email);
+        if(trainerGetByEmail==null){
+            throw new NotFoundException("Trainer email not found");
+        }else{
+            String pwdInDB = trainerGetByEmail.getPassword();
+            if(!passwordEncoder.matches(password,pwdInDB)){
+                throw new LoginFailException();
+            }else{
+                return new TrainerLoginResponse(trainerGetByEmail);
+            }
         }
     }
 }

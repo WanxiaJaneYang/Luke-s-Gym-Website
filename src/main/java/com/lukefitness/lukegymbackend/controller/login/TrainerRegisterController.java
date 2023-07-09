@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/register/trainer")
@@ -42,19 +40,8 @@ public class TrainerRegisterController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
 
-    public ResponseEntity<?> trainerRegister(@RequestBody Trainer trainer){
-        try {
-            trainer.set_admin(false);
-            Trainer trainerTemp = trainerService.registerTrainer(trainer);
-            HashMap<String, Object> trainerMap = new HashMap<>();
-            trainerMap.put("id", trainerTemp.getId());
-            trainerMap.put("username", trainerTemp.getUsername());
-            trainerMap.put("email", trainerTemp.getEmail());
-            return Response.successCreated(trainerMap);
-        }catch (BadRequestException e){
-            return Response.badRequest(e.getMessage());
-        }catch (Exception e){
-            return Response.internalServerError(e.getMessage());
-        }
+    public ResponseEntity<?> trainerRegister(@RequestBody TrainerRegisterReq trainerRegisterReq){
+        TrainerResponse trainerResponse = trainerService.registerTrainer(trainerRegisterReq);
+        return Response.successCreated("Successfully created a new trainer", trainerResponse);
     }
 }

@@ -1,8 +1,7 @@
 package com.lukefitness.lukegymbackend.dao;
 
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
-import com.lukefitness.lukegymbackend.utils.PageParam;
+import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;

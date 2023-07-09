@@ -53,7 +53,7 @@
         ORDER BY id
     </select>
 
-    <resultMap id="TraineeResMap" type="com.lukefitness.lukegymbackend.models.response.TraineeResponse">
+    <resultMap id="TraineeResMap" type="com.lukefitness.lukegymbackend.models.response.register.TraineeResponse">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="email" column="email"/>
