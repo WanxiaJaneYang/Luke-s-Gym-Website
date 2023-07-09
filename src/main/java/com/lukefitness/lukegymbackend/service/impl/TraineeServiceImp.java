@@ -7,17 +7,15 @@ import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsExc
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
 import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
+import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
-import com.lukefitness.lukegymbackend.utils.PageParam;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class TraineeServiceImp implements TraineeService {
@@ -29,13 +27,13 @@ public class TraineeServiceImp implements TraineeService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public Trainee traineeLogin(String username, String password) {
+    public TraineeLoginResponse traineeLogin(String username, String password) {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
         String pwdInDB = traineeGetByUsername.getPassword();
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
-            return traineeGetByUsername;
+            return new TraineeLoginResponse(traineeGetByUsername);
         }
     }
 
@@ -51,12 +49,14 @@ public class TraineeServiceImp implements TraineeService {
 
     @Transactional
     @Override
-    public Trainee traineeRegister(Trainee trainee) {
+    public TraineeResponse traineeRegister(UserRegisterReq traineeRegisterReq) {
         try{
-            trainee.setPassword(passwordEncoder.encode(trainee.getPassword()));
+            traineeRegisterReq.setPassword(passwordEncoder.encode(traineeRegisterReq.getPassword()));
+            Trainee trainee=new Trainee(traineeRegisterReq);
             traineeDao.traineeRegister(trainee);
             traineeContactInfoDao.insertTraineeContactInfo(trainee.getId());
-            return getTraineeByUsername(trainee.getUsername());
+            TraineeResponse traineeResponse=new TraineeResponse(trainee);
+            return traineeResponse;
         }catch (Exception e){
             e.printStackTrace();
             if (e.getMessage().contains("key 'username'")){
@@ -117,40 +117,24 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public List<TraineeResponse> getTraineesByPage(int page, int size) {
-        int offset=(page-1)*size;
-        RowBounds rowBounds=new RowBounds(offset,size);
-        List<TraineeResponse> trainees=traineeDao.getTraineesByPage(rowBounds);
-        if (trainees==null||trainees.size()==0){
-            throw new NotFoundException("Trainees not found");
+    public void deleteTrainee(int traineeId) {
+        Trainee trainee=traineeDao.getTraineeById(traineeId);
+        if (trainee==null){
+            throw new NotFoundException("Trainee id not found");
         }else{
-            return trainees;
+            traineeContactInfoDao.deleteTraineeContactInfo(traineeId);
+            traineeDao.deleteTrainee(traineeId);
         }
     }
 
     @Override
-    public List<TraineeResponse> getTraineesBySearchUsername(String username, int page, int size) {
-        int offset=(page-1)*size;
-        RowBounds rowBounds=new RowBounds(offset,size);
-        System.out.println("in service");
-        System.out.println("username: "+username);
-        List<TraineeResponse> trainees=traineeDao.getTraineesBySearchUsername(username,rowBounds);
-        if (trainees==null||trainees.size()==0){
-            throw new NotFoundException("Trainees not found");
-        }else{
-            return trainees;
-        }
-    }
-
-    @Override
-    public List<TraineeResponse> getTraineesBySearchEmail(String email, int page, int size) {
-        int offset=(page-1)*size;
-        RowBounds rowBounds=new RowBounds(offset,size);
-        List<TraineeResponse> trainees=traineeDao.getTraineesBySearchEmail(email,rowBounds);
-        if (trainees==null||trainees.size()==0){
-            throw new NotFoundException("Trainees not found");
-        }else{
-            return trainees;
+    public TraineeLoginResponse traineeLoginByEmail(String email, String password) {
+        Trainee traineeGetByEmail = getTraineeByEmail(email);
+        String pwdInDB = traineeGetByEmail.getPassword();
+        if(!passwordEncoder.matches(password,pwdInDB)){
+            throw new LoginFailException();
+        }else {
+            return new TraineeLoginResponse(traineeGetByEmail);
         }
     }
 }

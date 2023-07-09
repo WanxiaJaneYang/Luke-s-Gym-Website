@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.admin.trainee;
 
-import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
+import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.service.AdminTraineeService;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +21,9 @@ public class GetTraineeController {
     @Autowired
     private TraineeService traineeService;
 
+    @Autowired
+    AdminTraineeService adminTraineeService;
+
     @Operation(summary= "Get trainees by page number and page size",
             security = @SecurityRequirement(name="bearer-key"),
             parameters = {
@@ -36,7 +39,7 @@ public class GetTraineeController {
     })
     @GetMapping("/list")
     public ResponseEntity<?> getTrainees(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        List<TraineeResponse> result=traineeService.getTraineesByPage(pageNumber, pageSize);
+        List<TraineeResponse> result=adminTraineeService.getTraineesByPage(pageNumber, pageSize);
         return Response.success(result);
     }
 
@@ -79,11 +82,11 @@ public class GetTraineeController {
                                                   @RequestParam int pageNumber,
                                                   @RequestParam int pageSize) {
         if(username!=null) {
-            List<TraineeResponse> result=traineeService.getTraineesBySearchUsername(username, pageNumber, pageSize);
+            List<TraineeResponse> result=adminTraineeService.getTraineesBySearchUsername(username, pageNumber, pageSize);
             return Response.success(result);
         }
         else if(email!=null) {
-            List<TraineeResponse> result=traineeService.getTraineesBySearchEmail(email, pageNumber, pageSize);
+            List<TraineeResponse> result=adminTraineeService.getTraineesBySearchEmail(email, pageNumber, pageSize);
             return Response.success(result);
         }
         else

@@ -1,8 +1,7 @@
 package com.lukefitness.lukegymbackend.dao;
 
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.response.TraineeResponse;
-import com.lukefitness.lukegymbackend.utils.PageParam;
+import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
@@ -19,6 +18,7 @@ public interface TraineeDao {
     void setEmailUnverified(int id);
     void updateTraineePassword(Trainee trainee);
     void updateTraineeEmail(Trainee trainee);
+    void deleteTrainee(int id);
 
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);

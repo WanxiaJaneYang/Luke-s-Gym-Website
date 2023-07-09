@@ -36,6 +36,10 @@
         UPDATE trainee SET email = #{email} WHERE id = #{id}
     </update>
 
+    <delete id="deleteTrainee" parameterType="int">
+        DELETE FROM trainee WHERE id = #{id}
+    </delete>
+
     <select id="getTraineesByPage" resultMap="TraineeResMap">
         SELECT * FROM trainee
         ORDER BY id
@@ -53,7 +57,7 @@
         ORDER BY id
     </select>
 
-    <resultMap id="TraineeResMap" type="com.lukefitness.lukegymbackend.models.response.TraineeResponse">
+    <resultMap id="TraineeResMap" type="com.lukefitness.lukegymbackend.models.response.register.TraineeResponse">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="email" column="email"/>

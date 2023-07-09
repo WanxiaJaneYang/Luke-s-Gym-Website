@@ -1,10 +1,10 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
-import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
-import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,10 +26,10 @@ public class TraineeLoginController {
     TraineeService traineeService;
 
     @Operation(summary = "Login as a trainee",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainee json, including username and password",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainee json, including username/email and password",
                     required = true,
                     content=@Content(
-                            schema=@Schema(implementation = Trainee.class),
+                            schema=@Schema(implementation = UserRegisterReq.class),
                             mediaType = "application/json",
                             examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee5\",\"password\":\"123456\"}"
                     ))))
@@ -46,11 +46,18 @@ public class TraineeLoginController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<?> traineeLogin(@RequestBody Trainee trainee) throws Exception {
-        Trainee traineeFromDb = traineeService.traineeLogin(trainee.getUsername(), trainee.getPassword());
-        String token = JWTUtils.getToken(String.valueOf(traineeFromDb.getId()), traineeFromDb.getUsername(), "trainee");
-        Map<String, String> result=Map.of("token", token, "username", traineeFromDb.getUsername(), "id", String.valueOf(traineeFromDb.getId()));
-        return Response.success(result);
+    public ResponseEntity<?> traineeLogin(@RequestBody UserRegisterReq trainee) {
+        TraineeLoginResponse response;
+        if(trainee.getPassword()==null)
+            throw new BadRequestException("Password is required");
+        if (trainee.getUsername() == null && trainee.getEmail() == null) {
+            throw new BadRequestException("Username or password are required");
+        }else if (trainee.getEmail() == null) {
+             response = traineeService.traineeLogin(trainee.getUsername(), trainee.getPassword());
+        }else{
+            response=traineeService.traineeLoginByEmail(trainee.getEmail(), trainee.getPassword());
+        }
+        return Response.success("Successfully login as a trainee", response);
     }
 
 }
