@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface TraineeService {
     TraineeLoginResponse traineeLogin(String username, String password);
+    TraineeLoginResponse traineeLoginByEmail(String email, String password);
     Trainee getTraineeByUsername(String username);
     TraineeResponse traineeRegister(UserRegisterReq trainee);
 
@@ -17,9 +18,5 @@ public interface TraineeService {
     void updateTraineePassword(int id, String password);
     void updateTraineeEmail(int id, String email);
 
-    List<TraineeResponse> getTraineesByPage(int page, int size);
-    List<TraineeResponse> getTraineesBySearchUsername(String username, int page, int size);
-    List<TraineeResponse> getTraineesBySearchEmail(String email, int page, int size);
-
-    TraineeLoginResponse traineeLoginByEmail(String email, String password);
+    void deleteTrainee(int traineeId);
 }

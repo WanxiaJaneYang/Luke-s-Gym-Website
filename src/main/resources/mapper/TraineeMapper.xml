@@ -36,6 +36,10 @@
         UPDATE trainee SET email = #{email} WHERE id = #{id}
     </update>
 
+    <delete id="deleteTrainee" parameterType="int">
+        DELETE FROM trainee WHERE id = #{id}
+    </delete>
+
     <select id="getTraineesByPage" resultMap="TraineeResMap">
         SELECT * FROM trainee
         ORDER BY id

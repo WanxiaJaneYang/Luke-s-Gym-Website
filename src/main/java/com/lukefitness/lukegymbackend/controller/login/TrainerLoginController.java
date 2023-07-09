@@ -29,7 +29,7 @@ public class TrainerLoginController {
     TrainerService trainerService;
 
     @Operation(summary = "Login as a trainer",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainer json, including username and password",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "username/email and password",
                     required = true,
                     content=@Content(
                             mediaType = "application/json",
@@ -40,6 +40,7 @@ public class TrainerLoginController {
             @ApiResponse(responseCode = "200", description = "Successfully logged in as a trainer",
                     content = {@Content(
                             mediaType = "application/json",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TrainerLoginResponse.class),
                             examples = @ExampleObject(value = "{\"data\": {\"id\": 14,\"email\": \"trainer1@example.com\",\"username\": \"trainer1\",\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRyYWluZXIxIiwidXNlclJvbGUiOiJmYWxzZSIsInVzZXJJZCI6IjE0IiwiZXhwIjoxNjg4NzEyOTIwfQ.PeR53r_sHMhCTx82vlar7bHHvXmT9p_YSHcKp8UWkn4\"}}")
                     )}),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),

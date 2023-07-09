@@ -29,6 +29,7 @@ public class TrainerRegisterController {
                     required = true,
                     content=@Content(
                             mediaType = "application/json",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TrainerRegisterReq.class),
                             examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainer1\",\"email\":\"trainer1@example.com\",\"password\":\"123456\"}"
                             ))))
     @ApiResponses(value = {

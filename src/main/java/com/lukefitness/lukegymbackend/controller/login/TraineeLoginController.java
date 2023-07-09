@@ -26,10 +26,10 @@ public class TraineeLoginController {
     TraineeService traineeService;
 
     @Operation(summary = "Login as a trainee",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainee json, including username and password",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "trainee json, including username/email and password",
                     required = true,
                     content=@Content(
-                            schema=@Schema(implementation = Trainee.class),
+                            schema=@Schema(implementation = UserRegisterReq.class),
                             mediaType = "application/json",
                             examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"username\":\"trainee5\",\"password\":\"123456\"}"
                     ))))

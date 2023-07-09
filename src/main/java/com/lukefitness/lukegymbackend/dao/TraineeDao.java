@@ -18,6 +18,7 @@ public interface TraineeDao {
     void setEmailUnverified(int id);
     void updateTraineePassword(Trainee trainee);
     void updateTraineeEmail(Trainee trainee);
+    void deleteTrainee(int id);
 
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);

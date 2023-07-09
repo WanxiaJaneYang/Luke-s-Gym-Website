@@ -26,4 +26,8 @@
     <select id="getTraineeContactInfoByTraineeId" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
         SELECT * FROM trainee_contact_info WHERE trainee_id = #{trainee_id}
     </select>
+
+    <delete id="deleteTraineeContactInfo" parameterType="int">
+        DELETE FROM trainee_contact_info WHERE trainee_id = #{trainee_id}
+    </delete>
 </mapper>
