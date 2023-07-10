@@ -10,8 +10,8 @@ import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
-import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TraineeService;
+import com.lukefitness.lukegymbackend.utils.DeactivationDateCalculator;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +27,7 @@ public class TraineeServiceImp implements TraineeService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public TraineeLoginResponse traineeLogin(String username, String password) {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
@@ -34,6 +35,7 @@ public class TraineeServiceImp implements TraineeService {
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
+            traineeDao.traineeLogin(traineeGetByUsername);
             return new TraineeLoginResponse(traineeGetByUsername);
         }
     }
@@ -118,16 +120,16 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public void deleteTrainee(int traineeId) {
+    public void deactivateTrainee(int traineeId) {
         Trainee trainee=traineeDao.getTraineeById(traineeId);
         if (trainee==null){
             throw new NotFoundException("Trainee id not found");
         }else{
-            traineeContactInfoDao.deleteTraineeContactInfo(traineeId);
-            traineeDao.deleteTrainee(traineeId);
+            traineeDao.setDeactivationDate(traineeId, DeactivationDateCalculator.calculate());
         }
     }
 
+    @Transactional
     @Override
     public TraineeLoginResponse traineeLoginByEmail(String email, String password) {
         Trainee traineeGetByEmail = getTraineeByEmail(email);
@@ -135,6 +137,7 @@ public class TraineeServiceImp implements TraineeService {
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
+            traineeDao.traineeLogin(traineeGetByEmail);
             return new TraineeLoginResponse(traineeGetByEmail);
         }
     }

@@ -5,6 +5,12 @@ import com.lukefitness.lukegymbackend.dao.TraineeDao;
 import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.models.EmailToken;
+import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.models.User;
+import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
+import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
+import com.lukefitness.lukegymbackend.models.response.register.UserResponse;
 import com.lukefitness.lukegymbackend.service.VerifyService;
 import com.lukefitness.lukegymbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +47,22 @@ public class VerifyServiceImp implements VerifyService {
         }
     }
 
+    private UserResponse getUserResponse(EmailToken tokenRecord){
+        User user;
+        if (tokenRecord.getUser_type().equals("trainer")||tokenRecord.getUser_type().equals("admin")){
+            user=trainerDao.getTrainerById(tokenRecord.getUser_id());
+        }else if (tokenRecord.getUser_type().equals("trainee")){
+            user=traineeDao.getTraineeById(tokenRecord.getUser_id());
+        }else {
+            throw new BadRequestException("Invalid token: user type not found");
+        }
+
+        if(user instanceof Trainee){
+            return new TraineeLoginResponse((Trainee) user);
+        }else {
+            return new TrainerLoginResponse((Trainer) user);
+        }
+    }
     @Autowired
     TrainerDao trainerDao;
 
@@ -48,45 +70,20 @@ public class VerifyServiceImp implements VerifyService {
     TraineeDao traineeDao;
     @Transactional
     @Override
-    public Map<String, Object> verifyEmail(int tokenId, String token) {
+    public UserResponse verifyEmail(int tokenId, String token) {
         EmailToken tokenRecord=verifyToken(tokenId, token);
         if(tokenRecord.getUser_type().equals("trainer")){
             trainerDao.setEmailVerified(tokenRecord.getUser_id());
         }else if(tokenRecord.getUser_type().equals("trainee")) {
             traineeDao.setEmailVerified(tokenRecord.getUser_id());
         }
-        Map<String, Object> map=new HashMap<>();
-        if (tokenRecord.getUser_type().equals("trainer")) {
-            map.put("userType", "trainer");
-        } else if (tokenRecord.getUser_type().equals("trainee")) {
-            map.put("userType", "trainee");
-        } else if(tokenRecord.getUser_type().equals("admin")){
-            map.put("userType", "admin");
-        }else {
-            throw new BadRequestException("Invalid token");
-        }
-        map.put("id",tokenRecord.getUser_id());
-        String loginToken= JWTUtils.getToken(String.valueOf(tokenRecord.getUser_id()),tokenRecord.getUsername(),tokenRecord.getUser_type());
-        map.put("token",loginToken);
-        return map;
+        return getUserResponse(tokenRecord);
     }
 
+    @Transactional
     @Override
-    public Map<String, Object> verifyResetPw(int tokenId, String token) {
+    public UserResponse verifyResetPw(int tokenId, String token) {
         EmailToken tokenRecord = verifyToken(tokenId, token);
-        Map<String, Object> map=new HashMap<>();
-        if (tokenRecord.getUser_type().equals("trainer")) {
-            map.put("userType", "trainer");
-        } else if (tokenRecord.getUser_type().equals("trainee")) {
-            map.put("userType", "trainee");
-        } else if(tokenRecord.getUser_type().equals("admin")){
-            map.put("userType", "admin");
-        }else {
-            throw new BadRequestException("Invalid token");
-        }
-        map.put("id",tokenRecord.getUser_id());
-        String loginToken= JWTUtils.getToken(String.valueOf(tokenRecord.getUser_id()),tokenRecord.getUsername(),tokenRecord.getUser_type());
-        map.put("token",loginToken);
-        return map;
+        return getUserResponse(tokenRecord);
     }
 }

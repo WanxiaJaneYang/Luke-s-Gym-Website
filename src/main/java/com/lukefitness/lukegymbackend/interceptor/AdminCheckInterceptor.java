@@ -24,16 +24,15 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
             throw new BadRequestException("Token is null");
         }
 
-        DecodedJWT decodedToken = JWTUtils.verifyToken(token);
+        DecodedJWT decodedToken = JWTUtils.decodeToken(token);
         if(decodedToken==null){
             throw new UnauthorizedException("Token is invalid");
         }else if(!decodedToken.getClaim("userType").asString().equals("admin")){
             throw new UnauthorizedException("User is not a trainer");
         }
-        //check the expiration
-        if(JWTUtils.isTokenExpired(decodedToken)){
-            throw new UnauthorizedException("Token is expired");
-        }
+
+        //check the validity of the token
+        JWTUtils.validateToken(decodedToken);
 
         return true;
     }

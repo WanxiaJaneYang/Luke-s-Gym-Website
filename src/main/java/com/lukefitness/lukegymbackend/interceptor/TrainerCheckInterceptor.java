@@ -19,25 +19,30 @@ public class TrainerCheckInterceptor implements HandlerInterceptor {
             throw new BadRequestException("Token is null");
         }
 
-        DecodedJWT decodedToken = JWTUtils.verifyToken(token);
+        DecodedJWT decodedToken = JWTUtils.decodeToken(token);
         if(decodedToken==null){
             throw new UnauthorizedException("Token is invalid");
-        }else if(!decodedToken.getClaim("userType").asString().equals("trainer")){
-            throw new UnauthorizedException("User is not a trainer");
-        }
-        //check the expiration
-        if(JWTUtils.isTokenExpired(decodedToken)){
-            throw new UnauthorizedException("Token is expired");
         }
 
-        //check if the userid in the token is the same as the userid in the path
-        String id=trainerIdExtractor(request.getRequestURI());
-        if(!decodedToken.getClaim("userId").asString().equals(id)){
-            throw new UnauthorizedException("User id in token is not the same as the user id in the path");
+        //check the validity of the token
+        JWTUtils.validateToken(decodedToken);
+
+        //check the role
+        if(decodedToken.getClaim("userType").asString().equals("trainer")){
+            //check if the userid in the token is the same as the userid in the path
+            String id=trainerIdExtractor(request.getRequestURI());
+            if(!decodedToken.getClaim("userId").asString().equals(id)){
+                throw new UnauthorizedException("User id in token is not the same as the user id in the path");
+            }
+        }else if(decodedToken.getClaim("userType").asString().equals("admin")){
+            //do nothing
+        }else {
+            throw new UnauthorizedException("User is not authorized to access this resource");
         }
 
         return true;
     }
+
     private String trainerIdExtractor(String pathInfo){
         String prefix="/trainer/";
         int index=pathInfo.indexOf(prefix);

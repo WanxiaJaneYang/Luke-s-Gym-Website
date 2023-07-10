@@ -2,6 +2,7 @@ package com.lukefitness.lukegymbackend.utils;
 
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.lukefitness.lukegymbackend.exception.UnauthorizedException;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.models.User;
@@ -30,15 +31,17 @@ public class JWTUtils {
         JWTUtils.expirationTime = expirationTime;
     }
 
-    public static String getToken(String userId,String userName, String userType) {
+    public static String getToken(String user_id,String username, String user_type, boolean email_verified, boolean is_active) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationTime);
 
         JWTCreator.Builder builder= com.auth0.jwt.JWT.create();
         Map<String,String> payload =new HashMap<>();
-        payload.put("userId",userId);
-        payload.put("userName",userName);
-        payload.put("userType",userType);
+        payload.put("userId",user_id);
+        payload.put("userName",username);
+        payload.put("userType",user_type);
+        payload.put("emailVerified",String.valueOf(email_verified));
+        payload.put("isActive",String.valueOf(is_active));
         payload.forEach(builder::withClaim);
         return builder.withExpiresAt(calendar.getTime()).sign(com.auth0.jwt.algorithms.Algorithm.HMAC256(secret));
     }
@@ -46,17 +49,35 @@ public class JWTUtils {
     public static String getToken(User user){
         if (user instanceof Trainer) {
             if (((Trainer) user).is_admin()) {
-                return getToken(String.valueOf(user.getId()), user.getUsername(), "admin");
+                return getToken(String.valueOf(user.getId()), user.getUsername(), "admin", user.isEmail_verified(), user.is_active());
             }
-            return getToken(String.valueOf(user.getId()), user.getUsername(), "trainer");
+            return getToken(String.valueOf(user.getId()), user.getUsername(), "trainer", user.isEmail_verified(), user.is_active());
         } else if (user instanceof Trainee) {
-            return getToken(String.valueOf(user.getId()), user.getUsername(), "trainee");
+            return getToken(String.valueOf(user.getId()), user.getUsername(), "trainee", user.isEmail_verified(), user.is_active());
         } else {
             throw new RuntimeException("Invalid user type");
         }
     }
 
-    public static DecodedJWT verifyToken(String token) {
+    public static DecodedJWT decodeToken(String token) {
         return com.auth0.jwt.JWT.require(com.auth0.jwt.algorithms.Algorithm.HMAC256(secret)).build().verify(token);
+    }
+
+    public static void validateToken(DecodedJWT decodedToken) {
+
+        // Check if token is expired
+        if (isTokenExpired(decodedToken)) {
+            throw new UnauthorizedException("Token is expired");
+        }
+
+        // Check if account is active
+        if (decodedToken.getClaim("isActive").asBoolean()) {
+            throw new UnauthorizedException("Account is not active");
+        }
+
+        //Check if the email is verified
+        if (!decodedToken.getClaim("emailVerified").asBoolean()) {
+            throw new UnauthorizedException("Email is not verified");
+        }
     }
 }

@@ -17,6 +17,5 @@ public interface TraineeService {
     Trainee getTraineeByEmail(String email);
     void updateTraineePassword(int id, String password);
     void updateTraineeEmail(int id, String email);
-
-    void deleteTrainee(int traineeId);
+    void deactivateTrainee(int traineeId);
 }

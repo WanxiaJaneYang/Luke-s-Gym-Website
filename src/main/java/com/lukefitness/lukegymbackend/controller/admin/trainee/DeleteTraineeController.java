@@ -32,7 +32,7 @@ public class DeleteTraineeController {
     })
     @DeleteMapping("/{traineeId}")
     public ResponseEntity<?> deleteTrainee(@PathVariable int traineeId) {
-        traineeService.deleteTrainee(traineeId);
+        traineeService.deactivateTrainee(traineeId);
         return Response.success("Trainee deleted successfully");
     }
 }

@@ -19,16 +19,15 @@ public class TraineeCheckInterceptor implements HandlerInterceptor {
             throw new BadRequestException("Token is null");
         }
 
-        DecodedJWT decodedToken = JWTUtils.verifyToken(token);
+        DecodedJWT decodedToken = JWTUtils.decodeToken(token);
         if(decodedToken==null){
             throw new UnauthorizedException("Token is invalid");
         }else if(!decodedToken.getClaim("userType").asString().equals("trainee")){
             throw new UnauthorizedException("User is not a trainee");
         }
-        //check the expiration
-        if(JWTUtils.isTokenExpired(decodedToken)){
-            throw new UnauthorizedException("Token is expired");
-        }
+
+        //check the validity of the token
+        JWTUtils.validateToken(decodedToken);
 
         //check if the userid in the token is the same as the userid in the path
         String id=traineeIdExtractor(request.getRequestURI());

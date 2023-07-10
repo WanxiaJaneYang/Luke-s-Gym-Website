@@ -9,7 +9,6 @@ import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
-import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,6 +56,7 @@ public class TrainerServiceImp implements TrainerService {
         }
     }
 
+    @Transactional
     @Override
     public TrainerLoginResponse trainerLogin(String username, String password){
         Trainer trainerGetByUsername = trainerDao.getTrainerByName(username);
@@ -67,6 +67,7 @@ public class TrainerServiceImp implements TrainerService {
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
+                trainerDao.trainerLogin(trainerGetByUsername);
                 return new TrainerLoginResponse(trainerGetByUsername);
             }
         }
@@ -117,6 +118,7 @@ public class TrainerServiceImp implements TrainerService {
         }
     }
 
+    @Transactional
     @Override
     public TrainerLoginResponse trainerLoginByEmail(String email, String password) {
         Trainer trainerGetByEmail = trainerDao.getTrainerByEmail(email);
@@ -127,6 +129,7 @@ public class TrainerServiceImp implements TrainerService {
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
+                trainerDao.trainerLogin(trainerGetByEmail);
                 return new TrainerLoginResponse(trainerGetByEmail);
             }
         }

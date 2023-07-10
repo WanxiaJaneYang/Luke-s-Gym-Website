@@ -1,6 +1,8 @@
 package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.EmailTokenDao;
+import com.lukefitness.lukegymbackend.dao.TraineeDao;
+import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.service.ScheduledTasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,15 +13,42 @@ public class ScheduledTasksImp implements ScheduledTasks {
     @Autowired
     EmailTokenDao emailTokenDao;
 
+    @Autowired
+    TrainerDao trainerDao;
+
+    @Autowired
+    TraineeDao traineeDao;
+
     @Scheduled(cron = "0 0 0 * * ?")
     @Override
     public void deleteExpiredEmailTokens() {
-        try{
-            emailTokenDao.deleteEmailToken();
-            System.out.println("delete expired email tokens");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        emailTokenDao.deleteEmailToken();
+        System.out.println("delete expired email tokens");
+    }
 
+    @Override
+    public void deactivateTrainees() {
+        traineeDao.deactivateTrainee();
+        System.out.println("deactivate trainees");
+    }
+
+    @Override
+    public void deactivateTrainers() {
+        trainerDao.deactivateTrainer();
+        System.out.println("deactivate trainers");
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Override
+    public void deleteNotActiveTrainees() {
+        traineeDao.deleteNotActiveTrainees();
+        System.out.println("delete not active trainees");
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Override
+    public void deleteNotActiveTrainers() {
+        trainerDao.deleteNotActiveTrainers();
+        System.out.println("delete not active trainers");
     }
 }

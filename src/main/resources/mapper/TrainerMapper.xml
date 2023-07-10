@@ -20,6 +20,10 @@
         SELECT * FROM trainer WHERE id = #{id}
     </select>
 
+    <update id="trainerLogin" parameterType="com.lukefitness.lukegymbackend.models.Trainer">
+        UPDATE trainer SET last_used_date = NOW() WHERE id = #{id}
+    </update>
+
     <update id="setEmailVerified" parameterType="int">
         UPDATE trainer SET email_verified = true WHERE id = #{id}
     </update>
@@ -39,4 +43,18 @@
     <update id="updateTrainerEmail" parameterType="com.lukefitness.lukegymbackend.models.Trainer">
         UPDATE trainer SET email = #{email} WHERE id = #{id}
     </update>
+
+    <update id="setDeactivationDate">
+        UPDATE trainee SET deactivation_date = #{deactivation_date} WHERE id = #{id}
+    </update>
+
+    <update id="deactivateTrainer">
+        UPDATE trainer SET is_active = false WHERE deactivation_date &lt; NOW()
+    </update>
+
+    <delete id="deleteNotActiveTrainers">
+        DELETE FROM trainer WHERE is_active = false
+        AND deactivation_date IS NOT NULL
+        AND last_used_date &lt; NOW() - INTERVAL 2 YEAR
+    </delete>
 </mapper>
