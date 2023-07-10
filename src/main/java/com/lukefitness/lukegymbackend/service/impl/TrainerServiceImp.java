@@ -9,6 +9,7 @@ import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
+import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ public class TrainerServiceImp implements TrainerService {
     TrainerDao trainerDao;
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Override
     public TrainerResponse registerTrainer(TrainerRegisterReq trainerRegisterReq) {
         try{

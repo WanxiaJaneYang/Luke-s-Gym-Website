@@ -1,6 +1,8 @@
 package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.EmailTokenDao;
+import com.lukefitness.lukegymbackend.dao.TraineeDao;
+import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.models.EmailToken;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.Trainer;
@@ -27,10 +29,10 @@ public class EmailServiceImp implements EmailService {
     EmailTokenDao emailTokenDao;
 
     @Autowired
-    TraineeService traineeService;
+    TraineeDao traineeDao;
 
     @Autowired
-    TrainerService trainerService;
+    TrainerDao trainerDao;
 
     @Value("${spring.mail.username}")
     private String from;
@@ -57,11 +59,14 @@ public class EmailServiceImp implements EmailService {
 
         // get trainee by username or email address or traineeId
         if (map.containsKey("username")) {
-            trainee = traineeService.getTraineeByUsername(map.get("username"));
+            trainee = traineeDao.getTraineeByUsername(map.get("username"));
         }else if (map.containsKey("emailAddress")) {
-            trainee = traineeService.getTraineeByEmail(map.get("emailAddress"));
+            trainee = traineeDao.getTraineeByEmail(map.get("emailAddress"));
         }else{
-            trainee=traineeService.getTraineeById(Integer.parseInt(map.get("traineeId")));
+            trainee=traineeDao.getTraineeById(Integer.parseInt(map.get("traineeId")));
+        }
+        if (trainee==null){
+            throw new Exception("Trainee not exist");
         }
         EmailToken emailToken=new EmailToken(trainee);
         emailTokenDao.insertEmailToken(emailToken);
@@ -99,11 +104,11 @@ public class EmailServiceImp implements EmailService {
 
         //get the trainer by username, email or trainerId
         if(map.containsKey("username")){
-            trainer = trainerService.getTrainerByUsername(map.get("username"));
+            trainer = trainerDao.getTrainerByName(map.get("username"));
         }else if (map.containsKey("emailAddress")){
-            trainer = trainerService.getTrainerByEmail(map.get("emailAddress"));
+            trainer = trainerDao.getTrainerByEmail(map.get("emailAddress"));
         }else{
-            trainer = trainerService.getTrainerById(Integer.parseInt(map.get("trainerId")));
+            trainer = trainerDao.getTrainerById(Integer.parseInt(map.get("trainerId")));
         }
         EmailToken emailToken=new EmailToken(trainer);
         emailTokenDao.insertEmailToken(emailToken);
@@ -130,6 +135,18 @@ public class EmailServiceImp implements EmailService {
     public void sendResetPwEmailToTrainerByEmail(String email) {
         Map<String,String> map=Map.of("emailAddress",email,"emailType","resetPassword");
         sendEmailToTrainer(map);
+    }
+
+    @Override
+    public void sendResetSuccessEmail(String to, String username) {
+        Email email=Email.getResetPwSuccessEmail(to,username);
+        sendEmail(email);
+    }
+
+    @Override
+    public void sendAccountDeletionEmail(String to, String username) {
+        Email email=Email.getAccountDeleteEmail(to,username);
+        sendEmail(email);
     }
 
 }

@@ -10,6 +10,7 @@ import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
+import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

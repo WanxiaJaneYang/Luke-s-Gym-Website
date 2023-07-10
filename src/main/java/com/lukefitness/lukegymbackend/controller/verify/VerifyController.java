@@ -61,6 +61,9 @@ public class VerifyController {
             }
     )
     public ResponseEntity<?> verifyResetPw(@RequestParam int tokenId, @RequestParam String token) {
+        System.out.println("verifyResetPw");
+        System.out.println("tokenId = " + tokenId);
+        System.out.println("token = " + token);
         Map<String,Object> verifyResult =verifyService.verifyResetPw(tokenId, token);
         return Response.success("Successfully verified reset password", verifyResult);
     }
