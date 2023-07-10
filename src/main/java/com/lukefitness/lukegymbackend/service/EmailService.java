@@ -11,4 +11,7 @@ public interface EmailService {
     public void sendResetPwEmailToTrainerByUsername(String username);
     public void sendResetPwEmailToTrainerByEmail(String email);
 
+    public void sendResetSuccessEmail(String to, String username);
+    public void sendAccountDeletionEmail(String to, String username);
+
 }

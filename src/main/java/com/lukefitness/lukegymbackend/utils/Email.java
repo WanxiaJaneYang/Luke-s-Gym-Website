@@ -76,6 +76,29 @@ public class Email {
         return new Email(to, subject, text);
     }
 
+    public static Email getResetPwSuccessEmail(String to, String username){
+        String subject = "Your Password Has Been Reset";
+        String text="" +
+                "<h1>Hi "+username+"</h1>" +
+                "<p>Your password has been successfully reset.</p>" +
+                "<p>If you did not request a password reset, please contact us immediately.</p>" +
+                "<p>Thanks,</p>" +
+                "<p>Luke Fitness</p>";
+        return new Email(to, subject, text);
+    }
+
+    public static Email getAccountDeleteEmail(String to, String username){
+        String subject = "Your Account Has Been Deleted";
+        String text="" +
+                "<h1>Hi "+username+"</h1>" +
+                "<p>Your account will be deactivated in 3 days.</p>" +
+                "<p>Please note that once your account is deactivated, you will not be able to access your account and all your data will be deleted.</p>" +
+                "<p>If you have changed your mind, please contact us immediately.</p>" +
+                "<p>Thanks,</p>" +
+                "<p>Luke Fitness</p>";
+        return new Email(to, subject, text);
+    }
+
     public static Email getVerifyEmailByTrainer(Trainer trainer, EmailToken tokenRecord){
         String to = trainer.getEmail();
         String username = trainer.getUsername();

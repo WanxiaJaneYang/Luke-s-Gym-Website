@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -23,9 +24,7 @@ public class VerifyServiceImp implements VerifyService {
 
     @Transactional
     public EmailToken verifyToken(int tokenId, String token) {
-        EmailToken emailToken = new EmailToken();
-        emailToken.setId(tokenId);
-        emailToken.setToken(token);
+        EmailToken emailToken = new EmailToken(tokenId, token);
         EmailToken emailTokenDB = emailTokenDao.getEmailToken(emailToken);
         if (emailTokenDB == null) {
             throw new BadRequestException("Invalid token");
@@ -56,16 +55,17 @@ public class VerifyServiceImp implements VerifyService {
         }else if(tokenRecord.getUser_type().equals("trainee")) {
             traineeDao.setEmailVerified(tokenRecord.getUser_id());
         }
-        Map<String, Object> map;
+        Map<String, Object> map=new HashMap<>();
         if (tokenRecord.getUser_type().equals("trainer")) {
-            map= Map.of("userType", "trainer", "id", tokenRecord.getUser_id());
+            map.put("userType", "trainer");
         } else if (tokenRecord.getUser_type().equals("trainee")) {
-            map= Map.of("userType", "trainee", "id", tokenRecord.getUser_id());
+            map.put("userType", "trainee");
         } else if(tokenRecord.getUser_type().equals("admin")){
-            map= Map.of("userType", "admin", "id", tokenRecord.getUser_id());
+            map.put("userType", "admin");
         }else {
             throw new BadRequestException("Invalid token");
         }
+        map.put("id",tokenRecord.getUser_id());
         String loginToken= JWTUtils.getToken(String.valueOf(tokenRecord.getUser_id()),tokenRecord.getUsername(),tokenRecord.getUser_type());
         map.put("token",loginToken);
         return map;
@@ -74,16 +74,17 @@ public class VerifyServiceImp implements VerifyService {
     @Override
     public Map<String, Object> verifyResetPw(int tokenId, String token) {
         EmailToken tokenRecord = verifyToken(tokenId, token);
-        Map<String, Object> map;
+        Map<String, Object> map=new HashMap<>();
         if (tokenRecord.getUser_type().equals("trainer")) {
-            map= Map.of("userType", "trainer", "id", tokenRecord.getUser_id());
+            map.put("userType", "trainer");
         } else if (tokenRecord.getUser_type().equals("trainee")) {
-            map= Map.of("userType", "trainee", "id", tokenRecord.getUser_id());
+            map.put("userType", "trainee");
         } else if(tokenRecord.getUser_type().equals("admin")){
-            map= Map.of("userType", "admin", "id", tokenRecord.getUser_id());
+            map.put("userType", "admin");
         }else {
             throw new BadRequestException("Invalid token");
         }
+        map.put("id",tokenRecord.getUser_id());
         String loginToken= JWTUtils.getToken(String.valueOf(tokenRecord.getUser_id()),tokenRecord.getUsername(),tokenRecord.getUser_type());
         map.put("token",loginToken);
         return map;
