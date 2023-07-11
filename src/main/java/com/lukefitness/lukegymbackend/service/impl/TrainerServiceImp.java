@@ -63,6 +63,8 @@ public class TrainerServiceImp implements TrainerService {
         if(trainerGetByUsername==null){
             throw new NotFoundException("Trainer username not found");
         }else{
+            if(!trainerGetByUsername.is_active())
+                throw new UnauthorizedException("Account deactivated");
             String pwdInDB = trainerGetByUsername.getPassword();
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
@@ -125,6 +127,8 @@ public class TrainerServiceImp implements TrainerService {
         if(trainerGetByEmail==null){
             throw new NotFoundException("Trainer email not found");
         }else{
+            if(!trainerGetByEmail.is_active())
+                throw new UnauthorizedException("Account deactivated");
             String pwdInDB = trainerGetByEmail.getPassword();
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();

@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.trainee.account;
+package com.lukefitness.lukegymbackend.controller.send_verify_email;
 
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/trainee/{traineeId}/send-verify-email")
-@Tag(name = "Trainee-Account Controller")
+@RequestMapping("send-verify-email/trainee/{traineeId}")
+@Tag(name = "Send Verify Email Controller")
 public class TraineeVerifyEmailController {
     @Autowired
     EmailService emailService;

@@ -34,6 +34,8 @@ public class TraineeServiceImp implements TraineeService {
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
+            if(!traineeGetByUsername.is_active())
+                throw new UnauthorizedException("Account deactivated");
             traineeDao.traineeLogin(traineeGetByUsername);
             return new TraineeLoginResponse(traineeGetByUsername);
         }
@@ -135,6 +137,8 @@ public class TraineeServiceImp implements TraineeService {
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
+            if(!traineeGetByEmail.is_active())
+                throw new UnauthorizedException("Account deactivated");
             traineeDao.traineeLogin(traineeGetByEmail);
             return new TraineeLoginResponse(traineeGetByEmail);
         }
