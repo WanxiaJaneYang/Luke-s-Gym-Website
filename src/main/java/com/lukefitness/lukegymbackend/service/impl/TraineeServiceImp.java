@@ -10,7 +10,6 @@ import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
-import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ public class TraineeServiceImp implements TraineeService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public TraineeLoginResponse traineeLogin(String username, String password) {
         Trainee traineeGetByUsername = getTraineeByUsername(username);
@@ -34,6 +34,9 @@ public class TraineeServiceImp implements TraineeService {
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
+            if(!traineeGetByUsername.is_active())
+                throw new UnauthorizedException("Account deactivated");
+            traineeDao.traineeLogin(traineeGetByUsername);
             return new TraineeLoginResponse(traineeGetByUsername);
         }
     }
@@ -56,8 +59,7 @@ public class TraineeServiceImp implements TraineeService {
             Trainee trainee=new Trainee(traineeRegisterReq);
             traineeDao.traineeRegister(trainee);
             traineeContactInfoDao.insertTraineeContactInfo(trainee.getId());
-            TraineeResponse traineeResponse=new TraineeResponse(trainee);
-            return traineeResponse;
+            return new TraineeResponse(trainee);
         }catch (Exception e){
             e.printStackTrace();
             if (e.getMessage().contains("key 'username'")){
@@ -118,16 +120,16 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
-    public void deleteTrainee(int traineeId) {
+    public void deactivateTrainee(int traineeId) {
         Trainee trainee=traineeDao.getTraineeById(traineeId);
         if (trainee==null){
             throw new NotFoundException("Trainee id not found");
         }else{
-            traineeContactInfoDao.deleteTraineeContactInfo(traineeId);
-            traineeDao.deleteTrainee(traineeId);
+            traineeDao.setDeactivationDate(traineeId);
         }
     }
 
+    @Transactional
     @Override
     public TraineeLoginResponse traineeLoginByEmail(String email, String password) {
         Trainee traineeGetByEmail = getTraineeByEmail(email);
@@ -135,6 +137,9 @@ public class TraineeServiceImp implements TraineeService {
         if(!passwordEncoder.matches(password,pwdInDB)){
             throw new LoginFailException();
         }else {
+            if(!traineeGetByEmail.is_active())
+                throw new UnauthorizedException("Account deactivated");
+            traineeDao.traineeLogin(traineeGetByEmail);
             return new TraineeLoginResponse(traineeGetByEmail);
         }
     }

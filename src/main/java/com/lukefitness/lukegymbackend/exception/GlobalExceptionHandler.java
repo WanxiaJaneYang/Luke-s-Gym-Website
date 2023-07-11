@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<?> handleBadRequestException(BadRequestException e){
-        System.out.println("handleBadRequestException");
         e.printStackTrace();
         return Response.badRequest(e.getMessage());
     }

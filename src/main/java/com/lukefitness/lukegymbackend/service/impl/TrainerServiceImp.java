@@ -9,7 +9,6 @@ import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
-import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,16 +56,20 @@ public class TrainerServiceImp implements TrainerService {
         }
     }
 
+    @Transactional
     @Override
     public TrainerLoginResponse trainerLogin(String username, String password){
         Trainer trainerGetByUsername = trainerDao.getTrainerByName(username);
         if(trainerGetByUsername==null){
             throw new NotFoundException("Trainer username not found");
         }else{
+            if(!trainerGetByUsername.is_active())
+                throw new UnauthorizedException("Account deactivated");
             String pwdInDB = trainerGetByUsername.getPassword();
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
+                trainerDao.trainerLogin(trainerGetByUsername);
                 return new TrainerLoginResponse(trainerGetByUsername);
             }
         }
@@ -117,16 +120,20 @@ public class TrainerServiceImp implements TrainerService {
         }
     }
 
+    @Transactional
     @Override
     public TrainerLoginResponse trainerLoginByEmail(String email, String password) {
         Trainer trainerGetByEmail = trainerDao.getTrainerByEmail(email);
         if(trainerGetByEmail==null){
             throw new NotFoundException("Trainer email not found");
         }else{
+            if(!trainerGetByEmail.is_active())
+                throw new UnauthorizedException("Account deactivated");
             String pwdInDB = trainerGetByEmail.getPassword();
             if(!passwordEncoder.matches(password,pwdInDB)){
                 throw new LoginFailException();
             }else{
+                trainerDao.trainerLogin(trainerGetByEmail);
                 return new TrainerLoginResponse(trainerGetByEmail);
             }
         }

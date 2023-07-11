@@ -1,8 +1,9 @@
 package com.lukefitness.lukegymbackend.service;
 
-import java.util.Map;
+import com.lukefitness.lukegymbackend.models.response.register.UserResponse;
+
 
 public interface VerifyService {
-    public Map<String, Object> verifyEmail(int tokenId, String token);
-    public Map<String, Object> verifyResetPw(int tokenId, String token);
+    UserResponse verifyEmail(int tokenId, String token);
+    UserResponse verifyResetPw(int tokenId, String token);
 }

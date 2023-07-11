@@ -1,6 +1,5 @@
 package com.lukefitness.lukegymbackend.controller.verify;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.service.VerifyService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,8 +33,7 @@ public class VerifyController {
                     @io.swagger.v3.oas.annotations.Parameter(name = "token", description = "token", required = true)
             })
     public ResponseEntity<?> verifyEmail(@RequestParam int tokenId, @RequestParam String token) {
-        Map<String, Object> map=verifyService.verifyEmail(tokenId, token);
-        return Response.success("Successfully verified email", map);
+        return Response.success("Successfully verified email", verifyService.verifyEmail(tokenId, token));
 
     }
 
@@ -61,10 +59,6 @@ public class VerifyController {
             }
     )
     public ResponseEntity<?> verifyResetPw(@RequestParam int tokenId, @RequestParam String token) {
-        System.out.println("verifyResetPw");
-        System.out.println("tokenId = " + tokenId);
-        System.out.println("token = " + token);
-        Map<String,Object> verifyResult =verifyService.verifyResetPw(tokenId, token);
-        return Response.success("Successfully verified reset password", verifyResult);
+        return Response.success("Successfully verified reset password", verifyService.verifyResetPw(tokenId, token));
     }
 }

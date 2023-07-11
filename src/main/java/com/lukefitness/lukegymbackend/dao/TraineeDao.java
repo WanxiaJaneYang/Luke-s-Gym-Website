@@ -6,19 +6,23 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
 public interface TraineeDao {
     Trainee getTraineeByUsername(String username);
     int traineeRegister(Trainee trainee);
+    int traineeLogin(Trainee trainee);
     Trainee getTraineeById(int id);
     Trainee getTraineeByEmail(String email);
     void setEmailVerified(int id);
     void setEmailUnverified(int id);
     void updateTraineePassword(Trainee trainee);
     void updateTraineeEmail(Trainee trainee);
-    void deleteTrainee(int id);
+    void deleteNotActiveTrainees();
+    void setDeactivationDate(int id);
+    void deactivateTrainee();
 
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);

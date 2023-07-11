@@ -5,8 +5,6 @@ import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
 
-import java.util.List;
-
 public interface TraineeService {
     TraineeLoginResponse traineeLogin(String username, String password);
     TraineeLoginResponse traineeLoginByEmail(String email, String password);
@@ -17,6 +15,5 @@ public interface TraineeService {
     Trainee getTraineeByEmail(String email);
     void updateTraineePassword(int id, String password);
     void updateTraineeEmail(int id, String email);
-
-    void deleteTrainee(int traineeId);
+    void deactivateTrainee(int traineeId);
 }
