@@ -14,7 +14,12 @@ public class SendVerifyEmailInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)  {
         //
-        String token=request.getHeader("Authorization").substring(7);
+        String token;
+        try{
+            token=request.getHeader("Authorization").substring(7);
+        }catch(Exception e){
+            throw new UnauthorizedException("Token is null");
+        }
         String url=request.getRequestURI();
         DecodedJWT decodedToken = JWTUtils.decodeToken(token);
         String prefix;

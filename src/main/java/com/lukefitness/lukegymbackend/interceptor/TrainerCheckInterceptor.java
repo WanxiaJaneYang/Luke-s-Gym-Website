@@ -15,7 +15,12 @@ public class TrainerCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         //check the token first
-        String token=request.getHeader("Authorization").substring(7);
+        String token;
+        try {
+            token=request.getHeader("Authorization").substring(7);
+        }catch(Exception e){
+            throw new BadRequestException("Token is null");
+        }
 
         DecodedJWT decodedToken = JWTUtils.decodeToken(token);
 
