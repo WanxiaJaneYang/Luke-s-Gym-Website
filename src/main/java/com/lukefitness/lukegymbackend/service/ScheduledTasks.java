@@ -1,10 +1,10 @@
 package com.lukefitness.lukegymbackend.service;
 
 public interface ScheduledTasks {
-    public void deleteExpiredEmailTokens();
+    void deleteExpiredEmailTokens();
 
-    public void deactivateTrainees();
-    public void deactivateTrainers();
-    public void deleteNotActiveTrainees();
-    public void deleteNotActiveTrainers();
+    void deactivateTrainees();
+    void deactivateTrainers();
+    void deleteNotActiveTrainees();
+    void deleteNotActiveTrainers();
 }

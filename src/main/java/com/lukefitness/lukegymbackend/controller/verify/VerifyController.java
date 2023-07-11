@@ -1,6 +1,5 @@
 package com.lukefitness.lukegymbackend.controller.verify;
 
-import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.service.VerifyService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;

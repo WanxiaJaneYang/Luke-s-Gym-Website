@@ -26,12 +26,14 @@ public class ScheduledTasksImp implements ScheduledTasks {
         System.out.println("delete expired email tokens");
     }
 
+    @Scheduled(cron = "0 0 0 * * ?")
     @Override
     public void deactivateTrainees() {
         traineeDao.deactivateTrainee();
         System.out.println("deactivate trainees");
     }
 
+    @Scheduled(cron = "0 0 0 * * ?")
     @Override
     public void deactivateTrainers() {
         trainerDao.deactivateTrainer();

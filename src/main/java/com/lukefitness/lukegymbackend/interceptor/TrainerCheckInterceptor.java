@@ -15,14 +15,8 @@ public class TrainerCheckInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //check the token first
         String token=request.getHeader("Authorization").substring(7);
-        if (token==null){
-            throw new BadRequestException("Token is null");
-        }
 
         DecodedJWT decodedToken = JWTUtils.decodeToken(token);
-        if(decodedToken==null){
-            throw new UnauthorizedException("Token is invalid");
-        }
 
         //check the validity of the token
         JWTUtils.validateToken(decodedToken);
@@ -48,7 +42,6 @@ public class TrainerCheckInterceptor implements HandlerInterceptor {
         int index=pathInfo.indexOf(prefix);
         String restStr=pathInfo.substring(index+prefix.length());
         int end=restStr.indexOf("/");
-        String idStr=restStr.substring(0, end);
-        return idStr;
+        return restStr.substring(0, end);
     }
 }

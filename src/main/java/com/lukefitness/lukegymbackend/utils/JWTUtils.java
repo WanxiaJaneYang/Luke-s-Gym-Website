@@ -64,19 +64,22 @@ public class JWTUtils {
     }
 
     public static void validateToken(DecodedJWT decodedToken) {
-
+        System.out.println("decodedToken");
+        System.out.println(decodedToken.getClaim("userType"));
         // Check if token is expired
         if (isTokenExpired(decodedToken)) {
             throw new UnauthorizedException("Token is expired");
         }
 
-        // Check if account is active
-        if (decodedToken.getClaim("isActive").asBoolean()) {
+        // Check if account is not active
+        if (!"true".equals(decodedToken.getClaim("isActive").asString())) {
             throw new UnauthorizedException("Account is not active");
         }
 
         //Check if the email is verified
-        if (!decodedToken.getClaim("emailVerified").asBoolean()) {
+        System.out.println("emailVerified");
+        System.out.println(decodedToken.getClaim("emailVerified"));
+        if (!"true".equals(decodedToken.getClaim("emailVerified").asString())) {
             throw new UnauthorizedException("Email is not verified");
         }
     }

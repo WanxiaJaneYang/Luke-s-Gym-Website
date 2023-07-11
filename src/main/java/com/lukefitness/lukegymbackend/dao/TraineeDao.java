@@ -21,7 +21,7 @@ public interface TraineeDao {
     void updateTraineePassword(Trainee trainee);
     void updateTraineeEmail(Trainee trainee);
     void deleteNotActiveTrainees();
-    void setDeactivationDate(@Param("id") int id, @Param("deactivation_date") Timestamp deactivation_date);
+    void setDeactivationDate(int id);
     void deactivateTrainee();
 
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);

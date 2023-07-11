@@ -12,10 +12,6 @@
         SELECT * FROM trainer WHERE username = #{username}
     </select>
 
-    <select id="trainerLogin" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
-        SELECT * FROM trainer WHERE username = #{username} AND password = #{password}
-    </select>
-
     <select id="getTrainerById" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.Trainer">
         SELECT * FROM trainer WHERE id = #{id}
     </select>
@@ -45,7 +41,8 @@
     </update>
 
     <update id="setDeactivationDate">
-        UPDATE trainee SET deactivation_date = #{deactivation_date} WHERE id = #{id}
+        UPDATE trainer SET deactivation_date = NOW()+INTERVAL 3 DAY
+        WHERE id = #{id}
     </update>
 
     <update id="deactivateTrainer">

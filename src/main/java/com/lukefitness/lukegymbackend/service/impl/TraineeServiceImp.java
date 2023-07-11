@@ -11,7 +11,6 @@ import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
-import com.lukefitness.lukegymbackend.utils.DeactivationDateCalculator;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,8 +57,7 @@ public class TraineeServiceImp implements TraineeService {
             Trainee trainee=new Trainee(traineeRegisterReq);
             traineeDao.traineeRegister(trainee);
             traineeContactInfoDao.insertTraineeContactInfo(trainee.getId());
-            TraineeResponse traineeResponse=new TraineeResponse(trainee);
-            return traineeResponse;
+            return new TraineeResponse(trainee);
         }catch (Exception e){
             e.printStackTrace();
             if (e.getMessage().contains("key 'username'")){
@@ -125,7 +123,7 @@ public class TraineeServiceImp implements TraineeService {
         if (trainee==null){
             throw new NotFoundException("Trainee id not found");
         }else{
-            traineeDao.setDeactivationDate(traineeId, DeactivationDateCalculator.calculate());
+            traineeDao.setDeactivationDate(traineeId);
         }
     }
 

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface TrainerDao {
     Integer registerTrainer(Trainer trainer);
 
-    void setDeactivationDate(@Param("id") int id, @Param("deactivation_date") String deactivation_date);
+    void setDeactivationDate(int id);
     void deleteNotActiveTrainers();
     void deactivateTrainer();
     int trainerLogin(Trainer trainer);

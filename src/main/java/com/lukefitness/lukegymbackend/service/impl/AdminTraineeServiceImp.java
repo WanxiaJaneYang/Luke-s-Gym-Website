@@ -31,8 +31,6 @@ public class AdminTraineeServiceImp implements AdminTraineeService {
     public List<TraineeResponse> getTraineesBySearchUsername(String username, int page, int size) {
         int offset=(page-1)*size;
         RowBounds rowBounds=new RowBounds(offset,size);
-        System.out.println("in service");
-        System.out.println("username: "+username);
         List<TraineeResponse> trainees=traineeDao.getTraineesBySearchUsername(username,rowBounds);
         if (trainees==null||trainees.size()==0){
             throw new NotFoundException("Trainees not found");

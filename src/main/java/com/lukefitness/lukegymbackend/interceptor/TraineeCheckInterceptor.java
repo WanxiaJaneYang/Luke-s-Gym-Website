@@ -12,17 +12,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class TraineeCheckInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)  {
         //check the token first
         String token=request.getHeader("Authorization").substring(7);
-        if (token==null){
-            throw new BadRequestException("Token is null");
-        }
-
         DecodedJWT decodedToken = JWTUtils.decodeToken(token);
-        if(decodedToken==null){
-            throw new UnauthorizedException("Token is invalid");
-        }else if(!decodedToken.getClaim("userType").asString().equals("trainee")){
+        if(!decodedToken.getClaim("userType").asString().equals("trainee")){
             throw new UnauthorizedException("User is not a trainee");
         }
 
@@ -43,7 +37,6 @@ public class TraineeCheckInterceptor implements HandlerInterceptor {
         int index=pathInfo.indexOf(prefix);
         String restStr=pathInfo.substring(index+prefix.length());
         int end=restStr.indexOf("/");
-        String idStr=restStr.substring(0, end);
-        return idStr;
+        return restStr.substring(0, end);
     }
 }
