@@ -1,5 +1,6 @@
 package com.lukefitness.lukegymbackend.config;
 
+import com.lukefitness.lukegymbackend.interceptor.SendVerifyEmailInterceptor;
 import com.lukefitness.lukegymbackend.interceptor.TraineeCheckInterceptor;
 import com.lukefitness.lukegymbackend.interceptor.TrainerCheckInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private TrainerCheckInterceptor trainerCheckInterceptor;
 
+    @Autowired
+    private SendVerifyEmailInterceptor sendVerifyEmailInterceptor;
+
     @Override
     public void addCorsMappings(org.springframework.web.servlet.config.annotation.CorsRegistry registry) {
         registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
@@ -28,5 +32,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(adminCheckInterceptor).addPathPatterns("/admin/**");
         registry.addInterceptor(traineeCheckInterceptor).addPathPatterns("/trainee/**");
         registry.addInterceptor(trainerCheckInterceptor).addPathPatterns("/trainer/**");
+        registry.addInterceptor(sendVerifyEmailInterceptor).addPathPatterns("/send-verify-email/**");
     }
 }
