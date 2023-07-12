@@ -43,6 +43,6 @@ public class TrainerRegisterController {
 
     public ResponseEntity<?> trainerRegister(@RequestBody TrainerRegisterReq trainerRegisterReq){
         TrainerResponse trainerResponse = trainerService.registerTrainer(trainerRegisterReq);
-        return Response.successCreated("Successfully created a new trainer", trainerResponse);
+        return Response.successCreated(trainerResponse);
     }
 }

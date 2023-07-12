@@ -37,6 +37,6 @@ public class TraineeTokenRefreshController {
     public ResponseEntity<?> refreshTraineeToken(@PathVariable int traineeId) {
         Trainee trainee = traineeService.getTraineeById(traineeId);
         TraineeLoginResponse traineeLoginResponse = new TraineeLoginResponse(trainee);
-        return Response.success("Token refreshed successfully", traineeLoginResponse);
+        return Response.success(traineeLoginResponse);
     }
 }

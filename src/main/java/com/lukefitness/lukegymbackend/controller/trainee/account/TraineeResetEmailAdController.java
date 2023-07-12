@@ -33,6 +33,6 @@ public class TraineeResetEmailAdController {
         if(email == null || email.getEmail() == null || email.getEmail().isEmpty())
             throw new BadRequestException("Email is required");
         traineeService.updateTraineeEmail(traineeId, email.getEmail());
-        return Response.success("Email reset successfully");
+        return Response.success();
     }
 }

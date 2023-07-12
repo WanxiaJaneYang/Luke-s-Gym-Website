@@ -37,6 +37,6 @@ public class TrainerTokenRefreshController {
     public ResponseEntity<?> refreshTraineeToken(@PathVariable int trainerId) {
         Trainer trainer = trainerService.getTrainerById(trainerId);
         TrainerLoginResponse trainerLoginResponse = new TrainerLoginResponse(trainer);
-        return Response.success("Token refreshed successfully", trainerLoginResponse);
+        return Response.success(trainerLoginResponse);
     }
 }

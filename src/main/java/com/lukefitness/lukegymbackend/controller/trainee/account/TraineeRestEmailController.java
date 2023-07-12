@@ -39,7 +39,7 @@ public class TraineeRestEmailController {
         } else {
             throw new BadRequestException("Username or email is required");
         }
-        return Response.success("Email sent successfully");
+        return Response.success();
 
     }
 }

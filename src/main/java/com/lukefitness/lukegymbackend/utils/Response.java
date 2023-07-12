@@ -11,44 +11,35 @@ public class Response extends ResponseEntity {
         super(status);
     }
 
-    public static ResponseEntity success(Object data) {
-        Map<String, Object> response = Map.of("data", data);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public static ResponseEntity<?> success() {
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    public static ResponseEntity<?> success(Object data) {
+        return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
-    public static ResponseEntity success(String message) {
-        Map<String, Object> response = Map.of("message", message);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public static ResponseEntity<?> successCreated() {
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    public static ResponseEntity success(String message, Object data) {
-        Map<String, Object> response = Map.of("message", message, "data", data);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-    public static ResponseEntity successCreated(Object data) {
-        Map<String, Object> response = Map.of("data", data);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public static ResponseEntity<?> successCreated(Object data) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(data);
     }
 
-    public static ResponseEntity successCreated(String message, Object data) {
-        Map<String, Object> response = Map.of("message", message, "data", data);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    public static ResponseEntity error(HttpStatus status, String message) {
+    public static ResponseEntity<?> error(HttpStatus status, String message) {
         Map<String, Object> response = Map.of("error", message);
         return ResponseEntity.status(status).body(response);
     }
 
-    public static ResponseEntity badRequest(String message) {
+    public static ResponseEntity<?> badRequest(String message) {
         return error(HttpStatus.BAD_REQUEST, message);
     }
 
-    public static ResponseEntity notFound(String message) {
+    public static ResponseEntity<?> notFound(String message) {
         return error(HttpStatus.NOT_FOUND, message);
     }
 
-    public static ResponseEntity internalServerError(String message) {
+    public static ResponseEntity<?> internalServerError(String message) {
         return error(HttpStatus.INTERNAL_SERVER_ERROR, message);
     }
 

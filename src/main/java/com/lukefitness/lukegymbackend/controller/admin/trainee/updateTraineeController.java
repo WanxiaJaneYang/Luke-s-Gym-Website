@@ -36,7 +36,7 @@ public class updateTraineeController {
     @PatchMapping("/email")
     public ResponseEntity<?> updateTraineeEmail(@PathVariable int traineeId, @RequestBody Email email) {
         traineeService.updateTraineeEmail(traineeId, email.getEmail());
-        return Response.success("Trainee email updated successfully");
+        return Response.success();
     }
 
     @Operation(
@@ -56,6 +56,6 @@ public class updateTraineeController {
     @PatchMapping("/password")
     public ResponseEntity<?> updateTraineePassword(@PathVariable int traineeId, @RequestBody Password password) {
         traineeService.updateTraineePassword(traineeId, password.getPassword());
-        return Response.success("Trainee password updated successfully");
+        return Response.success();
     }
 }

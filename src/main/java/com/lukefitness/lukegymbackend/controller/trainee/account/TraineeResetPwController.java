@@ -34,6 +34,6 @@ public class TraineeResetPwController {
         if (password == null || password.getPassword() == null || password.getPassword().isEmpty())
             throw new BadRequestException("Password is required");
         traineeService.updateTraineePassword(traineeId, password.getPassword());
-        return Response.success("Password reset successfully");
+        return Response.success();
     }
 }

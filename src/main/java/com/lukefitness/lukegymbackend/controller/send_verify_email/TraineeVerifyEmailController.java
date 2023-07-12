@@ -36,6 +36,6 @@ public class TraineeVerifyEmailController {
     @PostMapping
     public ResponseEntity<?> sendVerifyEmail(@PathVariable int traineeId) throws Exception {
         emailService.sendVerifyEmailToTrainee(traineeId);
-        return Response.success("Email sent successfully");
+        return Response.success();
     }
 }

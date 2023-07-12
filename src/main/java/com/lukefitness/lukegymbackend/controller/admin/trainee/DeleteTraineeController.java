@@ -33,6 +33,6 @@ public class DeleteTraineeController {
     @DeleteMapping("/{traineeId}")
     public ResponseEntity<?> deleteTrainee(@PathVariable int traineeId) {
         traineeService.deactivateTrainee(traineeId);
-        return Response.success("Trainee deleted successfully");
+        return Response.success();
     }
 }

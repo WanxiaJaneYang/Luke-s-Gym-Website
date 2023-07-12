@@ -38,6 +38,6 @@ public class AdminRestEmailController {
         if (email == null || email.getEmail() == null || email.getEmail().isEmpty())
             throw new BadRequestException("Email is required");
         trainerService.updateTrainerEmail(1, email.getEmail());
-        return Response.success("Email reset successfully");
+        return Response.success();
     }
 }
