@@ -35,6 +35,6 @@ public class AdminRestPwController {
         if (password == null || password.getPassword() == null || password.getPassword().isEmpty())
             throw new BadRequestException("Password is required");
         trainerService.updateTrainerPassword(1, password.getPassword());
-        return Response.success("Password reset successfully");
+        return Response.success();
     }
 }

@@ -33,7 +33,7 @@ public class VerifyController {
                     @io.swagger.v3.oas.annotations.Parameter(name = "token", description = "token", required = true)
             })
     public ResponseEntity<?> verifyEmail(@RequestParam int tokenId, @RequestParam String token) {
-        return Response.success("Successfully verified email", verifyService.verifyEmail(tokenId, token));
+        return Response.success(verifyService.verifyEmail(tokenId, token));
 
     }
 
@@ -59,6 +59,6 @@ public class VerifyController {
             }
     )
     public ResponseEntity<?> verifyResetPw(@RequestParam int tokenId, @RequestParam String token) {
-        return Response.success("Successfully verified reset password", verifyService.verifyResetPw(tokenId, token));
+        return Response.success(verifyService.verifyResetPw(tokenId, token));
     }
 }

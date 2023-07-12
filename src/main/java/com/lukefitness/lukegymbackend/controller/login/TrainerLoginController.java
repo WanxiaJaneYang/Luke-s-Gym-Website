@@ -61,6 +61,6 @@ public class TrainerLoginController {
         }else{
             response = trainerService.trainerLogin(trainerLoginReq.getUsername(), trainerLoginReq.getPassword());
         }
-        return Response.success("Successfully logged in as a trainer", response);
+        return Response.success(response);
     }
 }

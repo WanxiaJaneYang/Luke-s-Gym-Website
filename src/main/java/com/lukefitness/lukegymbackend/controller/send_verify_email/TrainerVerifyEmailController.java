@@ -36,6 +36,6 @@ public class TrainerVerifyEmailController {
     @PostMapping
     public ResponseEntity<?> sendVerifyEmail(@PathVariable int trainerId) {
             emailService.sendVerifyEmailToTrainer(trainerId);
-            return Response.success("Email sent successfully");
+            return Response.success();
     }
 }

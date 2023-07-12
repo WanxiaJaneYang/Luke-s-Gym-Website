@@ -57,7 +57,7 @@ public class TraineeLoginController {
         }else{
             response=traineeService.traineeLoginByEmail(trainee.getEmail(), trainee.getPassword());
         }
-        return Response.success("Successfully login as a trainee", response);
+        return Response.success(response);
     }
 
 }

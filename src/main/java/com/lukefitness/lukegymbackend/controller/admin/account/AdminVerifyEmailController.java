@@ -31,6 +31,6 @@ public class AdminVerifyEmailController {
     @PostMapping
     public ResponseEntity<?> sendVerifyEmail() {
         emailService.sendVerifyEmailToTrainer(1);
-        return Response.success("Email sent successfully");
+        return Response.success();
     }
 }
