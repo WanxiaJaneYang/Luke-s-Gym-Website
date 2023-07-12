@@ -2,14 +2,18 @@ package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.TraineeContactInfoDao;
 import com.lukefitness.lukegymbackend.dao.TraineeDao;
+import com.lukefitness.lukegymbackend.dao.TraineeFitnessGoalDao;
+import com.lukefitness.lukegymbackend.dao.TraineeHealthMetricDao;
 import com.lukefitness.lukegymbackend.exception.*;
 import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsException;
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
 import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
-import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
+import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.response.login.TraineeLoginResponse;
+import com.lukefitness.lukegymbackend.models.TraineeFitnessGoal;
+import com.lukefitness.lukegymbackend.models.TraineeHealthMetric;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,12 @@ public class TraineeServiceImp implements TraineeService {
     TraineeDao traineeDao;
     @Autowired
     TraineeContactInfoDao traineeContactInfoDao;
+
+    @Autowired
+    TraineeFitnessGoalDao traineeFitnessGoalDao;
+
+    @Autowired
+    TraineeHealthMetricDao traineeHealthMetricDao;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -59,6 +69,8 @@ public class TraineeServiceImp implements TraineeService {
             Trainee trainee=new Trainee(traineeRegisterReq);
             traineeDao.traineeRegister(trainee);
             traineeContactInfoDao.insertTraineeContactInfo(trainee.getId());
+            traineeFitnessGoalDao.insert(new TraineeFitnessGoal(trainee.getId()));
+            traineeHealthMetricDao.insert(new TraineeHealthMetric(trainee.getId()));
             return new TraineeResponse(trainee);
         }catch (Exception e){
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.models.request;
+package com.lukefitness.lukegymbackend.dto.request;
 
 public class Email {
     private String email;

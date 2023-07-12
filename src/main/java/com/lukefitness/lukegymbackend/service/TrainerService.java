@@ -1,11 +1,9 @@
 package com.lukefitness.lukegymbackend.service;
 
 import com.lukefitness.lukegymbackend.models.Trainer;
-import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
-import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
-import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
-
-import java.util.Map;
+import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.login.TrainerLoginResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 
 public interface TrainerService {
     TrainerResponse registerTrainer(TrainerRegisterReq trainerRegisterReq);

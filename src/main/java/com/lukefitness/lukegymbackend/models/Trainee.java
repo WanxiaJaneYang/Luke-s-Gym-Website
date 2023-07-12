@@ -1,6 +1,6 @@
 package com.lukefitness.lukegymbackend.models;
 
-import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
