@@ -1,6 +1,6 @@
 package com.lukefitness.lukegymbackend.service;
 
-import com.lukefitness.lukegymbackend.models.response.register.UserResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.UserResponse;
 
 
 public interface VerifyService {

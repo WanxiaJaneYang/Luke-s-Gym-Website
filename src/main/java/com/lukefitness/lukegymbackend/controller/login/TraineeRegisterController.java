@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
-import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;

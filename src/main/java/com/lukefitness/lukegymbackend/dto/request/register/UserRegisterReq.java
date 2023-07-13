@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.models.request.register;
+package com.lukefitness.lukegymbackend.dto.request.register;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

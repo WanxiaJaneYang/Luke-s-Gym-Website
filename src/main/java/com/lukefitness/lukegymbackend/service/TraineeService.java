@@ -1,9 +1,9 @@
 package com.lukefitness.lukegymbackend.service;
 
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
-import com.lukefitness.lukegymbackend.models.response.login.TraineeLoginResponse;
+import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.response.login.TraineeLoginResponse;
 
 public interface TraineeService {
     TraineeLoginResponse traineeLogin(String username, String password);

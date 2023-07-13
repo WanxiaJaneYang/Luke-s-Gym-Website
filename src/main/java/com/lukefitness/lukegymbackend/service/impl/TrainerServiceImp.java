@@ -6,9 +6,9 @@ import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsExc
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
 import com.lukefitness.lukegymbackend.exception.badrequest.UserAlreadyExistsException;
 import com.lukefitness.lukegymbackend.models.Trainer;
-import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
-import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
-import com.lukefitness.lukegymbackend.models.response.register.TrainerResponse;
+import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.login.TrainerLoginResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

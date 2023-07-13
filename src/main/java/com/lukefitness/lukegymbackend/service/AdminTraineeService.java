@@ -1,6 +1,6 @@
 package com.lukefitness.lukegymbackend.service;
 
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 
 import java.util.List;
 

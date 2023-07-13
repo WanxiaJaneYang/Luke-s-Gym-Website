@@ -1,9 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.login;
 
-import com.lukefitness.lukegymbackend.models.Trainer;
-import com.lukefitness.lukegymbackend.models.request.register.TrainerRegisterReq;
-import com.lukefitness.lukegymbackend.models.request.register.UserRegisterReq;
-import com.lukefitness.lukegymbackend.models.response.login.TrainerLoginResponse;
+import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/login/trainer")

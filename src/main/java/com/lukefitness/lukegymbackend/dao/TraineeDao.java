@@ -1,12 +1,11 @@
 package com.lukefitness.lukegymbackend.dao;
 
 import com.lukefitness.lukegymbackend.models.Trainee;
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper

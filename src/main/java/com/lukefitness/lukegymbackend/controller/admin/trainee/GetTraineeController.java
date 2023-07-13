@@ -1,6 +1,6 @@
 package com.lukefitness.lukegymbackend.controller.admin.trainee;
 
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.AdminTraineeService;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;

@@ -2,7 +2,7 @@ package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.TraineeDao;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
-import com.lukefitness.lukegymbackend.models.response.register.TraineeResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.AdminTraineeService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;

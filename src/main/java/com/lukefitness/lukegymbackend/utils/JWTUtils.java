@@ -83,4 +83,9 @@ public class JWTUtils {
             throw new UnauthorizedException("Account is not active");
         }
     }
+
+    public static String getNewToken(String oldToken){
+        DecodedJWT decodedToken = decodeToken(oldToken);
+        return getToken(decodedToken.getClaim("userId").asString(), decodedToken.getClaim("userName").asString(), decodedToken.getClaim("userType").asString(), "true".equals(decodedToken.getClaim("emailVerified").asString()), "true".equals(decodedToken.getClaim("isActive").asString()));
+    }
 }
