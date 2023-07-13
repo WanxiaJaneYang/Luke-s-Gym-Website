@@ -52,5 +52,4 @@ public class SendVerifyEmailInterceptor implements HandlerInterceptor {
 
         return true;
     }
-
 }

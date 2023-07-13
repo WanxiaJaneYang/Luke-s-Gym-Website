@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(org.springframework.web.servlet.config.annotation.CorsRegistry registry) {
-        registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
+        registry.addMapping("/**").allowedMethods("*").allowedOrigins("*").allowedHeaders("*");
     }
 
     @Override
