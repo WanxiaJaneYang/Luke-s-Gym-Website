@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TraineeLoginResponse extends TraineeResponse {
-    String token;
-
+    String accessToken;
+    String refreshToken;
     public TraineeLoginResponse(Trainee trainee){
         super(trainee);
-        this.token= JWTUtils.getToken(trainee);
+        this.accessToken= JWTUtils.getToken(trainee);
+        this.refreshToken=JWTUtils.getRefreshToken(trainee);
     }
 }
