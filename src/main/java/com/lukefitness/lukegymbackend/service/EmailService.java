@@ -1,5 +1,8 @@
 package com.lukefitness.lukegymbackend.service;
 
+import com.lukefitness.lukegymbackend.models.Trainee;
+import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.models.User;
 import com.lukefitness.lukegymbackend.utils.Email;
 
 public interface EmailService {
@@ -11,7 +14,8 @@ public interface EmailService {
     public void sendResetPwEmailToTrainerByUsername(String username);
     public void sendResetPwEmailToTrainerByEmail(String email);
 
-    public void sendResetSuccessEmail(String to, String username);
-    public void sendAccountDeletionEmail(String to, String username);
+    public void sendResetSuccessEmail(User user);
+    public void sendTrainerDeletionEmail(Trainer trainer);
+    public void sendTraineeDeletionEmail(Trainee trainee);
 
 }

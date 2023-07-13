@@ -21,6 +21,7 @@ public class TrainerCheckInterceptor implements HandlerInterceptor {
         //check the token first
         String token;
         try {
+            System.out.println(request.getHeader("Authorization"));
             token=request.getHeader("Authorization").substring(7);
         }catch(Exception e){
             throw new BadRequestException("Token is null");
