@@ -20,8 +20,7 @@ public interface TraineeDao {
     void updateTraineePassword(Trainee trainee);
     void updateTraineeEmail(Trainee trainee);
     void deleteNotActiveTrainees();
-    void setDeactivationDate(int id);
-    void deactivateTrainee();
+    void deactivateTrainee(int id);
 
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);

@@ -16,4 +16,5 @@ public interface TrainerService {
     void updateTrainerEmail(int id, String email);
 
     TrainerLoginResponse trainerLoginByEmail(String email, String password);
+    void deactivateTrainer(int trainerId);
 }

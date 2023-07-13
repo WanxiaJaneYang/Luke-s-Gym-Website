@@ -40,18 +40,15 @@
         UPDATE trainee SET email = #{email} WHERE id = #{id}
     </update>
 
-    <update id="setDeactivationDate">
-        UPDATE trainee SET deactivation_date = NOW()+INTERVAL 3 DAY
+    <update id="deactivateTrainee">
+        UPDATE trainee
+        SET deactivation_date = NOW()
+        , is_active = false
         WHERE id = #{id}
-    </update>
-
-    <update id="deactivateTrainee" >
-        UPDATE trainee SET is_active = false WHERE deactivation_date &lt; NOW()
     </update>
 
     <delete id="deleteNotActiveTrainees">
         DELETE FROM trainee WHERE is_active = false
-        AND deactivation_date IS NOT NULL
         AND last_used_date &lt; NOW() - INTERVAL 2 YEAR
     </delete>
 
