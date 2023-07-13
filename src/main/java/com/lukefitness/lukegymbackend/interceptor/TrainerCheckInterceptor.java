@@ -8,12 +8,16 @@ import com.lukefitness.lukegymbackend.utils.UrlIdExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class TrainerCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (RequestMethod.OPTIONS.toString().equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
         //check the token first
         String token;
         try {
