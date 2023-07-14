@@ -1,8 +1,13 @@
 package com.lukefitness.lukegymbackend.dao;
 
+import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
+import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 @Mapper
 public interface TrainerDao {
@@ -20,4 +25,6 @@ public interface TrainerDao {
 
     void updateTrainerPassword(Trainer trainer);
     void updateTrainerEmail(Trainer trainer);
+
+    List<SimpleUserQueryResponse> getTrainers(RowBounds rowBounds);
 }
