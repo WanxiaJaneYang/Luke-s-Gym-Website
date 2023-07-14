@@ -2,6 +2,8 @@ package com.lukefitness.lukegymbackend.controller.trainer;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.dto.request.Password;
+import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +21,9 @@ public class TrainerRestPwController{
     @Autowired
     TrainerService trainerService;
 
+    @Autowired
+    EmailService emailService;
+
     @Operation(summary = "Reset password of trainer by trainer id",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "new password", required = true,
                     content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",examples = @io.swagger.v3.oas.annotations.media.ExampleObject(value = "{\"password\":\"new-password\"}"))),
@@ -33,7 +38,9 @@ public class TrainerRestPwController{
     public ResponseEntity<?> resetPassword(@PathVariable int trainerId, @RequestBody Password password){
         if(password == null || password.getPassword() == null || password.getPassword().isEmpty())
             throw new BadRequestException("Password is required");
+        Trainer trainer = trainerService.getTrainerById(trainerId);
         trainerService.updateTrainerPassword(trainerId, password.getPassword());
+        emailService.sendResetSuccessEmail(trainer);
         return Response.success();
     }
 }

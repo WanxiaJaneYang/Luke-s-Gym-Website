@@ -133,12 +133,7 @@ public class TraineeServiceImp implements TraineeService {
 
     @Override
     public void deactivateTrainee(int traineeId) {
-        Trainee trainee=traineeDao.getTraineeById(traineeId);
-        if (trainee==null){
-            throw new NotFoundException("Trainee id not found");
-        }else{
-            traineeDao.setDeactivationDate(traineeId);
-        }
+        traineeDao.deactivateTrainee(traineeId);
     }
 
     @Transactional

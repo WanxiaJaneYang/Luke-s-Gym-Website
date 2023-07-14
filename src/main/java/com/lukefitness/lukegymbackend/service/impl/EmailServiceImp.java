@@ -6,6 +6,7 @@ import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.models.EmailToken;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.models.Trainer;
+import com.lukefitness.lukegymbackend.models.User;
 import com.lukefitness.lukegymbackend.service.EmailService;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.service.TrainerService;
@@ -138,14 +139,20 @@ public class EmailServiceImp implements EmailService {
     }
 
     @Override
-    public void sendResetSuccessEmail(String to, String username) {
-        Email email=Email.getResetPwSuccessEmail(to,username);
+    public void sendResetSuccessEmail(User user) {
+        Email email=Email.getResetPwSuccessEmail(user.getEmail(),user.getUsername());
         sendEmail(email);
     }
 
     @Override
-    public void sendAccountDeletionEmail(String to, String username) {
-        Email email=Email.getAccountDeleteEmail(to,username);
+    public void sendTrainerDeletionEmail(Trainer trainer) {
+        Email email=Email.getTrainerDeleteEmail(trainer.getEmail(),trainer.getUsername());
+        sendEmail(email);
+    }
+
+    @Override
+    public void sendTraineeDeletionEmail(Trainee trainee) {
+        Email email=Email.getTraineeDeleteEmail(trainee.getEmail(),trainee.getUsername());
         sendEmail(email);
     }
 
