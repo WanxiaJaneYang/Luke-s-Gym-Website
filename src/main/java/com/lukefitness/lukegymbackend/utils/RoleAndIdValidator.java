@@ -24,8 +24,10 @@ public class RoleAndIdValidator {
         requiredUserId= UrlIdExtractor.extract(url, "/"+requiredUserType+"/");
 
         //compare the required user type and userType with the token
-        if(!decodedToken.getClaim("userType").asString().equals(requiredUserType)){
-            throw new UnauthorizedException("User is not a "+requiredUserType);
+        if(!requiredUserType.equals("admin")){
+            if(!decodedToken.getClaim("userType").asString().equals(requiredUserType)){
+                throw new UnauthorizedException("User is not a "+requiredUserType);
+            }
         }
 
         //compare the required user id and userId with the token

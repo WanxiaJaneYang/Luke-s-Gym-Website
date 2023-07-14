@@ -138,4 +138,9 @@ public class TrainerServiceImp implements TrainerService {
             }
         }
     }
+
+    @Override
+    public void deactivateTrainer(int trainerId) {
+        trainerDao.setDeactivationDate(trainerId);
+    }
 }

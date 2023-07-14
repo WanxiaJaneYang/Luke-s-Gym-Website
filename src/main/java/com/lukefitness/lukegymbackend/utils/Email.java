@@ -87,12 +87,23 @@ public class Email {
         return new Email(to, subject, text);
     }
 
-    public static Email getAccountDeleteEmail(String to, String username){
+    public static Email getTrainerDeleteEmail(String to, String username){
         String subject = "Your Account Has Been Deleted";
         String text="" +
                 "<h1>Hi "+username+"</h1>" +
                 "<p>Your account will be deactivated in 3 days.</p>" +
                 "<p>Please note that once your account is deactivated, you will not be able to access your account and all your data will be deleted.</p>" +
+                "<p>If you have changed your mind, please contact us immediately.</p>" +
+                "<p>Thanks,</p>" +
+                "<p>Luke Fitness</p>";
+        return new Email(to, subject, text);
+    }
+
+    public static Email getTraineeDeleteEmail(String to, String username){
+        String subject = "Your Account Has Been Deleted";
+        String text="" +
+                "<h1>Hi "+username+"</h1>" +
+                "<p>Your account is deleted.</p>" +
                 "<p>If you have changed your mind, please contact us immediately.</p>" +
                 "<p>Thanks,</p>" +
                 "<p>Luke Fitness</p>";
