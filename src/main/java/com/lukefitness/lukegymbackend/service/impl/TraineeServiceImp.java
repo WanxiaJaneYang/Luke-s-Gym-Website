@@ -21,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @Service
 public class TraineeServiceImp implements TraineeService {
     @Autowired
@@ -134,6 +136,13 @@ public class TraineeServiceImp implements TraineeService {
     @Override
     public void deactivateTrainee(int traineeId) {
         traineeDao.deactivateTrainee(traineeId);
+    }
+
+    @Override
+    public void linkTraineeToTrainer(int traineeId, int trainerId) {
+        int affectedRow=traineeDao.linkTraineeToTrainer(traineeId,trainerId);
+        if (affectedRow==0)
+            throw new NotFoundException("Trainee id not found");
     }
 
     @Transactional

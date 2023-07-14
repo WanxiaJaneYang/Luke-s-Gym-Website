@@ -8,6 +8,11 @@
         VALUES (#{username}, #{password}, #{email}, #{is_admin})
     </insert>
 
+    <select id="getTrainers" resultMap="TrainerResultMap">
+        SELECT * FROM trainer
+        ORDER BY username
+    </select>
+
     <select id="getTrainerByName" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
         SELECT * FROM trainer WHERE username = #{username}
     </select>
@@ -54,4 +59,10 @@
         AND deactivation_date IS NOT NULL
         AND last_used_date &lt; NOW() - INTERVAL 2 YEAR
     </delete>
+
+    <resultMap id="TrainerResultMap" type="com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+    </resultMap>
 </mapper>

@@ -47,6 +47,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="linkTraineeToTrainer" >
+        UPDATE trainee
+        SET trainer_id = #{trainer_id}
+        WHERE id = #{trainee_id}
+    </update>
+
     <delete id="deleteNotActiveTrainees">
         DELETE FROM trainee WHERE is_active = false
         AND last_used_date &lt; NOW() - INTERVAL 2 YEAR

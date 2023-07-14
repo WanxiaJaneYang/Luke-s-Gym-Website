@@ -1,5 +1,6 @@
 package com.lukefitness.lukegymbackend.dao;
 
+import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,6 +22,8 @@ public interface TraineeDao {
     void updateTraineeEmail(Trainee trainee);
     void deleteNotActiveTrainees();
     void deactivateTrainee(int id);
+
+    int linkTraineeToTrainer(@Param("traineeId") int traineeId, @Param("trainerId") int trainerId);
 
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);
