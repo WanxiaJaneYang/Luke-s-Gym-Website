@@ -124,6 +124,14 @@ public class TrainerServiceImp implements TrainerService {
         }
     }
 
+    @Override
+    public void updateTrainerUsername(int id, String username) {
+        int affectedRows=trainerDao.updateTrainerUsername(id,username);
+        if(affectedRows==0){
+            throw new NotFoundException("Trainer id not found");
+        }
+    }
+
     @Transactional
     @Override
     public TrainerLoginResponse trainerLoginByEmail(String email, String password) {
@@ -145,13 +153,35 @@ public class TrainerServiceImp implements TrainerService {
 
     @Override
     public void deactivateTrainer(int trainerId) {
-        trainerDao.setDeactivationDate(trainerId);
+        int affectedRows=trainerDao.setDeactivationDate(trainerId);
+        if(affectedRows==0){
+            throw new NotFoundException("Trainer id not found");
+        }
     }
 
     @Override
-    public List<SimpleUserQueryResponse> getTrainers(int page, int size) {
+    public List<Trainer> getAllTrainers() {
+        return trainerDao.getAllTrainers();
+    }
+
+    @Override
+    public List<Trainer> getTrainers(int page, int size) {
         int offset=(page-1)*size;
         RowBounds rowBounds=new RowBounds(offset,size);
         return trainerDao.getTrainers(rowBounds);
+    }
+
+    @Override
+    public List<Trainer> searchTrainerByUsername(String username, int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        return trainerDao.searchTrainerByUsername(username,rowBounds);
+    }
+
+    @Override
+    public List<Trainer> searchTrainerByEmail(String email, int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        return trainerDao.searchTrainerByEmail(email,rowBounds);
     }
 }

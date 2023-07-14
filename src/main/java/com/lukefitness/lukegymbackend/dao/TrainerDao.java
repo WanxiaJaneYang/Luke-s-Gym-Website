@@ -13,7 +13,7 @@ import java.util.List;
 public interface TrainerDao {
     Integer registerTrainer(Trainer trainer);
 
-    void setDeactivationDate(int id);
+    int setDeactivationDate(int id);
     void deleteNotActiveTrainers();
     void deactivateTrainer();
     int trainerLogin(Trainer trainer);
@@ -23,8 +23,12 @@ public interface TrainerDao {
     void setEmailVerified(int id);
     void setEmailUnverified(int id);
 
-    void updateTrainerPassword(Trainer trainer);
-    void updateTrainerEmail(Trainer trainer);
+    int updateTrainerPassword(Trainer trainer);
+    int updateTrainerEmail(Trainer trainer);
+    int  updateTrainerUsername(@Param("id") int id, @Param("username") String username);
 
-    List<SimpleUserQueryResponse> getTrainers(RowBounds rowBounds);
+    List<Trainer> getAllTrainers();
+    List<Trainer> getTrainers(RowBounds rowBounds);
+    List<Trainer> searchTrainerByUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);
+    List<Trainer> searchTrainerByEmail(@Param("email") String email, @Param("rowBounds") RowBounds rowBounds);
 }

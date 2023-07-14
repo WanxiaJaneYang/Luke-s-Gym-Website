@@ -17,8 +17,13 @@ public interface TrainerService {
 
     void updateTrainerPassword(int id, String password);
     void updateTrainerEmail(int id, String email);
+    void updateTrainerUsername(int id, String username);
 
     TrainerLoginResponse trainerLoginByEmail(String email, String password);
     void deactivateTrainer(int trainerId);
-    List<SimpleUserQueryResponse> getTrainers(int page, int size);
+    List<Trainer> getAllTrainers();
+    List<Trainer> getTrainers(int page, int size);
+
+    List<Trainer> searchTrainerByUsername(String username, int page, int size);
+    List<Trainer> searchTrainerByEmail(String email, int page, int size);
 }
