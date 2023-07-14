@@ -145,6 +145,13 @@ public class TraineeServiceImp implements TraineeService {
             throw new NotFoundException("Trainee id not found");
     }
 
+    @Override
+    public void unlinkTraineeToTrainer(int traineeId) {
+        int affectedRow=traineeDao.unlinkTraineeToTrainer(traineeId);
+        if (affectedRow==0)
+            throw new NotFoundException("Trainee id not found");
+    }
+
     @Transactional
     @Override
     public TraineeLoginResponse traineeLoginByEmail(String email, String password) {

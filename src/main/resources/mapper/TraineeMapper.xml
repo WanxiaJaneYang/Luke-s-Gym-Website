@@ -49,8 +49,14 @@
 
     <update id="linkTraineeToTrainer" >
         UPDATE trainee
-        SET trainer_id = #{trainer_id}
-        WHERE id = #{trainee_id}
+        SET trainer_id = #{trainerId}
+        WHERE id = #{traineeId}
+    </update>
+
+    <update id="unlinkTraineeToTrainer" >
+        UPDATE trainee
+        SET trainer_id = NULL
+        WHERE id = #{traineeId}
     </update>
 
     <delete id="deleteNotActiveTrainees">

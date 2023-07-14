@@ -28,4 +28,6 @@ public interface TraineeDao {
     List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);
     List<TraineeResponse> getTraineesBySearchEmail(@Param("email") String email, @Param("rowBounds") RowBounds rowBounds);
+
+    int unlinkTraineeToTrainer(int traineeId);
 }
