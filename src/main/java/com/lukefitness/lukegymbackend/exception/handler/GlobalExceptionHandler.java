@@ -1,7 +1,11 @@
-package com.lukefitness.lukegymbackend.exception;
+package com.lukefitness.lukegymbackend.exception.handler;
 
+import com.lukefitness.lukegymbackend.exception.BadRequestException;
+import com.lukefitness.lukegymbackend.exception.NotFoundException;
+import com.lukefitness.lukegymbackend.exception.UnauthorizedException;
 import com.lukefitness.lukegymbackend.utils.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,6 +31,12 @@ public class GlobalExceptionHandler {
         return Response.unauthorized(e.getMessage());
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e){
+        System.out.println("handleHttpMessageNotReadableException");
+        e.printStackTrace();
+        return Response.badRequest(e.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e){

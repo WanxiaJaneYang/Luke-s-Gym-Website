@@ -1,5 +1,8 @@
 package com.lukefitness.lukegymbackend.controller.trainee.trainer;
 
+import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
+import com.lukefitness.lukegymbackend.exception.NotFoundException;
+import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,6 +42,13 @@ public class ViewTrainerListController {
             }
     )
     public ResponseEntity<?> getTrainerList(@PathVariable int traineeId, @RequestParam int pageNumber, @RequestParam int pageSize){
-        return Response.success(trainerService.getTrainers(pageNumber, pageSize));
+        List<Trainer> trainers = trainerService.getTrainers(pageNumber, pageSize);
+        if(trainers.isEmpty())
+            throw new NotFoundException("No trainers found");
+        List<SimpleUserQueryResponse> response=new ArrayList<>();
+        for(Trainer trainer:trainers){
+            response.add(new SimpleUserQueryResponse(trainer));
+        }
+        return Response.success(response);
     }
 }
