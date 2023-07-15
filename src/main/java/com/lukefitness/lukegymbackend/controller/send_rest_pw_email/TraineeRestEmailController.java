@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.trainee.account;
+package com.lukefitness.lukegymbackend.controller.send_rest_pw_email;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.service.EmailService;

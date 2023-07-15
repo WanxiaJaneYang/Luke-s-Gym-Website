@@ -1,9 +1,12 @@
 package com.lukefitness.lukegymbackend.service;
 
+import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
 import com.lukefitness.lukegymbackend.dto.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
+
+import java.util.List;
 
 public interface TrainerService {
     TrainerResponse registerTrainer(TrainerRegisterReq trainerRegisterReq);
@@ -14,7 +17,13 @@ public interface TrainerService {
 
     void updateTrainerPassword(int id, String password);
     void updateTrainerEmail(int id, String email);
+    void updateTrainerUsername(int id, String username);
 
     TrainerLoginResponse trainerLoginByEmail(String email, String password);
     void deactivateTrainer(int trainerId);
+    List<Trainer> getAllTrainers();
+    List<Trainer> getTrainers(int page, int size);
+
+    List<Trainer> searchTrainerByUsername(String username, int page, int size);
+    List<Trainer> searchTrainerByEmail(String email, int page, int size);
 }

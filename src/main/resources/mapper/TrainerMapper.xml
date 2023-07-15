@@ -8,12 +8,46 @@
         VALUES (#{username}, #{password}, #{email}, #{is_admin})
     </insert>
 
+    <select id="getTrainers" resultMap="TrainerResultMap">
+        SELECT * FROM trainer
+        WHERE is_active = true
+        AND is_admin = false
+        ORDER BY username
+    </select>
+
+    <select id="getAllTrainers" resultMap="TrainerResultMap">
+        SELECT * FROM trainer
+        WHERE is_admin = false
+        AND is_active = true
+        ORDER BY username
+    </select>
+
     <select id="getTrainerByName" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
         SELECT * FROM trainer WHERE username = #{username}
     </select>
 
     <select id="getTrainerById" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.Trainer">
         SELECT * FROM trainer WHERE id = #{id}
+    </select>
+
+    <select id="getTrainerByEmail" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
+        SELECT * FROM trainer WHERE email = #{email}
+    </select>
+
+    <select id="searchTrainerByUsername" resultMap="TrainerResultMap">
+        SELECT * FROM trainer
+        WHERE is_active = true
+        AND is_admin = false
+        AND LOWER(username) LIKE LOWER(CONCAT('%', #{username}, '%'))
+        ORDER BY username
+    </select>
+
+    <select id="searchTrainerByEmail" resultMap="TrainerResultMap">
+        SELECT * FROM trainer
+        WHERE is_active = true
+        AND is_admin = false
+        AND LOWER(email) LIKE LOWER(CONCAT('%', #{email}, '%'))
+        ORDER BY username
     </select>
 
     <update id="trainerLogin" parameterType="com.lukefitness.lukegymbackend.models.Trainer">
@@ -28,9 +62,9 @@
         UPDATE trainer SET email_verified = false WHERE id = #{id}
     </update>
 
-    <select id="getTrainerByEmail" parameterType="String" resultType="com.lukefitness.lukegymbackend.models.Trainer">
-        SELECT * FROM trainer WHERE email = #{email}
-    </select>
+    <update id="updateTrainerUsername">
+        UPDATE trainer SET username = #{username} WHERE id = #{id}
+    </update>
 
     <update id="updateTrainerPassword" parameterType="com.lukefitness.lukegymbackend.models.Trainer">
         UPDATE trainer SET password = #{password} WHERE id = #{id}
@@ -54,4 +88,15 @@
         AND deactivation_date IS NOT NULL
         AND last_used_date &lt; NOW() - INTERVAL 2 YEAR
     </delete>
+
+    <resultMap id="TrainerResultMap" type="com.lukefitness.lukegymbackend.models.Trainer">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="email_verified" column="email_verified"/>
+        <result property="is_admin" column="is_admin"/>
+        <result property="is_active" column="is_active"/>
+        <result property="deactivation_date" column="deactivation_date"/>
+        <result property="last_used_date" column="last_used_date"/>
+    </resultMap>
 </mapper>

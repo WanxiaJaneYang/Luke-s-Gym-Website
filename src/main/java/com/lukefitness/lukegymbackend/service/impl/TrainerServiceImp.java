@@ -1,6 +1,7 @@
 package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.TrainerDao;
+import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
 import com.lukefitness.lukegymbackend.exception.*;
 import com.lukefitness.lukegymbackend.exception.badrequest.EmailAlreadyExistsException;
 import com.lukefitness.lukegymbackend.exception.badrequest.KeywordCannotBeNullException;
@@ -10,10 +11,13 @@ import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
 import com.lukefitness.lukegymbackend.dto.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -120,6 +124,14 @@ public class TrainerServiceImp implements TrainerService {
         }
     }
 
+    @Override
+    public void updateTrainerUsername(int id, String username) {
+        int affectedRows=trainerDao.updateTrainerUsername(id,username);
+        if(affectedRows==0){
+            throw new NotFoundException("Trainer id not found");
+        }
+    }
+
     @Transactional
     @Override
     public TrainerLoginResponse trainerLoginByEmail(String email, String password) {
@@ -141,6 +153,35 @@ public class TrainerServiceImp implements TrainerService {
 
     @Override
     public void deactivateTrainer(int trainerId) {
-        trainerDao.setDeactivationDate(trainerId);
+        int affectedRows=trainerDao.setDeactivationDate(trainerId);
+        if(affectedRows==0){
+            throw new NotFoundException("Trainer id not found");
+        }
+    }
+
+    @Override
+    public List<Trainer> getAllTrainers() {
+        return trainerDao.getAllTrainers();
+    }
+
+    @Override
+    public List<Trainer> getTrainers(int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        return trainerDao.getTrainers(rowBounds);
+    }
+
+    @Override
+    public List<Trainer> searchTrainerByUsername(String username, int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        return trainerDao.searchTrainerByUsername(username,rowBounds);
+    }
+
+    @Override
+    public List<Trainer> searchTrainerByEmail(String email, int page, int size) {
+        int offset=(page-1)*size;
+        RowBounds rowBounds=new RowBounds(offset,size);
+        return trainerDao.searchTrainerByEmail(email,rowBounds);
     }
 }
