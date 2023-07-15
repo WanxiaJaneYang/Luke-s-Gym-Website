@@ -1,5 +1,7 @@
 package com.lukefitness.lukegymbackend.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dao.ExerciseDao;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Exercise;
@@ -28,5 +30,13 @@ public class ExerciseServiceImp implements ExerciseService {
     @Override
     public List<Exercise> getAllExercises() {
         return exerciseDao.selectAll();
+    }
+
+    @Override
+    public PageInfo<Exercise> getExercisesByPage(Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<Exercise> exercises = exerciseDao.selectAll();
+        PageInfo<Exercise> pageInfo = new PageInfo<>(exercises);
+        return pageInfo;
     }
 }

@@ -1,5 +1,6 @@
 package com.lukefitness.lukegymbackend.controller.admin.exercise;
 
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.models.Exercise;
 import com.lukefitness.lukegymbackend.service.ExerciseService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,5 +39,21 @@ public class GetExerciseController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllExercises() {
         return Response.success(exerciseService.getAllExercises());
+    }
+
+    @GetMapping("/by-page")
+    @Operation(
+            summary = "get all excercise by page for admin",
+            security = @SecurityRequirement(name = "bearer-key"),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List of exercises returned successfully",
+                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
+                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PageInfo.class),
+                                    array = @io.swagger.v3.oas.annotations.media.ArraySchema(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Exercise.class)))),
+            }
+    )
+    public ResponseEntity<?> getAllExercisesByPage(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                   @RequestParam(defaultValue = "10") Integer pageSize) {
+        return Response.success(exerciseService.getExercisesByPage(pageNo, pageSize));
     }
 }
