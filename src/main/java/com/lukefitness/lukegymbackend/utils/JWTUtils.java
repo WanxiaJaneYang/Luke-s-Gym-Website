@@ -108,7 +108,7 @@ public class JWTUtils {
 
     public static String getRefreshToken(String user_id,String username, String user_type, boolean email_verified, boolean is_active) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 7);
+        calendar.add(Calendar.DATE, 30);
 
         JWTCreator.Builder builder= com.auth0.jwt.JWT.create();
         Map<String,String> payload =new HashMap<>();
