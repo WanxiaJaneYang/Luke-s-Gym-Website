@@ -34,7 +34,9 @@ public class ExerciseServiceImp implements ExerciseService {
 
     @Override
     public PageInfo<Exercise> getExercisesByPage(Integer pageNo, Integer pageSize) {
+        System.out.println("pageNo:"+pageNo+" pageSize:"+pageSize);
         PageHelper.startPage(pageNo, pageSize);
+        System.out.println("pageNo:"+pageNo+" pageSize:"+pageSize);
         List<Exercise> exercises = exerciseDao.selectAll();
         PageInfo<Exercise> pageInfo = new PageInfo<>(exercises);
         return pageInfo;

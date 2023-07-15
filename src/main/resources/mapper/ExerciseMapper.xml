@@ -56,5 +56,6 @@
     -->
     select id, name
     from exercises
+    ORDER BY name
   </select>
 </mapper>

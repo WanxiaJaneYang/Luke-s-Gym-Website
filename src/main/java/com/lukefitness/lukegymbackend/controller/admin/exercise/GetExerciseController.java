@@ -45,6 +45,10 @@ public class GetExerciseController {
     @Operation(
             summary = "get all excercise by page for admin",
             security = @SecurityRequirement(name = "bearer-key"),
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageNo", description = "page number", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true)
+            },
             responses = {
                     @ApiResponse(responseCode = "200", description = "List of exercises returned successfully",
                             content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
