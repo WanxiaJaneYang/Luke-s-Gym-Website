@@ -1,4 +1,4 @@
-package com.lukefitness.lukegymbackend.controller.admin.account;
+package com.lukefitness.lukegymbackend.controller.send_rest_pw_email;
 
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.service.EmailService;
@@ -12,13 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/email/admin")
-@Tag(name = "Admin-Account Controller")
-public class SendRstPwEmailToAdminController {
+@RequestMapping("/email/trainer")
+@Tag(name = "Trainer-Account Controller")
+public class SendRstPwEmailToTrainerController {
     @Autowired
     EmailService emailService;
 
-    @Operation(summary = "Send reset password email to admin by username or email",
+    @Operation(summary = "Send reset password email to trainer by username or email",
             parameters = {
                     @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.QUERY,name = "username", description = "username of the trainer", example = "WanxiaJaneYang"),
                     @io.swagger.v3.oas.annotations.Parameter(in= ParameterIn.QUERY,name = "email", description = "email of the trainer",  example = "wanxiayang86@gmail.com"),

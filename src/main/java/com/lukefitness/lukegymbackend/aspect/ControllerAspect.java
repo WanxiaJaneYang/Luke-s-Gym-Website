@@ -17,6 +17,7 @@ public class ControllerAspect {
 
     @Around("(@within(org.springframework.web.bind.annotation.RestController) || @within(org.springframework.stereotype.Controller)) && " +
             "!within(com.lukefitness.lukegymbackend.controller.login..*) && " +
+            "!within(com.lukefitness.lukegymbackend.controller.send_rest_pw_email..*) && " +
             "!within(com.lukefitness.lukegymbackend.controller.verify..*)")
     public Object addTokenToResponse(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
