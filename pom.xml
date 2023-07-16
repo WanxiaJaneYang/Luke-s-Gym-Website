@@ -122,14 +122,6 @@
 				<configuration>
 					<configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
 				</configuration>
-				<executions>
-					<execution>
-						<id>Generate MyBatis Artifacts</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
 				<dependencies>
 					<dependency>
 						<groupId>com.mysql</groupId>
