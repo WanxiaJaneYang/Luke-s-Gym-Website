@@ -1,6 +1,5 @@
 package com.lukefitness.lukegymbackend.dao;
 
-import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import org.apache.ibatis.annotations.Mapper;
