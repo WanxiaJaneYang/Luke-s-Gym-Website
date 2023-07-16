@@ -58,4 +58,10 @@
     from exercises
     ORDER BY name
   </select>
+
+  <select id="selectByName" resultType="com.lukefitness.lukegymbackend.models.Exercise">
+    SELECT id, name
+    FROM exercises
+    WHERE name = #{name}
+    </select>
 </mapper>

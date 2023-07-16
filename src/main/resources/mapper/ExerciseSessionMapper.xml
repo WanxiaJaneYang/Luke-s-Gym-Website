@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lukefitness.lukegymbackend.dao.ExerciseSessionDao">
+  <resultMap id="BaseResultMap" type="com.lukefitness.lukegymbackend.models.ExerciseSession">
+    <id column="exercise_session_id" jdbcType="INTEGER" property="exerciseSessionId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="exercise_id" jdbcType="INTEGER" property="exerciseId" />
+    <result column="card_id" jdbcType="INTEGER" property="cardId" />
+    <result column="session_type" jdbcType="CHAR" property="sessionType" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="reps" jdbcType="INTEGER" property="reps" />
+    <result column="sets" jdbcType="INTEGER" property="sets" />
+    <result column="intensity" jdbcType="VARCHAR" property="intensity" />
+    <result column="tempo" jdbcType="VARCHAR" property="tempo" />
+    <result column="rest" jdbcType="INTEGER" property="rest" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exercise_session
+    where exercise_session_id = #{exerciseSessionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSession">
+    insert into exercise_session (exercise_session_id, name, exercise_id, 
+      card_id, session_type, time, 
+      reps, sets, intensity, 
+      tempo, rest)
+    values (#{exerciseSessionId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{exerciseId,jdbcType=INTEGER}, 
+      #{cardId,jdbcType=INTEGER}, #{sessionType,jdbcType=CHAR}, #{time,jdbcType=INTEGER}, 
+      #{reps,jdbcType=INTEGER}, #{sets,jdbcType=INTEGER}, #{intensity,jdbcType=VARCHAR}, 
+      #{tempo,jdbcType=VARCHAR}, #{rest,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSession">
+    update exercise_session
+    set name = #{name,jdbcType=VARCHAR},
+      exercise_id = #{exerciseId,jdbcType=INTEGER},
+      card_id = #{cardId,jdbcType=INTEGER},
+      session_type = #{sessionType,jdbcType=CHAR},
+      time = #{time,jdbcType=INTEGER},
+      reps = #{reps,jdbcType=INTEGER},
+      sets = #{sets,jdbcType=INTEGER},
+      intensity = #{intensity,jdbcType=VARCHAR},
+      tempo = #{tempo,jdbcType=VARCHAR},
+      rest = #{rest,jdbcType=INTEGER}
+    where exercise_session_id = #{exerciseSessionId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select exercise_session_id, name, exercise_id, card_id, session_type, time, reps, 
+    sets, intensity, tempo, rest
+    from exercise_session
+    where exercise_session_id = #{exerciseSessionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select exercise_session_id, name, exercise_id, card_id, session_type, time, reps, 
+    sets, intensity, tempo, rest
+    from exercise_session
+  </select>
+  <select id="selectByCardId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select exercise_session_id, name, exercise_id, card_id, session_type, time, reps,
+    sets, intensity, tempo, rest
+    from exercise_session
+    where card_id = #{cardId,jdbcType=INTEGER}
+    </select>
+</mapper>

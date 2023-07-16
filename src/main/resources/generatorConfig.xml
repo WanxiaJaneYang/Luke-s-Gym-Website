@@ -7,6 +7,10 @@
 
     <context id="context1" targetRuntime="MyBatis3Simple"
              defaultModelType="flat">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://labman5.mysql.database.azure.com:3306/gym?useSSL=true&amp;requireSSL=true&amp;enabledSslProtocolSuites=TLSv1,TLSv1.1,TLSv1.2&amp;serverSslCert=DigiCertGlobalRootCA.crt.pem"
@@ -27,8 +31,8 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
 
-        <table schema="gym" tableName="exercises"
-               domainObjectName="Exercise"
+        <table schema="gym" tableName="exercise_session"
+               domainObjectName="ExerciseSession"
         >
         </table>
 
