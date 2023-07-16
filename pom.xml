@@ -98,7 +98,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>3.1.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
 		<!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
@@ -115,21 +114,29 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-<!--			<plugin>-->
-<!--				<groupId>org.mybatis.generator</groupId>-->
-<!--				<artifactId>mybatis-generator-maven-plugin</artifactId>-->
-<!--				<version>1.4.2</version>-->
-<!--				<configuration>-->
-<!--					<configurationFile>src/main/resources/generatorConfig.xml</configurationFile>-->
-<!--				</configuration>-->
-<!--				<dependencies>-->
-<!--					<dependency>-->
-<!--						<groupId>com.mysql</groupId>-->
-<!--						<artifactId>mysql-connector-j</artifactId>-->
-<!--						<version>8.0.33</version> &lt;!&ndash; use the version compatible with your MySQL Server &ndash;&gt;-->
-<!--					</dependency>-->
-<!--				</dependencies>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.4.2</version>
+				<configuration>
+					<configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+				</configuration>
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>Generate MyBatis Artifacts</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+				<dependencies>
+					<dependency>
+						<groupId>com.mysql</groupId>
+						<artifactId>mysql-connector-j</artifactId>
+						<version>8.0.33</version> <!-- use the version compatible with your MySQL Server -->
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
