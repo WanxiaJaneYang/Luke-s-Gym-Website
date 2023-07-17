@@ -5,6 +5,11 @@ public class UrlIdExtractor {
         int index=pathInfo.indexOf(prefix);
         String restStr=pathInfo.substring(index+prefix.length());
         int end=restStr.indexOf("/");
-        return restStr.substring(0, end);
+        if(end==-1)
+            return restStr;
+        else if(end==0)
+            return null;
+        else
+            return restStr.substring(0, end);
     }
 }
