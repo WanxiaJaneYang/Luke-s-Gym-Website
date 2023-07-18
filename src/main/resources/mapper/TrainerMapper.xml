@@ -8,13 +8,6 @@
         VALUES (#{username}, #{password}, #{email}, #{is_admin})
     </insert>
 
-    <select id="getTrainers" resultMap="TrainerResultMap">
-        SELECT * FROM trainer
-        WHERE is_active = true
-        AND is_admin = false
-        ORDER BY username
-    </select>
-
     <select id="getAllTrainers" resultMap="TrainerResultMap">
         SELECT * FROM trainer
         WHERE is_admin = false
@@ -89,14 +82,10 @@
         AND last_used_date &lt; NOW() - INTERVAL 2 YEAR
     </delete>
 
-    <resultMap id="TrainerResultMap" type="com.lukefitness.lukegymbackend.models.Trainer">
+    <resultMap id="TrainerResultMap" type="com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="email" column="email"/>
         <result property="email_verified" column="email_verified"/>
-        <result property="is_admin" column="is_admin"/>
-        <result property="is_active" column="is_active"/>
-        <result property="deactivation_date" column="deactivation_date"/>
-        <result property="last_used_date" column="last_used_date"/>
     </resultMap>
 </mapper>

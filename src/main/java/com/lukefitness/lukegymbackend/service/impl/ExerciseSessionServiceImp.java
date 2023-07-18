@@ -25,11 +25,8 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
     @Transactional
     public void insertExerciseSession(ExerciseSessionReq exerciseSessionReq) {
         ExerciseSession exerciseSession = new ExerciseSession(exerciseSessionReq);
-        if (exerciseSessionReq.getExerciseId()==null){
-            Exercise exercise=new Exercise(exerciseSessionReq.getName());
-            exerciseDao.insert(exercise);
-            exerciseSession.setExerciseId(exercise.getId());
-        }
+        if(exerciseDao.selectByName(exerciseSessionReq.getName())==null)
+            exerciseDao.insert(new Exercise(exerciseSessionReq.getName()));
         exerciseSessionDao.insert(exerciseSession);
     }
 

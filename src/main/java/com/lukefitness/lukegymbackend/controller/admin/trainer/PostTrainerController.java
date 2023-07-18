@@ -1,6 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.admin.trainer;
 
 import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
+import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +35,7 @@ public class PostTrainerController {
             }
     )
     public ResponseEntity<?> createTrainer(@RequestBody TrainerRegisterReq trainerRegisterReq){
-        trainerService.registerTrainer(trainerRegisterReq);
-        return Response.success();
+        TrainerResponse response=trainerService.registerTrainer(trainerRegisterReq);
+        return Response.successCreated(response);
     }
 }

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProgramCard {
     private Integer cardId;
 
@@ -20,5 +20,10 @@ public class ProgramCard {
 
     private Integer traineeId;
 
-    private Boolean confirmed;
+    private String status;
+
+    private String sessionFocus1;
+
+    private String sessionFocus2;
+
 }

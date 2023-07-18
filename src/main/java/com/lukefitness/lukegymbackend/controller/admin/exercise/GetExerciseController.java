@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/exercise")
-@Tag(name="admin/exercise")
+@Tag(name="Admin-Exercise")
 public class GetExerciseController {
     @Autowired
     ExerciseService exerciseService;

@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/exercise")
-@Tag(name="admin/exercise")
+@Tag(name="Admin-Exercise")
 public class DeleteExerciseController {
     @Autowired
     ExerciseService exerciseService;
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     @Operation(summary="delete exercise for admin",
             security = @SecurityRequirement(name="bearer-key"),
             parameters = {

@@ -13,8 +13,6 @@ public class ExerciseSession {
 
     private String name;
 
-    private Integer exerciseId;
-
     private Integer cardId;
 
     private String sessionType;
@@ -33,7 +31,6 @@ public class ExerciseSession {
 
     public ExerciseSession(ExerciseSessionReq exerciseSessionReq) {
         this.name = exerciseSessionReq.getName();
-        this.exerciseId = exerciseSessionReq.getExerciseId();
         this.cardId = exerciseSessionReq.getCardId();
         this.sessionType = exerciseSessionReq.getSessionType();
         this.time = exerciseSessionReq.getTime();

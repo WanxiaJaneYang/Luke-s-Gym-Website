@@ -1,30 +1,61 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lukefitness.lukegymbackend.dao.TraineeContactInfoDao">
-    <insert id="insertTraineeContactInfo" parameterType="int" >
-        INSERT INTO trainee_contact_info (trainee_id)
-        VALUES (#{trainee_id})
-    </insert>
-
-    <update id="updateTraineeContactInfo" parameterType="com.lukefitness.lukegymbackend.models.TraineeContactInfo" >
-        UPDATE trainee_contact_info
-        SET
-            full_name = #{full_name},
-            occupation = #{occupation},
-            date_of_birth=#{date_of_birth},
-            phone = #{phone},
-            address = #{address},
-            state = #{state},
-            postal_code = #{postal_code},
-            emergency_contact_name = #{emergency_contact_name},
-            emergency_contact_phone = #{emergency_contact_phone}
-        WHERE trainee_id = #{trainee_id}
-    </update>
-    
-    <select id="getTraineeContactInfoByTraineeId" parameterType="int" resultType="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
-        SELECT * FROM trainee_contact_info WHERE trainee_id = #{trainee_id}
-    </select>
+  <resultMap id="BaseResultMap" type="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
+    <id column="trainee_id" jdbcType="INTEGER" property="traineeId" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="occupation" jdbcType="VARCHAR" property="occupation" />
+    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="emergency_contact_name" jdbcType="VARCHAR" property="emergencyContactName" />
+    <result column="emergency_contact_phone" jdbcType="VARCHAR" property="emergencyContactPhone" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="postal_code" jdbcType="VARCHAR" property="postalCode" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from trainee_contact_info
+    where trainee_id = #{traineeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
+    insert into trainee_contact_info (trainee_id, full_name, address, 
+      occupation, date_of_birth, phone, 
+      emergency_contact_name, emergency_contact_phone, 
+      created_at, updated_at, state, 
+      postal_code)
+    values (#{traineeId,jdbcType=INTEGER}, #{fullName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{occupation,jdbcType=VARCHAR}, #{dateOfBirth,jdbcType=DATE}, #{phone,jdbcType=VARCHAR}, 
+      #{emergencyContactName,jdbcType=VARCHAR}, #{emergencyContactPhone,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, 
+      #{postalCode,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lukefitness.lukegymbackend.models.TraineeContactInfo">
+    update trainee_contact_info
+    set full_name = #{fullName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
+      date_of_birth = #{dateOfBirth,jdbcType=DATE},
+      phone = #{phone,jdbcType=VARCHAR},
+      emergency_contact_name = #{emergencyContactName,jdbcType=VARCHAR},
+      emergency_contact_phone = #{emergencyContactPhone,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      postal_code = #{postalCode,jdbcType=VARCHAR}
+    where trainee_id = #{traineeId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select trainee_id, full_name, address, occupation, date_of_birth, phone, emergency_contact_name, 
+    emergency_contact_phone, created_at, updated_at, state, postal_code
+    from trainee_contact_info
+    where trainee_id = #{traineeId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select trainee_id, full_name, address, occupation, date_of_birth, phone, emergency_contact_name, 
+    emergency_contact_phone, created_at, updated_at, state, postal_code
+    from trainee_contact_info
+  </select>
 
 </mapper>

@@ -6,14 +6,12 @@ import com.lukefitness.lukegymbackend.service.TraineeFitnessGoalService;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Service
 public class TraineeFitnessGoalServiceImp implements TraineeFitnessGoalService {
     @Autowired
     TraineeFitnessGoalDao traineeFitnessGoalDao;
-    @GetMapping
+
     @Override
     public TraineeFitnessGoal getTraineeFitnessGoal(int traineeId) throws NotFoundException {
         TraineeFitnessGoal result=traineeFitnessGoalDao.selectByPrimaryKey(traineeId);
@@ -24,7 +22,7 @@ public class TraineeFitnessGoalServiceImp implements TraineeFitnessGoalService {
         }
     }
 
-    @PutMapping
+
     @Override
     public void updateTraineeFitnessGoal(TraineeFitnessGoal traineeFitnessGoal) throws NotFoundException {
         int rowAffected=traineeFitnessGoalDao.updateByPrimaryKey(traineeFitnessGoal);

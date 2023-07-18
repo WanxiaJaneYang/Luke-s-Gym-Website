@@ -16,8 +16,8 @@ public class ExerciseServiceImp implements ExerciseService {
     @Autowired
     ExerciseDao exerciseDao;
     @Override
-    public void addExercise(String name) {
-        exerciseDao.insert(new Exercise(name));
+    public void addExercise(Exercise exercise) {
+        exerciseDao.insert(exercise);
     }
 
     @Override

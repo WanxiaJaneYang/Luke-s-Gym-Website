@@ -1,5 +1,7 @@
 package com.lukefitness.lukegymbackend.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dao.TraineeContactInfoDao;
 import com.lukefitness.lukegymbackend.dao.TraineeDao;
 import com.lukefitness.lukegymbackend.dao.TraineeFitnessGoalDao;
@@ -12,6 +14,7 @@ import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.dto.response.login.TraineeLoginResponse;
+import com.lukefitness.lukegymbackend.models.TraineeContactInfo;
 import com.lukefitness.lukegymbackend.models.TraineeFitnessGoal;
 import com.lukefitness.lukegymbackend.models.TraineeHealthMetric;
 import com.lukefitness.lukegymbackend.service.TraineeService;
@@ -21,7 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
 @Service
 public class TraineeServiceImp implements TraineeService {
@@ -70,7 +73,7 @@ public class TraineeServiceImp implements TraineeService {
             traineeRegisterReq.setPassword(passwordEncoder.encode(traineeRegisterReq.getPassword()));
             Trainee trainee=new Trainee(traineeRegisterReq);
             traineeDao.traineeRegister(trainee);
-            traineeContactInfoDao.insertTraineeContactInfo(trainee.getId());
+            traineeContactInfoDao.insert(new TraineeContactInfo(trainee.getId()));
             traineeFitnessGoalDao.insert(new TraineeFitnessGoal(trainee.getId()));
             traineeHealthMetricDao.insert(new TraineeHealthMetric(trainee.getId()));
             return new TraineeResponse(trainee);
@@ -150,6 +153,14 @@ public class TraineeServiceImp implements TraineeService {
         int affectedRow=traineeDao.unlinkTraineeToTrainer(traineeId);
         if (affectedRow==0)
             throw new NotFoundException("Trainee id not found");
+    }
+
+    @Override
+    public PageInfo<TraineeResponse> getTraineesByTrainerId(int trainerId, int pageNumber, int pageSize) {
+        PageHelper.startPage(pageNumber,pageSize);
+        List<TraineeResponse> trainees=traineeDao.getTraineesByTrainerId(trainerId);
+        return new PageInfo<>(trainees);
+
     }
 
     @Transactional

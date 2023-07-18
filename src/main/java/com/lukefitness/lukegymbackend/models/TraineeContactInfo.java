@@ -1,19 +1,39 @@
 package com.lukefitness.lukegymbackend.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
+import java.util.Date;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TraineeContactInfo {
-    private int trainee_id;
-    private String postal_code;
-    private String phone;
-    private String full_name;
-    private String occupation;
+    private Integer traineeId;
+
+    private String fullName;
+
     private String address;
+
+    private String occupation;
+
+    private Date dateOfBirth;
+
+    private String phone;
+
+    private String emergencyContactName;
+
+    private String emergencyContactPhone;
+
+    private Date createdAt;
+
+    private Date updatedAt;
+
     private String state;
-    private String emergency_contact_name;
-    private String emergency_contact_phone;
-    private LocalDate date_of_birth;
+
+    private String postalCode;
+
+    public TraineeContactInfo(int traineeId){
+        this.traineeId=traineeId;
+    }
 }
