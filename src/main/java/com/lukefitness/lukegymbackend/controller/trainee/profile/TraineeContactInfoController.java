@@ -51,17 +51,14 @@ public class TraineeContactInfoController {
     )
     @ApiResponses(
             value = {
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated trainee contact info",
-                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
-                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TraineeContactInfo.class))
-                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated trainee contact info"),
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trainee id not found"),
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
             }
     )
     public ResponseEntity<?> updateTraineeContact(@PathVariable int traineeId, @RequestBody TraineeContactInfo traineeContactInfo) throws Exception {
-        TraineeContactInfo contactInfo=traineeContactInfoService.updateTraineeContact(traineeId, traineeContactInfo);
-        return Response.success(contactInfo);
+        traineeContactInfoService.updateTraineeContact(traineeId, traineeContactInfo);
+        return Response.success();
     }
 }

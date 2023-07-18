@@ -1,5 +1,6 @@
 package com.lukefitness.lukegymbackend.service;
 
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
 import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
@@ -21,9 +22,9 @@ public interface TrainerService {
 
     TrainerLoginResponse trainerLoginByEmail(String email, String password);
     void deactivateTrainer(int trainerId);
-    List<Trainer> getAllTrainers();
-    List<Trainer> getTrainers(int page, int size);
+    List<SimpleUserQueryResponse> getAllTrainers();
+    PageInfo<SimpleUserQueryResponse> getTrainers(int page, int size);
 
-    List<Trainer> searchTrainerByUsername(String username, int page, int size);
-    List<Trainer> searchTrainerByEmail(String email, int page, int size);
+    PageInfo<SimpleUserQueryResponse> searchTrainerByUsername(String username, int page, int size);
+    PageInfo<SimpleUserQueryResponse> searchTrainerByEmail(String email, int page, int size);
 }

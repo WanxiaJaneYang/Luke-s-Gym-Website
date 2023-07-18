@@ -40,6 +40,6 @@ public class AddTraineeController {
     @PostMapping
     public ResponseEntity<?> addTrainee(@RequestBody UserRegisterReq traineeRegisterReq) {
         TraineeResponse result=traineeService.traineeRegister(traineeRegisterReq);
-        return Response.successCreated();
+        return Response.successCreated(result);
     }
 }

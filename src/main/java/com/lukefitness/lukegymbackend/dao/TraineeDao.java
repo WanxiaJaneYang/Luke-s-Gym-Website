@@ -4,7 +4,6 @@ import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -24,9 +23,9 @@ public interface TraineeDao {
 
     int linkTraineeToTrainer(@Param("traineeId") int traineeId, @Param("trainerId") int trainerId);
 
-    List<TraineeResponse> getTraineesByPage(RowBounds rowBounds);
-    List<TraineeResponse> getTraineesBySearchUsername(@Param("username") String username, @Param("rowBounds") RowBounds rowBounds);
-    List<TraineeResponse> getTraineesBySearchEmail(@Param("email") String email, @Param("rowBounds") RowBounds rowBounds);
-
+    List<TraineeResponse> getAllTrainees();
+    List<TraineeResponse> getTraineesBySearchUsername(String username);
+    List<TraineeResponse> getTraineesBySearchEmail(String email);
+    List<TraineeResponse> getTraineesByTrainerId(int trainerId);
     int unlinkTraineeToTrainer(int traineeId);
 }

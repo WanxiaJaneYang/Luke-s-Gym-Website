@@ -1,7 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.admin.trainer;
 
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
-import com.lukefitness.lukegymbackend.models.Trainer;
 import com.lukefitness.lukegymbackend.service.TrainerService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,12 +41,7 @@ public class GetTrainersController {
             }
     )
     public ResponseEntity<?> getTrainers(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        List<Trainer> trainers = trainerService.getTrainers(pageNumber, pageSize);
-        List<SimpleUserQueryResponse> response=new ArrayList<>();
-        for(Trainer trainer: trainers){
-            response.add(new SimpleUserQueryResponse(trainer));
-        }
-        return Response.success(response);
+        return Response.success(trainerService.getTrainers(pageNumber, pageSize));
     }
 
     @GetMapping("/all")
@@ -66,19 +60,14 @@ public class GetTrainersController {
             }
     )
     public ResponseEntity<?> getAllTrainers(){
-        List<Trainer> trainers = trainerService.getAllTrainers();
-        List<SimpleUserQueryResponse> response=new ArrayList<>();
-        for(Trainer trainer: trainers){
-            response.add(new SimpleUserQueryResponse(trainer));
-        }
-        return Response.success(response);
+        return Response.success(trainerService.getAllTrainers());
     }
 
     @GetMapping("/search")
     @Operation(summary = "a search method using email or username",
             parameters = {
-                    @io.swagger.v3.oas.annotations.Parameter(name = "email", description = "Trainer's email", required = false),
-                    @io.swagger.v3.oas.annotations.Parameter(name = "username", description = "Trainer's username", required = false),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "email", description = "Trainer's email"),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "username", description = "Trainer's username"),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNumber", description = "Page number", required = true),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "Page size", required = true)
             },
@@ -97,7 +86,7 @@ public class GetTrainersController {
     )
     public ResponseEntity<?> searchTrainers(@RequestParam(required = false) String email, @RequestParam(required = false) String username,
                                             @RequestParam int pageNumber, @RequestParam int pageSize){
-        List<Trainer> trainers;
+        PageInfo<SimpleUserQueryResponse> trainers;
         if(email==null && username==null){
             return Response.badRequest("Please provide either email or username");
         }else if(username!=null){
@@ -105,11 +94,7 @@ public class GetTrainersController {
         }else{
             trainers=trainerService.searchTrainerByEmail(email, pageNumber, pageSize);
         }
-        List<SimpleUserQueryResponse> response=new ArrayList<>();
-        for(Trainer trainer: trainers){
-            response.add(new SimpleUserQueryResponse(trainer));
-        }
-        return Response.success(response);
+        return Response.success(trainers);
     }
 
 

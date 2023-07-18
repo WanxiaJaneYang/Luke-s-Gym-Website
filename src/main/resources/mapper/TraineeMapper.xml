@@ -81,6 +81,12 @@
         ORDER BY id
     </select>
 
+    <select id="getTraineesByTrainerId" parameterType="int" resultMap="TraineeResMap">
+        SELECT * FROM trainee
+        WHERE trainer_id = #{trainerId}
+        ORDER BY username
+    </select>
+
     <resultMap id="TraineeResMap" type="com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse">
         <id property="id" column="id"/>
         <result property="username" column="username"/>

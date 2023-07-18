@@ -5,13 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class TraineeFitnessGoal {
-
     private Integer traineeId;
+
+    private Date achieveByDate;
 
     private String jobActivityLevel;
 
@@ -22,6 +22,8 @@ public class TraineeFitnessGoal {
     private Date createdAt;
 
     private Date updatedAt;
+
+    private String preferredExerciseTime;
 
     private String number1Goal;
 

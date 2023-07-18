@@ -1,11 +1,10 @@
 package com.lukefitness.lukegymbackend.service;
 
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 
-import java.util.List;
-
 public interface AdminTraineeService {
-    List<TraineeResponse> getTraineesByPage(int page, int size);
-    List<TraineeResponse> getTraineesBySearchUsername(String username, int page, int size);
-    List<TraineeResponse> getTraineesBySearchEmail(String email, int page, int size);
+    PageInfo<TraineeResponse> getTraineesByPage(int page, int size);
+    PageInfo<TraineeResponse> getTraineesBySearchUsername(String username, int page, int size);
+    PageInfo<TraineeResponse> getTraineesBySearchEmail(String email, int page, int size);
 }

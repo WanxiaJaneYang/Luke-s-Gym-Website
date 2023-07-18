@@ -7,7 +7,9 @@
     <result column="date" jdbcType="DATE" property="date" />
     <result column="duration" jdbcType="INTEGER" property="duration" />
     <result column="trainee_id" jdbcType="INTEGER" property="traineeId" />
-    <result column="confirmed" jdbcType="BIT" property="confirmed" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="session_focus_1" jdbcType="VARCHAR" property="sessionFocus1" />
+    <result column="session_focus_2" jdbcType="VARCHAR" property="sessionFocus2" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from program_card
@@ -15,11 +17,11 @@
   </delete>
   <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard">
     insert into program_card (card_id, trainer_id, date, 
-      duration, trainee_id, confirmed
-      )
+      duration, trainee_id, status, 
+      session_focus_1, session_focus_2)
     values (#{cardId,jdbcType=INTEGER}, #{trainerId,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
-      #{duration,jdbcType=INTEGER}, #{traineeId,jdbcType=INTEGER}, #{confirmed,jdbcType=BIT}
-      )
+      #{duration,jdbcType=INTEGER}, #{traineeId,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
+      #{sessionFocus1,jdbcType=VARCHAR}, #{sessionFocus2,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard">
     update program_card
@@ -27,16 +29,20 @@
       date = #{date,jdbcType=DATE},
       duration = #{duration,jdbcType=INTEGER},
       trainee_id = #{traineeId,jdbcType=INTEGER},
-      confirmed = #{confirmed,jdbcType=BIT}
+      status = #{status,jdbcType=CHAR},
+      session_focus_1 = #{sessionFocus1,jdbcType=VARCHAR},
+      session_focus_2 = #{sessionFocus2,jdbcType=VARCHAR}
     where card_id = #{cardId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select card_id, trainer_id, date, duration, trainee_id, confirmed
+    select card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, 
+    session_focus_2
     from program_card
     where card_id = #{cardId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select card_id, trainer_id, date, duration, trainee_id, confirmed
+    select card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, 
+    session_focus_2
     from program_card
   </select>
 </mapper>

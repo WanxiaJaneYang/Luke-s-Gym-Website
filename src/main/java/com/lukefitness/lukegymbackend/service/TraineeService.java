@@ -1,5 +1,6 @@
 package com.lukefitness.lukegymbackend.service;
 
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
@@ -18,4 +19,6 @@ public interface TraineeService {
     void deactivateTrainee(int traineeId);
     void linkTraineeToTrainer(int traineeId, int trainerId);
     void unlinkTraineeToTrainer(int traineeId);
+
+    PageInfo<TraineeResponse> getTraineesByTrainerId(int trainerId, int pageNumber, int pageSize);
 }

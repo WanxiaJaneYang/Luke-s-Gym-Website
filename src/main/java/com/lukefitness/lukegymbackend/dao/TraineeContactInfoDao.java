@@ -1,11 +1,16 @@
 package com.lukefitness.lukegymbackend.dao;
 
 import com.lukefitness.lukegymbackend.models.TraineeContactInfo;
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
 
-@Mapper
 public interface TraineeContactInfoDao {
-    int insertTraineeContactInfo(int traineeId);
-    int updateTraineeContactInfo(TraineeContactInfo traineeContactInfo);
-    TraineeContactInfo getTraineeContactInfoByTraineeId(int traineeId);
+    int deleteByPrimaryKey(Integer traineeId);
+
+    int insert(TraineeContactInfo row);
+
+    TraineeContactInfo selectByPrimaryKey(Integer traineeId);
+
+    List<TraineeContactInfo> selectAll();
+
+    int updateByPrimaryKey(TraineeContactInfo row);
 }

@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/admin/trainee")
 @Tag(name = "Admin-Trainee Controller")
@@ -39,8 +37,7 @@ public class GetTraineeController {
     })
     @GetMapping("/list")
     public ResponseEntity<?> getTrainees(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        List<TraineeResponse> result=adminTraineeService.getTraineesByPage(pageNumber, pageSize);
-        return Response.success(result);
+        return Response.success(adminTraineeService.getTraineesByPage(pageNumber, pageSize));
     }
 
     @Operation(summary= "Get trainee by trainee id",
@@ -82,12 +79,10 @@ public class GetTraineeController {
                                                   @RequestParam int pageNumber,
                                                   @RequestParam int pageSize) {
         if(username!=null) {
-            List<TraineeResponse> result=adminTraineeService.getTraineesBySearchUsername(username, pageNumber, pageSize);
-            return Response.success(result);
+            return Response.success(adminTraineeService.getTraineesBySearchUsername(username, pageNumber, pageSize));
         }
         else if(email!=null) {
-            List<TraineeResponse> result=adminTraineeService.getTraineesBySearchEmail(email, pageNumber, pageSize);
-            return Response.success(result);
+            return Response.success(adminTraineeService.getTraineesBySearchEmail(email, pageNumber, pageSize));
         }
         else
             return Response.badRequest("Username or email is required");

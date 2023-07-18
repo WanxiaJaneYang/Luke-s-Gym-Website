@@ -31,8 +31,8 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
 
-        <table schema="gym" tableName="exercise_session"
-               domainObjectName="ExerciseSession"
+        <table schema="gym" tableName="trainee_contact_info"
+               domainObjectName="TraineeContactInfo"
         >
         </table>
 

@@ -1,5 +1,7 @@
 package com.lukefitness.lukegymbackend.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dao.TrainerDao;
 import com.lukefitness.lukegymbackend.dto.response.query.SimpleUserQueryResponse;
 import com.lukefitness.lukegymbackend.exception.*;
@@ -11,7 +13,6 @@ import com.lukefitness.lukegymbackend.dto.request.register.TrainerRegisterReq;
 import com.lukefitness.lukegymbackend.dto.response.login.TrainerLoginResponse;
 import com.lukefitness.lukegymbackend.dto.response.register.TrainerResponse;
 import com.lukefitness.lukegymbackend.service.TrainerService;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -160,28 +161,28 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
-    public List<Trainer> getAllTrainers() {
+    public List<SimpleUserQueryResponse> getAllTrainers() {
         return trainerDao.getAllTrainers();
     }
 
     @Override
-    public List<Trainer> getTrainers(int page, int size) {
-        int offset=(page-1)*size;
-        RowBounds rowBounds=new RowBounds(offset,size);
-        return trainerDao.getTrainers(rowBounds);
+    public PageInfo<SimpleUserQueryResponse> getTrainers(int page, int size) {
+        PageHelper.startPage(page,size);
+        List<SimpleUserQueryResponse> trainers=trainerDao.getAllTrainers();
+        return new PageInfo<>(trainers);
     }
 
     @Override
-    public List<Trainer> searchTrainerByUsername(String username, int page, int size) {
-        int offset=(page-1)*size;
-        RowBounds rowBounds=new RowBounds(offset,size);
-        return trainerDao.searchTrainerByUsername(username,rowBounds);
+    public PageInfo<SimpleUserQueryResponse> searchTrainerByUsername(String username, int page, int size) {
+        PageHelper.startPage(page,size);
+        List<SimpleUserQueryResponse> trainers=trainerDao.searchTrainerByUsername(username);
+        return new PageInfo<>(trainers);
     }
 
     @Override
-    public List<Trainer> searchTrainerByEmail(String email, int page, int size) {
-        int offset=(page-1)*size;
-        RowBounds rowBounds=new RowBounds(offset,size);
-        return trainerDao.searchTrainerByEmail(email,rowBounds);
+    public PageInfo<SimpleUserQueryResponse> searchTrainerByEmail(String email, int page, int size) {
+        PageHelper.startPage(page,size);
+        List<SimpleUserQueryResponse> trainers=trainerDao.searchTrainerByEmail(email);
+        return new PageInfo<>(trainers);
     }
 }
