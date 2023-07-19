@@ -31,7 +31,6 @@ public class ExerciseSession {
 
     public ExerciseSession(ExerciseSessionReq exerciseSessionReq) {
         this.name = exerciseSessionReq.getName();
-        this.cardId = exerciseSessionReq.getCardId();
         this.sessionType = exerciseSessionReq.getSessionType();
         this.time = exerciseSessionReq.getTime();
         this.reps = exerciseSessionReq.getReps();

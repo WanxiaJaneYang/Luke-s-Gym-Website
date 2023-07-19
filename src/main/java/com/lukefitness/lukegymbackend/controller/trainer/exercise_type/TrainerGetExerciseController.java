@@ -26,6 +26,9 @@ public class TrainerGetExerciseController {
 
     @Operation(summary="get all excercise for trainer",
             security = @SecurityRequirement(name = "bearer-key"),
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Id of the trainer", required = true)
+            },
             responses = {
                     @ApiResponse(responseCode = "200", description = "List of exercises returned successfully",
                         content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
@@ -43,11 +46,12 @@ public class TrainerGetExerciseController {
 
     @GetMapping("/by-page")
     @Operation(
-            summary = "get all excercise by page for admin",
+            summary = "get all excercise by page for trainer",
             security = @SecurityRequirement(name = "bearer-key"),
             parameters = {
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNo", description = "page number", required = true),
-                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true)
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Id of the trainer", required = true)
             },
             responses = {
                     @ApiResponse(responseCode = "200", description = "List of exercises returned successfully",
@@ -59,5 +63,31 @@ public class TrainerGetExerciseController {
     public ResponseEntity<?> getAllExercisesByPage(@RequestParam(defaultValue = "0") Integer pageNo,
                                                    @RequestParam(defaultValue = "10") Integer pageSize) {
         return Response.success(exerciseService.getExercisesByPage(pageNo, pageSize));
+    }
+
+    @GetMapping("/search")
+    @Operation(
+            summary = "search exercises by name for trainer",
+            security = @SecurityRequirement(name="bearer-key"),
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "name", description = "exercise name", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageNo", description = "page number", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Id of the trainer", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List of exercises returned successfully",
+                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
+                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PageInfo.class),
+                                    array = @io.swagger.v3.oas.annotations.media.ArraySchema(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Exercise.class)))),
+                    @ApiResponse(responseCode = "400", description = "Invalid page number or page size"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
+    public ResponseEntity<?> getExercisesBySearch(@RequestParam String name,
+                                                  @RequestParam(defaultValue = "1") Integer pageNo,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize) {
+        return Response.success(exerciseService.getExercisesBySearch(name, pageNo, pageSize));
     }
 }

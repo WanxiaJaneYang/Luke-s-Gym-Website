@@ -6,7 +6,7 @@ import com.lukefitness.lukegymbackend.models.ExerciseSession;
 import java.util.List;
 
 public interface ExerciseSessionService {
-    void insertExerciseSession(ExerciseSessionReq exerciseSessionReq);
+    ExerciseSession insertExerciseSession(ExerciseSession exerciseSession);
     void deleteExerciseSession(Integer id);
     void updateExerciseSession(ExerciseSessionReq exerciseSessionReq, Integer id);
     List<ExerciseSession> getExerciseSessionByCardId(Integer cardId);

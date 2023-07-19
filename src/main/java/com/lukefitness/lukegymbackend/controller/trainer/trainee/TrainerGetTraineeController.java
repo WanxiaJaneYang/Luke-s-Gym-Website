@@ -5,6 +5,7 @@ import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.service.TraineeService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,5 +41,30 @@ public class TrainerGetTraineeController {
     )
     public ResponseEntity<?> getTraineeByPage(@PathVariable int trainerId, @RequestParam int pageNumber, @RequestParam int pageSize){
         return Response.success(traineeService.getTraineesByTrainerId(trainerId, pageNumber, pageSize));
+    }
+
+    @GetMapping("/search")
+    @Operation(
+            summary = "a controller for trainer to search the trainees linked to him by username",
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "username", required = true, description = "the username of the trainee"),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageNumber", required = true, description = "the page number of the trainees"),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", required = true, description = "the page size of the trainees"),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", required = true, description = "the id of the trainer")
+            },
+            security = @SecurityRequirement(name = "bearer-key"),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Success",
+                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                    mediaType = "application/json",
+                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PageInfo.class),
+                                    array = @io.swagger.v3.oas.annotations.media.ArraySchema(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TraineeResponse.class))
+                            )),
+                    @ApiResponse(responseCode = "400", description = "Bad Request", content = @io.swagger.v3.oas.annotations.media.Content()),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @io.swagger.v3.oas.annotations.media.Content()),
+            }
+    )
+    public ResponseEntity<?> getTraineeBySearch(@PathVariable int trainerId, @RequestParam String username, @RequestParam int pageNumber, @RequestParam int pageSize){
+        return Response.success(traineeService.searchLinkedTraineeByUsername(trainerId, username, pageNumber, pageSize));
     }
 }

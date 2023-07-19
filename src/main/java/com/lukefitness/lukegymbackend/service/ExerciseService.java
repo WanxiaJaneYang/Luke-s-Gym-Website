@@ -10,4 +10,6 @@ public interface ExerciseService {
     void deleteExercise(Integer id);
     List<Exercise> getAllExercises();
     PageInfo<Exercise> getExercisesByPage(Integer pageNo, Integer pageSize);
+
+    PageInfo<Exercise> getExercisesBySearch(String name, Integer pageNo, Integer pageSize);
 }

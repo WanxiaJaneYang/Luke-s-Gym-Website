@@ -87,6 +87,13 @@
         ORDER BY username
     </select>
 
+    <select id="searchLinkedTraineeByUsername" resultMap="TraineeResMap">
+        SELECT * FROM trainee
+        WHERE trainer_id = #{trainerId}
+        AND LOWER(username) LIKE LOWER(CONCAT('%', #{username}, '%'))
+        ORDER BY username
+    </select>
+
     <resultMap id="TraineeResMap" type="com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse">
         <id property="id" column="id"/>
         <result property="username" column="username"/>

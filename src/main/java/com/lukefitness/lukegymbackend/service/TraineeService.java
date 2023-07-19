@@ -21,4 +21,5 @@ public interface TraineeService {
     void unlinkTraineeToTrainer(int traineeId);
 
     PageInfo<TraineeResponse> getTraineesByTrainerId(int trainerId, int pageNumber, int pageSize);
+    PageInfo<TraineeResponse> searchLinkedTraineeByUsername(int trainerId, String username, int pageNumber, int pageSize);
 }

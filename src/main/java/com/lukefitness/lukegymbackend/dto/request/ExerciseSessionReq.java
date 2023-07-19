@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 public class ExerciseSessionReq {
     private String name;
 
-    private Integer cardId;
-
     private String sessionType;
 
     private Integer time;
