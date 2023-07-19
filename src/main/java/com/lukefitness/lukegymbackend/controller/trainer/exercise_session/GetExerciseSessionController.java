@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/trainer/{trainerId}/{cardId}/exercise_session")
 @Tag(name="Trainer-Exercise-Session")
-public class GetController {
+public class GetExerciseSessionController {
     @Autowired
     ExerciseSessionService exerciseSessionService;
     @GetMapping

@@ -28,6 +28,14 @@ public class ExerciseServiceImp implements ExerciseService {
     }
 
     @Override
+    public PageInfo<Exercise> getExercisesBySearch(String name, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<Exercise> exercises = exerciseDao.searchByName(name);
+        PageInfo<Exercise> pageInfo = new PageInfo<>(exercises);
+        return pageInfo;
+    }
+
+    @Override
     public List<Exercise> getAllExercises() {
         return exerciseDao.selectAll();
     }

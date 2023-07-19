@@ -163,6 +163,13 @@ public class TraineeServiceImp implements TraineeService {
 
     }
 
+    @Override
+    public PageInfo<TraineeResponse> searchLinkedTraineeByUsername(int trainerId, String username, int pageNumber, int pageSize) {
+        PageHelper.startPage(pageNumber,pageSize);
+        List<TraineeResponse> trainees=traineeDao.searchLinkedTraineeByUsername(trainerId,username);
+        return new PageInfo<>(trainees);
+    }
+
     @Transactional
     @Override
     public TraineeLoginResponse traineeLoginByEmail(String email, String password) {

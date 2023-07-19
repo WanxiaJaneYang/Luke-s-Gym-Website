@@ -23,11 +23,11 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
 
     @Override
     @Transactional
-    public void insertExerciseSession(ExerciseSessionReq exerciseSessionReq) {
-        ExerciseSession exerciseSession = new ExerciseSession(exerciseSessionReq);
-        if(exerciseDao.selectByName(exerciseSessionReq.getName())==null)
-            exerciseDao.insert(new Exercise(exerciseSessionReq.getName()));
+    public ExerciseSession insertExerciseSession(ExerciseSession exerciseSession) {
+        if(exerciseDao.selectByName(exerciseSession.getName())==null)
+            exerciseDao.insert(new Exercise(exerciseSession.getName()));
         exerciseSessionDao.insert(exerciseSession);
+        return exerciseSession;
     }
 
     @Override

@@ -64,4 +64,11 @@
     FROM exercises
     WHERE name = #{name}
     </select>
+
+  <select id="searchByName" resultMap="BaseResultMap">
+    SELECT id, name
+    FROM exercises
+    WHERE LOWER(name) LIKE LOWER(CONCAT('%', #{name}, '%'))
+    ORDER BY name
+    </select>
 </mapper>

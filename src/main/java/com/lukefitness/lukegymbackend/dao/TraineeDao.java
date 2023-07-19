@@ -28,4 +28,5 @@ public interface TraineeDao {
     List<TraineeResponse> getTraineesBySearchEmail(String email);
     List<TraineeResponse> getTraineesByTrainerId(int trainerId);
     int unlinkTraineeToTrainer(int traineeId);
+    List<TraineeResponse> searchLinkedTraineeByUsername(@Param("trainerId") int trainerId, @Param("username") String username);
 }

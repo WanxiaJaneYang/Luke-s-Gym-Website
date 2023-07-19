@@ -13,4 +13,5 @@ public interface ExerciseDao {
     Exercise selectByName(String name);
     List<Exercise> selectAll();
     int updateByPrimaryKey(Exercise row);
+    List<Exercise> searchByName(String name);
 }
