@@ -21,6 +21,9 @@ public class TrainerAddExerciseController {
     ExerciseService exerciseService;
     @PostMapping("/add")
     @Operation(summary="add exercise for trainer",
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "trainer id", required = true)
+            },
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "exercise name", required = true,
                     content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
                             schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ExerciseReq.class))),
