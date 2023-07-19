@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 
-    <context id="context1" targetRuntime="MyBatis3Simple"
+    <context id="context1" targetRuntime="MyBatis3"
              defaultModelType="flat">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
@@ -31,8 +31,8 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
 
-        <table schema="gym" tableName="trainee_contact_info"
-               domainObjectName="TraineeContactInfo"
+        <table schema="gym" tableName="program_card"
+               domainObjectName="ProgramCard"
         >
         </table>
 

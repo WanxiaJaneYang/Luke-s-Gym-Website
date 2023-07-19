@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dao.ExerciseDao;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Exercise;
+import com.lukefitness.lukegymbackend.models.ExerciseExample;
 import com.lukefitness.lukegymbackend.service.ExerciseService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,11 @@ public class ExerciseServiceImp implements ExerciseService {
     @Autowired
     ExerciseDao exerciseDao;
     @Override
-    public void addExercise(Exercise exercise) {
-        exerciseDao.insert(exercise);
+    public Exercise addExercise(@NotNull String exercise) {
+        exerciseDao.insertSelective(new Exercise(exercise));
+        ExerciseExample exerciseExample = new ExerciseExample();
+        exerciseExample.createCriteria().andNameEqualTo(exercise);
+        return exerciseDao.selectByExample(exerciseExample).get(0);
     }
 
     @Override
@@ -28,22 +33,33 @@ public class ExerciseServiceImp implements ExerciseService {
     }
 
     @Override
-    public PageInfo<Exercise> getExercisesBySearch(String name, Integer pageNo, Integer pageSize) {
+    public PageInfo<Exercise> getExercisesBySearch(String name, Integer pageNo, Integer pageSize, String orderByColumn, String orderType) {
+        // orderByColumn: name, create_at, update_at
+        // orderType: asc, desc
+        ExerciseExample exerciseExample = new ExerciseExample();
+        exerciseExample.setOrderByClause(orderByColumn + " " + orderType);
+        exerciseExample.createCriteria().andNameIgnoreCaseLike("%" + name + "%");
         PageHelper.startPage(pageNo, pageSize);
-        List<Exercise> exercises = exerciseDao.searchByName(name);
+        List<Exercise> exercises = exerciseDao.selectByExample(exerciseExample);
         PageInfo<Exercise> pageInfo = new PageInfo<>(exercises);
         return pageInfo;
     }
 
     @Override
     public List<Exercise> getAllExercises() {
-        return exerciseDao.selectAll();
+        ExerciseExample exerciseExample = new ExerciseExample();
+        return exerciseDao.selectByExample(exerciseExample);
     }
 
     @Override
-    public PageInfo<Exercise> getExercisesByPage(Integer pageNo, Integer pageSize) {
+    public PageInfo<Exercise> getExercisesByPage(Integer pageNo, Integer pageSize, String orderByColumn, String orderType) {
+        // orderByColumn: name, create_at, update_at
+        // orderType: asc, desc
+        ExerciseExample exerciseExample = new ExerciseExample();
+        exerciseExample.setOrderByClause(orderByColumn + " " + orderType);
+
         PageHelper.startPage(pageNo, pageSize);
-        List<Exercise> exercises = exerciseDao.selectAll();
+        List<Exercise> exercises = exerciseDao.selectByExample(exerciseExample);
         PageInfo<Exercise> pageInfo = new PageInfo<>(exercises);
         return pageInfo;
     }

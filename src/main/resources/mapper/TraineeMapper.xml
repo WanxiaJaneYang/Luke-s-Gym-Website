@@ -20,6 +20,10 @@
         SELECT * FROM trainee WHERE email = #{email}
     </select>
 
+    <select id="isTraineeLinkedToTrainer" parameterType="int" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM trainee WHERE id = #{traineeId} AND trainer_id = #{trainerId})
+    </select>
+
     <update id="traineeLogin" parameterType="com.lukefitness.lukegymbackend.models.Trainee">
         UPDATE trainee SET last_used_date = NOW() WHERE id = #{id}
     </update>

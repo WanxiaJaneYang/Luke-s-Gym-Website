@@ -5,7 +5,9 @@ import com.lukefitness.lukegymbackend.dao.ExerciseSessionDao;
 import com.lukefitness.lukegymbackend.dto.request.ExerciseSessionReq;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.models.Exercise;
+import com.lukefitness.lukegymbackend.models.ExerciseExample;
 import com.lukefitness.lukegymbackend.models.ExerciseSession;
+import com.lukefitness.lukegymbackend.models.ExerciseSessionExample;
 import com.lukefitness.lukegymbackend.service.ExerciseSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +26,11 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
     @Override
     @Transactional
     public ExerciseSession insertExerciseSession(ExerciseSession exerciseSession) {
-        if(exerciseDao.selectByName(exerciseSession.getName())==null)
+        ExerciseExample exerciseExample = new ExerciseExample();
+        exerciseExample.createCriteria().andNameEqualTo(exerciseSession.getName());
+        if(exerciseDao.selectByExample(exerciseExample).isEmpty())
             exerciseDao.insert(new Exercise(exerciseSession.getName()));
-        exerciseSessionDao.insert(exerciseSession);
+        exerciseSessionDao.insertSelective(exerciseSession);
         return exerciseSession;
     }
 
@@ -50,7 +54,10 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
 
     @Override
     public List<ExerciseSession> getExerciseSessionByCardId(Integer cardId) {
-        return exerciseSessionDao.selectByCardId(cardId);
+        ExerciseSessionExample exerciseSessionExample = new ExerciseSessionExample();
+        exerciseSessionExample.createCriteria().andCardIdEqualTo(cardId);
+        exerciseSessionExample.setOrderByClause("session_type");
+        return exerciseSessionDao.selectByExample(exerciseSessionExample);
     }
 
 }

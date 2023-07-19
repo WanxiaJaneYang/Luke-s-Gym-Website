@@ -5,6 +5,7 @@ import com.lukefitness.lukegymbackend.models.Trainee;
 import com.lukefitness.lukegymbackend.dto.request.register.UserRegisterReq;
 import com.lukefitness.lukegymbackend.dto.response.register.TraineeResponse;
 import com.lukefitness.lukegymbackend.dto.response.login.TraineeLoginResponse;
+import org.apache.ibatis.annotations.Param;
 
 public interface TraineeService {
     TraineeLoginResponse traineeLogin(String username, String password);
@@ -19,6 +20,7 @@ public interface TraineeService {
     void deactivateTrainee(int traineeId);
     void linkTraineeToTrainer(int traineeId, int trainerId);
     void unlinkTraineeToTrainer(int traineeId);
+    boolean isTraineeLinkedToTrainer(int traineeId, int trainerId);
 
     PageInfo<TraineeResponse> getTraineesByTrainerId(int trainerId, int pageNumber, int pageSize);
     PageInfo<TraineeResponse> searchLinkedTraineeByUsername(int trainerId, String username, int pageNumber, int pageSize);

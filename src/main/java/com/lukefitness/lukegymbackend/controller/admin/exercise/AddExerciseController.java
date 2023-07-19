@@ -35,8 +35,8 @@ public class AddExerciseController {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
             }
     )
-    public ResponseEntity<?> addExercise(@RequestBody Exercise exercise){
-        exerciseService.addExercise(exercise);
+    public ResponseEntity<?> addExercise(@RequestBody ExerciseReq exerciseReq){
+        Exercise exercise=exerciseService.addExercise(exerciseReq.getName());
         return Response.successCreated(exercise);
     }
 }

@@ -1,6 +1,8 @@
 package com.lukefitness.lukegymbackend.controller.admin.exercise;
 
 import com.github.pagehelper.PageInfo;
+import com.lukefitness.lukegymbackend.dto.OrderTypeEnum;
+import com.lukefitness.lukegymbackend.dto.orderby.ExerciseOrderByEnum;
 import com.lukefitness.lukegymbackend.models.Exercise;
 import com.lukefitness.lukegymbackend.service.ExerciseService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -47,7 +49,9 @@ public class GetExerciseController {
             security = @SecurityRequirement(name = "bearer-key"),
             parameters = {
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNo", description = "page number", required = true),
-                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true)
+                    @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "orderBy", description = "order by"),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "orderType", description = "order type")
             },
             responses = {
                     @ApiResponse(responseCode = "200", description = "List of exercises returned successfully",
@@ -56,8 +60,11 @@ public class GetExerciseController {
                                     array = @io.swagger.v3.oas.annotations.media.ArraySchema(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Exercise.class)))),
             }
     )
-    public ResponseEntity<?> getAllExercisesByPage(@RequestParam(defaultValue = "0") Integer pageNo,
-                                                   @RequestParam(defaultValue = "10") Integer pageSize) {
-        return Response.success(exerciseService.getExercisesByPage(pageNo, pageSize));
+    public ResponseEntity<?> getAllExercisesByPage(@RequestParam(defaultValue = "1") Integer pageNo,
+                                                   @RequestParam(defaultValue = "10") Integer pageSize,
+                                                   @RequestParam(defaultValue = "update_at") ExerciseOrderByEnum orderBy,
+                                                   @RequestParam(defaultValue = "desc")OrderTypeEnum orderType
+                                                   ) {
+        return Response.success(exerciseService.getExercisesByPage(pageNo, pageSize,orderBy.getValue(),orderType.getValue()));
     }
 }

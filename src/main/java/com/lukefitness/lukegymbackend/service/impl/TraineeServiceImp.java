@@ -156,6 +156,11 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
+    public boolean isTraineeLinkedToTrainer(int traineeId, int trainerId) {
+        return traineeDao.isTraineeLinkedToTrainer(traineeId,trainerId);
+    }
+
+    @Override
     public PageInfo<TraineeResponse> getTraineesByTrainerId(int trainerId, int pageNumber, int pageSize) {
         PageHelper.startPage(pageNumber,pageSize);
         List<TraineeResponse> trainees=traineeDao.getTraineesByTrainerId(trainerId);

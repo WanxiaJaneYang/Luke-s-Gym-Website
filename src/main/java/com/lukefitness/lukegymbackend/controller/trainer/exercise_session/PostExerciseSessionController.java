@@ -23,7 +23,6 @@ public class PostExerciseSessionController {
             parameters = {
                     @io.swagger.v3.oas.annotations.Parameter(name = "cardId", description = "program card id", required = true),
                     @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "trainer id", required = true),
-                    @io.swagger.v3.oas.annotations.Parameter(name = "exerciseSessionId", description = "exercise session id", required = true)
             },
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "exercise session details", required = true, content =
                     @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ExerciseSessionReq.class))
@@ -37,7 +36,7 @@ public class PostExerciseSessionController {
                     @ApiResponse(responseCode = "500", description = "Internal server error")
             }
     )
-    public ResponseEntity<?> addExerciseSession(@PathVariable Integer cardId, @PathVariable Integer trainerId, @PathVariable Integer exerciseSessionId, @RequestBody ExerciseSessionReq exerciseSessionReq){
+    public ResponseEntity<?> addExerciseSession(@PathVariable Integer cardId, @PathVariable Integer trainerId,  @RequestBody ExerciseSessionReq exerciseSessionReq){
         ExerciseSession exerciseSession =new ExerciseSession(exerciseSessionReq);
         exerciseSession.setCardId(cardId);
         return Response.success(exerciseSessionService.insertExerciseSession(exerciseSession));
