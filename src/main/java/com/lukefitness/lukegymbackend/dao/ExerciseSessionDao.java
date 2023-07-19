@@ -1,20 +1,30 @@
 package com.lukefitness.lukegymbackend.dao;
 
 import com.lukefitness.lukegymbackend.models.ExerciseSession;
-import org.apache.ibatis.annotations.Mapper;
-
+import com.lukefitness.lukegymbackend.models.ExerciseSessionExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface ExerciseSessionDao {
+    long countByExample(ExerciseSessionExample example);
+
+    int deleteByExample(ExerciseSessionExample example);
+
     int deleteByPrimaryKey(Integer exerciseSessionId);
 
     int insert(ExerciseSession row);
 
+    int insertSelective(ExerciseSession row);
+
+    List<ExerciseSession> selectByExample(ExerciseSessionExample example);
+
     ExerciseSession selectByPrimaryKey(Integer exerciseSessionId);
 
-    List<ExerciseSession> selectAll();
+    int updateByExampleSelective(@Param("row") ExerciseSession row, @Param("example") ExerciseSessionExample example);
+
+    int updateByExample(@Param("row") ExerciseSession row, @Param("example") ExerciseSessionExample example);
+
+    int updateByPrimaryKeySelective(ExerciseSession row);
 
     int updateByPrimaryKey(ExerciseSession row);
-    List<ExerciseSession> selectByCardId(Integer cardId);
 }

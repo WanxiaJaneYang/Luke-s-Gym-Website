@@ -11,9 +11,96 @@
     <result column="session_focus_1" jdbcType="VARCHAR" property="sessionFocus1" />
     <result column="session_focus_2" jdbcType="VARCHAR" property="sessionFocus2" />
   </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, session_focus_2
+  </sql>
+  <select id="selectByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramCardExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from program_card
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from program_card
+    where card_id = #{cardId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from program_card
     where card_id = #{cardId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramCardExample">
+    delete from program_card
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard">
     insert into program_card (card_id, trainer_id, date, 
@@ -23,6 +110,140 @@
       #{duration,jdbcType=INTEGER}, #{traineeId,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
       #{sessionFocus1,jdbcType=VARCHAR}, #{sessionFocus2,jdbcType=VARCHAR})
   </insert>
+  <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard" useGeneratedKeys="true" keyProperty="cardId">
+    insert into program_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="trainerId != null">
+        trainer_id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="traineeId != null">
+        trainee_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="sessionFocus1 != null">
+        session_focus_1,
+      </if>
+      <if test="sessionFocus2 != null">
+        session_focus_2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cardId != null">
+        #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="trainerId != null">
+        #{trainerId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="traineeId != null">
+        #{traineeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="sessionFocus1 != null">
+        #{sessionFocus1,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionFocus2 != null">
+        #{sessionFocus2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramCardExample" resultType="java.lang.Long">
+    select count(*) from program_card
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update program_card
+    <set>
+      <if test="row.cardId != null">
+        card_id = #{row.cardId,jdbcType=INTEGER},
+      </if>
+      <if test="row.trainerId != null">
+        trainer_id = #{row.trainerId,jdbcType=INTEGER},
+      </if>
+      <if test="row.date != null">
+        date = #{row.date,jdbcType=DATE},
+      </if>
+      <if test="row.duration != null">
+        duration = #{row.duration,jdbcType=INTEGER},
+      </if>
+      <if test="row.traineeId != null">
+        trainee_id = #{row.traineeId,jdbcType=INTEGER},
+      </if>
+      <if test="row.status != null">
+        status = #{row.status,jdbcType=CHAR},
+      </if>
+      <if test="row.sessionFocus1 != null">
+        session_focus_1 = #{row.sessionFocus1,jdbcType=VARCHAR},
+      </if>
+      <if test="row.sessionFocus2 != null">
+        session_focus_2 = #{row.sessionFocus2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update program_card
+    set card_id = #{row.cardId,jdbcType=INTEGER},
+      trainer_id = #{row.trainerId,jdbcType=INTEGER},
+      date = #{row.date,jdbcType=DATE},
+      duration = #{row.duration,jdbcType=INTEGER},
+      trainee_id = #{row.traineeId,jdbcType=INTEGER},
+      status = #{row.status,jdbcType=CHAR},
+      session_focus_1 = #{row.sessionFocus1,jdbcType=VARCHAR},
+      session_focus_2 = #{row.sessionFocus2,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard">
+    update program_card
+    <set>
+      <if test="trainerId != null">
+        trainer_id = #{trainerId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="traineeId != null">
+        trainee_id = #{traineeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="sessionFocus1 != null">
+        session_focus_1 = #{sessionFocus1,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionFocus2 != null">
+        session_focus_2 = #{sessionFocus2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where card_id = #{cardId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard">
     update program_card
     set trainer_id = #{trainerId,jdbcType=INTEGER},
@@ -34,15 +255,4 @@
       session_focus_2 = #{sessionFocus2,jdbcType=VARCHAR}
     where card_id = #{cardId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, 
-    session_focus_2
-    from program_card
-    where card_id = #{cardId,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, 
-    session_focus_2
-    from program_card
-  </select>
 </mapper>

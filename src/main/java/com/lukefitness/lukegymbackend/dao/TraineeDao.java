@@ -22,6 +22,7 @@ public interface TraineeDao {
     void deactivateTrainee(int id);
 
     int linkTraineeToTrainer(@Param("traineeId") int traineeId, @Param("trainerId") int trainerId);
+    boolean isTraineeLinkedToTrainer(@Param("traineeId") int traineeId, @Param("trainerId") int trainerId);
 
     List<TraineeResponse> getAllTrainees();
     List<TraineeResponse> getTraineesBySearchUsername(String username);

@@ -6,6 +6,7 @@ import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +39,8 @@ public class TrainerAddExerciseController {
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
             }
     )
-    public ResponseEntity<?> addExercise(@RequestBody Exercise exercise){
-        exerciseService.addExercise(exercise);
+    public ResponseEntity<?> addExercise(@Valid @RequestBody ExerciseReq exerciseReq){
+        Exercise exercise=exerciseService.addExercise(exerciseReq.getName());
         return Response.successCreated(exercise);
     }
 }

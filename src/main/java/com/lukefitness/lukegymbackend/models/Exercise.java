@@ -4,14 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Exercise {
     private Integer id;
+
     private String name;
 
+    private Date createAt;
+
+    private Date updateAt;
+
     public Exercise(String name) {
-        this.name = name;
+            this.name = name;
     }
 }
