@@ -115,7 +115,7 @@
       #{sets,jdbcType=INTEGER}, #{intensity,jdbcType=VARCHAR}, #{tempo,jdbcType=VARCHAR}, 
       #{rest,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSession">
+  <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSession" useGeneratedKeys="true" keyProperty="exerciseSessionId">
     insert into exercise_session
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="exerciseSessionId != null">
