@@ -43,13 +43,17 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
     }
 
     @Override
-    public void updateExerciseSession(ExerciseSessionReq exerciseSessionReq, Integer id) {
-        ExerciseSession exerciseSession = new ExerciseSession(exerciseSessionReq);
-        exerciseSession.setExerciseSessionId(id);
-        int affectedRows = exerciseSessionDao.updateByPrimaryKey(exerciseSession);
-        if (affectedRows == 0) {
-            throw new NotFoundException("ExerciseSession not found");
+    @Transactional
+    public void updateExerciseSession(ExerciseSession exerciseSession) {
+        if (exerciseSession.getName()!=null) {
+            ExerciseExample exerciseExample = new ExerciseExample();
+            exerciseExample.createCriteria().andNameEqualTo(exerciseSession.getName());
+            if(exerciseDao.selectByExample(exerciseExample).isEmpty())
+                exerciseDao.insert(new Exercise(exerciseSession.getName()));
         }
+        int rows=exerciseSessionDao.updateByPrimaryKeySelective(exerciseSession);
+        if(rows==0)
+            throw new NotFoundException("ExerciseSession not found");
     }
 
     @Override
@@ -58,6 +62,17 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
         exerciseSessionExample.createCriteria().andCardIdEqualTo(cardId);
         exerciseSessionExample.setOrderByClause("session_type");
         return exerciseSessionDao.selectByExample(exerciseSessionExample);
+    }
+
+    @Override
+    public ExerciseSession getExerciseSessionByCardIdAndExerciseSessionId( Integer cardId, Integer exerciseSessionId) {
+        ExerciseSessionExample exerciseSessionExample = new ExerciseSessionExample();
+        exerciseSessionExample.createCriteria().andCardIdEqualTo(cardId).andExerciseSessionIdEqualTo(exerciseSessionId);
+        List<ExerciseSession> exerciseSessions = exerciseSessionDao.selectByExample(exerciseSessionExample);
+        if (exerciseSessions.isEmpty()) {
+            throw new NotFoundException("ExerciseSession not found");
+        }
+        return exerciseSessions.get(0);
     }
 
 }
