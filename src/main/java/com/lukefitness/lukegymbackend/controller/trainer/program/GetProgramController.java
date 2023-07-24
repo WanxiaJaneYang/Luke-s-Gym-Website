@@ -45,9 +45,11 @@ public class GetProgramController {
             }
 
     )
-    public ResponseEntity<?> getPrograms(@PathVariable Integer trainerId, @RequestParam(required = false) Integer traineeId,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "START_DATE") ProgramOrderByEnum sortBy, @RequestParam(defaultValue = "ASC") OrderTypeEnum order) {
+    public ResponseEntity<?> getPrograms(@PathVariable Integer trainerId, @RequestParam(required = false) Integer traineeId,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(required = false,defaultValue = "START_DATE") ProgramOrderByEnum sortBy, @RequestParam(required = false,defaultValue = "ASC") OrderTypeEnum order) {
         ProgramExample programExample = new ProgramExample();
-        programExample.createCriteria().andTrainerIdEqualTo(trainerId).andTraineeIdEqualTo(traineeId);
+        ProgramExample.Criteria criteria=programExample.createCriteria().andTrainerIdEqualTo(trainerId).andTraineeIdEqualTo(traineeId);
+        if(traineeId!=null)
+            criteria.andTraineeIdEqualTo(traineeId);
         return Response.success(programService.getProgramsForTrainer(programExample, pageNum, pageSize, sortBy.getValue(), order.getValue()));
     }
 }
