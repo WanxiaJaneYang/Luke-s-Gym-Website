@@ -13,12 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/trainer/{trainerId}/program_card/{cardId}/edit")
+@RequestMapping("/trainer/{trainerId}/program_card/{cardId}")
 @Tag(name="Trainer-Program Card")
 public class EditProgramCard {
     @Autowired
     ProgramCardService programCardService;
-    @PutMapping
+    @PutMapping("/edit")
     @Operation(
             summary = "Edit a program card",
             parameters = {
@@ -42,6 +42,27 @@ public class EditProgramCard {
         programCard.setCardId(cardId);
         programCard.setTrainerId(trainerId);
         programCardService.updateProgramCard(programCard);
+        return Response.success();
+    }
+
+    @PatchMapping("/send")
+    @Operation(
+            summary = "Send a program card to a client",
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "The trainer id", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "cardId", description = "The card id", required = true)
+            },
+            security = @SecurityRequirement(name="bearer-key"),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Program card sent successfully"),
+                    @ApiResponse(responseCode = "400", description = "Bad request"),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+                    @ApiResponse(responseCode = "404", description = "Program card not found"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
+    public ResponseEntity<?> sendProgramCard(@PathVariable Integer trainerId, @PathVariable Integer cardId) {
+        programCardService.sendProgramCard(cardId, trainerId);
         return Response.success();
     }
 }

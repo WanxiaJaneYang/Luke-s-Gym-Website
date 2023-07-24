@@ -1,7 +1,6 @@
 package com.lukefitness.lukegymbackend.controller.trainer.exercise_session;
 
 import com.lukefitness.lukegymbackend.models.ExerciseSession;
-import com.lukefitness.lukegymbackend.models.ProgramCard;
 import com.lukefitness.lukegymbackend.service.ExerciseSessionService;
 import com.lukefitness.lukegymbackend.service.ProgramCardService;
 import com.lukefitness.lukegymbackend.utils.Response;

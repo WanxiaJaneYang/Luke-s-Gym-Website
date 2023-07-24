@@ -641,6 +641,126 @@ public class ProgramCardExample {
             addCriterion("session_focus_2 not between", value1, value2, "sessionFocus2");
             return (Criteria) this;
         }
+
+        public Criteria andSentAtIsNull() {
+            addCriterion("sent_at is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtIsNotNull() {
+            addCriterion("sent_at is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtEqualTo(Date value) {
+            addCriterion("sent_at =", value, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtNotEqualTo(Date value) {
+            addCriterion("sent_at <>", value, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtGreaterThan(Date value) {
+            addCriterion("sent_at >", value, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("sent_at >=", value, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtLessThan(Date value) {
+            addCriterion("sent_at <", value, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtLessThanOrEqualTo(Date value) {
+            addCriterion("sent_at <=", value, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtIn(List<Date> values) {
+            addCriterion("sent_at in", values, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtNotIn(List<Date> values) {
+            addCriterion("sent_at not in", values, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtBetween(Date value1, Date value2) {
+            addCriterion("sent_at between", value1, value2, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentAtNotBetween(Date value1, Date value2) {
+            addCriterion("sent_at not between", value1, value2, "sentAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtIsNull() {
+            addCriterion("update_at is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtIsNotNull() {
+            addCriterion("update_at is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtEqualTo(Date value) {
+            addCriterion("update_at =", value, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtNotEqualTo(Date value) {
+            addCriterion("update_at <>", value, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtGreaterThan(Date value) {
+            addCriterion("update_at >", value, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_at >=", value, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtLessThan(Date value) {
+            addCriterion("update_at <", value, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtLessThanOrEqualTo(Date value) {
+            addCriterion("update_at <=", value, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtIn(List<Date> values) {
+            addCriterion("update_at in", values, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtNotIn(List<Date> values) {
+            addCriterion("update_at not in", values, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtBetween(Date value1, Date value2) {
+            addCriterion("update_at between", value1, value2, "updateAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateAtNotBetween(Date value1, Date value2) {
+            addCriterion("update_at not between", value1, value2, "updateAt");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

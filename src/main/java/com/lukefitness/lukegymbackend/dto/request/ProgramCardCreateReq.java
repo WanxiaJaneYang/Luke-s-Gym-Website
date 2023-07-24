@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class ProgramCardCreateReq {
-    private Date date;
+    private Timestamp date;
 
     private Integer duration;
 

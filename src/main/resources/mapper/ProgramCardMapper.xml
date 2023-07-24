@@ -10,6 +10,8 @@
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="session_focus_1" jdbcType="VARCHAR" property="sessionFocus1" />
     <result column="session_focus_2" jdbcType="VARCHAR" property="sessionFocus2" />
+    <result column="sent_at" jdbcType="TIMESTAMP" property="sentAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, session_focus_2
+    card_id, trainer_id, date, duration, trainee_id, status, session_focus_1, session_focus_2, 
+    sent_at, update_at
   </sql>
   <select id="selectByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramCardExample" resultMap="BaseResultMap">
     select
@@ -105,10 +108,12 @@
   <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard">
     insert into program_card (card_id, trainer_id, date, 
       duration, trainee_id, status, 
-      session_focus_1, session_focus_2)
+      session_focus_1, session_focus_2, sent_at, 
+      update_at)
     values (#{cardId,jdbcType=INTEGER}, #{trainerId,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
       #{duration,jdbcType=INTEGER}, #{traineeId,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
-      #{sessionFocus1,jdbcType=VARCHAR}, #{sessionFocus2,jdbcType=VARCHAR})
+      #{sessionFocus1,jdbcType=VARCHAR}, #{sessionFocus2,jdbcType=VARCHAR}, #{sentAt,jdbcType=TIMESTAMP}, 
+      #{updateAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.ProgramCard" useGeneratedKeys="true" keyProperty="cardId">
     insert into program_card
@@ -137,6 +142,12 @@
       <if test="sessionFocus2 != null">
         session_focus_2,
       </if>
+      <if test="sentAt != null">
+        sent_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cardId != null">
@@ -162,6 +173,12 @@
       </if>
       <if test="sessionFocus2 != null">
         #{sessionFocus2,jdbcType=VARCHAR},
+      </if>
+      <if test="sentAt != null">
+        #{sentAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -198,6 +215,12 @@
       <if test="row.sessionFocus2 != null">
         session_focus_2 = #{row.sessionFocus2,jdbcType=VARCHAR},
       </if>
+      <if test="row.sentAt != null">
+        sent_at = #{row.sentAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updateAt != null">
+        update_at = #{row.updateAt,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +235,9 @@
       trainee_id = #{row.traineeId,jdbcType=INTEGER},
       status = #{row.status,jdbcType=CHAR},
       session_focus_1 = #{row.sessionFocus1,jdbcType=VARCHAR},
-      session_focus_2 = #{row.sessionFocus2,jdbcType=VARCHAR}
+      session_focus_2 = #{row.sessionFocus2,jdbcType=VARCHAR},
+      sent_at = #{row.sentAt,jdbcType=TIMESTAMP},
+      update_at = #{row.updateAt,jdbcType=TIMESTAMP}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +266,12 @@
       <if test="sessionFocus2 != null">
         session_focus_2 = #{sessionFocus2,jdbcType=VARCHAR},
       </if>
+      <if test="sentAt != null">
+        sent_at = #{sentAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where card_id = #{cardId,jdbcType=INTEGER}
   </update>
@@ -252,7 +283,9 @@
       trainee_id = #{traineeId,jdbcType=INTEGER},
       status = #{status,jdbcType=CHAR},
       session_focus_1 = #{sessionFocus1,jdbcType=VARCHAR},
-      session_focus_2 = #{sessionFocus2,jdbcType=VARCHAR}
+      session_focus_2 = #{sessionFocus2,jdbcType=VARCHAR},
+      sent_at = #{sentAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
     where card_id = #{cardId,jdbcType=INTEGER}
   </update>
 </mapper>

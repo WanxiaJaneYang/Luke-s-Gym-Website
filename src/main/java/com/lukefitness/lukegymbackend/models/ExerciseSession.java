@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +30,7 @@ public class ExerciseSession {
     private String tempo;
 
     private Integer rest;
+    private Timestamp updateAt;
 
     public ExerciseSession(ExerciseSessionReq exerciseSessionReq) {
         this.name = exerciseSessionReq.getName();

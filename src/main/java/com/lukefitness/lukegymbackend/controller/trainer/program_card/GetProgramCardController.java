@@ -49,8 +49,11 @@ public class GetProgramCardController {
                     @Parameter(name = "trainerId", description = "The trainer id", required = true),
                     @Parameter(name = "page", description = "The page number", required = true),
                     @Parameter(name = "size", description = "The page size", required = true),
-                    @Parameter(name = "orderBy", description = "The order by field"),
-                    @Parameter(name = "orderType", description = "The order type")
+                    @Parameter(name = "orderBy", description = "The order by field",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProgramCardOrderByEnum.class)
+                    ),
+                    @Parameter(name = "orderType", description = "The order type",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderTypeEnum.class))
             },
             responses = {
                     @ApiResponse(responseCode = "200", description = "Program cards retrieved successfully",

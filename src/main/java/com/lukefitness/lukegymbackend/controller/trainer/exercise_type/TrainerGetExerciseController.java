@@ -7,7 +7,7 @@ import com.lukefitness.lukegymbackend.models.Exercise;
 import com.lukefitness.lukegymbackend.service.ExerciseService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -54,7 +54,7 @@ public class TrainerGetExerciseController {
             parameters = {
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNo", description = "page number", required = true),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true),
-                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Id of the trainer", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Id of the trainer", required = true, in= ParameterIn.PATH),
                     @io.swagger.v3.oas.annotations.Parameter(name = "orderBy", description = "order by",schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ExerciseOrderByEnum.class)),
                     @io.swagger.v3.oas.annotations.Parameter(name = "orderType", description = "order type",schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderTypeEnum.class))
             },
@@ -81,7 +81,7 @@ public class TrainerGetExerciseController {
                     @io.swagger.v3.oas.annotations.Parameter(name = "name", description = "exercise name", required = true),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNo", description = "page number", required = true),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "page size", required = true),
-                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Id of the trainer", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId" ,description = "Id of the trainer", required = true),
                     @io.swagger.v3.oas.annotations.Parameter(name = "orderBy", description = "order by",schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ExerciseOrderByEnum.class)),
                     @io.swagger.v3.oas.annotations.Parameter(name = "orderType", description = "order type",schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderTypeEnum.class))
             },

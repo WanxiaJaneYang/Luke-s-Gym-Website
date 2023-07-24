@@ -18,6 +18,11 @@
                         password="Adelaide123N">
         </jdbcConnection>
 
+<!--        <javaTypeResolver>-->
+<!--            <property name="forceBigDecimals" value="false"/>-->
+<!--            <typeOverride name="TIMESTAMP" javaType="java.sql.Timestamp"/>-->
+<!--        </javaTypeResolver>-->
+        
         <javaModelGenerator targetPackage="com.lukefitness.lukegymbackend.models"
                             targetProject="src/main/java">
         </javaModelGenerator>
@@ -31,8 +36,8 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
 
-        <table schema="gym" tableName="program_card"
-               domainObjectName="ProgramCard"
+        <table schema="gym" tableName="program"
+               domainObjectName="Program"
         >
         </table>
 
