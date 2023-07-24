@@ -12,6 +12,7 @@
     <result column="intensity" jdbcType="VARCHAR" property="intensity" />
     <result column="tempo" jdbcType="VARCHAR" property="tempo" />
     <result column="rest" jdbcType="INTEGER" property="rest" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     exercise_session_id, name, card_id, session_type, time, reps, sets, intensity, tempo, 
-    rest
+    rest, update_at
   </sql>
   <select id="selectByExample" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSessionExample" resultMap="BaseResultMap">
     select
@@ -109,11 +110,11 @@
     insert into exercise_session (exercise_session_id, name, card_id, 
       session_type, time, reps, 
       sets, intensity, tempo, 
-      rest)
+      rest, update_at)
     values (#{exerciseSessionId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cardId,jdbcType=INTEGER}, 
       #{sessionType,jdbcType=CHAR}, #{time,jdbcType=INTEGER}, #{reps,jdbcType=INTEGER}, 
       #{sets,jdbcType=INTEGER}, #{intensity,jdbcType=VARCHAR}, #{tempo,jdbcType=VARCHAR}, 
-      #{rest,jdbcType=INTEGER})
+      #{rest,jdbcType=INTEGER}, #{updateAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSession" useGeneratedKeys="true" keyProperty="exerciseSessionId">
     insert into exercise_session
@@ -148,6 +149,9 @@
       <if test="rest != null">
         rest,
       </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="exerciseSessionId != null">
@@ -179,6 +183,9 @@
       </if>
       <if test="rest != null">
         #{rest,jdbcType=INTEGER},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -221,6 +228,9 @@
       <if test="row.rest != null">
         rest = #{row.rest,jdbcType=INTEGER},
       </if>
+      <if test="row.updateAt != null">
+        update_at = #{row.updateAt,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +247,8 @@
       sets = #{row.sets,jdbcType=INTEGER},
       intensity = #{row.intensity,jdbcType=VARCHAR},
       tempo = #{row.tempo,jdbcType=VARCHAR},
-      rest = #{row.rest,jdbcType=INTEGER}
+      rest = #{row.rest,jdbcType=INTEGER},
+      update_at = #{row.updateAt,jdbcType=TIMESTAMP}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,7 +283,24 @@
       <if test="rest != null">
         rest = #{rest,jdbcType=INTEGER},
       </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
     </set>
+    where exercise_session_id = #{exerciseSessionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lukefitness.lukegymbackend.models.ExerciseSession">
+    update exercise_session
+    set name = #{name,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=INTEGER},
+      session_type = #{sessionType,jdbcType=CHAR},
+      time = #{time,jdbcType=INTEGER},
+      reps = #{reps,jdbcType=INTEGER},
+      sets = #{sets,jdbcType=INTEGER},
+      intensity = #{intensity,jdbcType=VARCHAR},
+      tempo = #{tempo,jdbcType=VARCHAR},
+      rest = #{rest,jdbcType=INTEGER},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
     where exercise_session_id = #{exerciseSessionId,jdbcType=INTEGER}
   </update>
 </mapper>

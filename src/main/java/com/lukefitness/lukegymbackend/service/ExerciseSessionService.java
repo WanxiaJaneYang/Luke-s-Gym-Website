@@ -1,6 +1,5 @@
 package com.lukefitness.lukegymbackend.service;
 
-import com.lukefitness.lukegymbackend.dto.request.ExerciseSessionReq;
 import com.lukefitness.lukegymbackend.models.ExerciseSession;
 
 import java.util.List;

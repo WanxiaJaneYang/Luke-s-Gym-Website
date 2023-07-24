@@ -2,12 +2,9 @@ package com.lukefitness.lukegymbackend.service.impl;
 
 import com.lukefitness.lukegymbackend.dao.ExerciseDao;
 import com.lukefitness.lukegymbackend.dao.ExerciseSessionDao;
-import com.lukefitness.lukegymbackend.dto.request.ExerciseSessionReq;
+import com.lukefitness.lukegymbackend.dao.ProgramCardDao;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
-import com.lukefitness.lukegymbackend.models.Exercise;
-import com.lukefitness.lukegymbackend.models.ExerciseExample;
-import com.lukefitness.lukegymbackend.models.ExerciseSession;
-import com.lukefitness.lukegymbackend.models.ExerciseSessionExample;
+import com.lukefitness.lukegymbackend.models.*;
 import com.lukefitness.lukegymbackend.service.ExerciseSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +20,8 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
     @Autowired
     ExerciseDao exerciseDao;
 
+    @Autowired
+    ProgramCardDao programCardDao;
     @Override
     @Transactional
     public ExerciseSession insertExerciseSession(ExerciseSession exerciseSession) {
@@ -54,6 +53,12 @@ public class ExerciseSessionServiceImp implements ExerciseSessionService {
         int rows=exerciseSessionDao.updateByPrimaryKeySelective(exerciseSession);
         if(rows==0)
             throw new NotFoundException("ExerciseSession not found");
+
+        //update card
+        ExerciseSession exerciseSessionFromDb=exerciseSessionDao.selectByPrimaryKey(exerciseSession.getExerciseSessionId());
+        ProgramCard programCard = new ProgramCard(exerciseSessionFromDb.getCardId());
+        programCard.setUpdateAt(exerciseSessionFromDb.getUpdateAt());
+        programCardDao.updateByPrimaryKeySelective(programCard);
     }
 
     @Override
