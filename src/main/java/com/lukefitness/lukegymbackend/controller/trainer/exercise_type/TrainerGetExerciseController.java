@@ -67,8 +67,8 @@ public class TrainerGetExerciseController {
     )
     public ResponseEntity<?> getAllExercisesByPage(@RequestParam(defaultValue = "0") Integer pageNo,
                                                    @RequestParam(defaultValue = "10") Integer pageSize,
-                                                   @RequestParam(defaultValue = "updated_at")ExerciseOrderByEnum orderBy,
-                                                    @RequestParam(defaultValue = "desc") OrderTypeEnum orderType
+                                                   @RequestParam(defaultValue = "UPDATE_AT")ExerciseOrderByEnum orderBy,
+                                                    @RequestParam(defaultValue = "DESC") OrderTypeEnum orderType
                                                    ) {
         return Response.success(exerciseService.getExercisesByPage(pageNo, pageSize, orderBy.getValue(), orderType.getValue()));
     }

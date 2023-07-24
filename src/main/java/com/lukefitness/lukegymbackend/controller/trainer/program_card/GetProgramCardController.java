@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dto.OrderTypeEnum;
 import com.lukefitness.lukegymbackend.dto.orderby.ProgramCardOrderByEnum;
 import com.lukefitness.lukegymbackend.models.ProgramCard;
+import com.lukefitness.lukegymbackend.models.ProgramCardExample;
+import com.lukefitness.lukegymbackend.models.ProgramCardStatusEnum;
 import com.lukefitness.lukegymbackend.service.ProgramCardService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,6 +51,10 @@ public class GetProgramCardController {
                     @Parameter(name = "trainerId", description = "The trainer id", required = true),
                     @Parameter(name = "page", description = "The page number", required = true),
                     @Parameter(name = "size", description = "The page size", required = true),
+                    @Parameter(name = "traineeId", description = "The trainee id"),
+                    @Parameter(name = "statusEnum", description = "The status enum",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProgramCardStatusEnum.class)
+                    ),
                     @Parameter(name = "orderBy", description = "The order by field",
                             schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProgramCardOrderByEnum.class)
                     ),
@@ -69,7 +75,16 @@ public class GetProgramCardController {
                                                    @RequestParam Integer page,
                                                    @RequestParam Integer size,
                                                    @RequestParam(defaultValue = "DATE") ProgramCardOrderByEnum orderBy,
-                                                   @RequestParam(defaultValue = "DESC") OrderTypeEnum orderType) {
-        return Response.success(programCardService.getProgramCards(trainerId, page, size, orderBy.getValue(), orderType.getValue()));
+                                                   @RequestParam(defaultValue = "DESC") OrderTypeEnum orderType,
+                                                   @RequestParam(required = false) Integer traineeId,
+                                                   @RequestParam(required = false,
+                                                           defaultValue = "DRAFT") ProgramCardStatusEnum statusEnum
+                                                   ) {
+        ProgramCardExample programCardExample = new ProgramCardExample();
+        programCardExample.createCriteria()
+                .andTrainerIdEqualTo(trainerId)
+                .andStatusEqualTo(statusEnum.getValue())
+                .andTraineeIdEqualTo(traineeId);
+        return Response.success(programCardService.getProgramCardsByExample(programCardExample, page, size, orderBy.getValue(), orderType.getValue()));
     }
 }

@@ -4,9 +4,12 @@ import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dto.OrderTypeEnum;
 import com.lukefitness.lukegymbackend.dto.orderby.ProgramOrderByEnum;
 import com.lukefitness.lukegymbackend.models.Program;
+import com.lukefitness.lukegymbackend.models.ProgramExample;
 import com.lukefitness.lukegymbackend.service.ProgramService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +27,7 @@ public class GetProgramController {
     @GetMapping
     @Operation(summary = "Get programs for trainer",
             parameters = {
-                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Trainer ID", required = true),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Trainer ID", required = true,in= ParameterIn.PATH),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNum", description = "Page number"),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "Page size"),
                     @io.swagger.v3.oas.annotations.Parameter(name = "sortBy", description = "Sort by",
@@ -42,7 +45,9 @@ public class GetProgramController {
             }
 
     )
-    public ResponseEntity<?> getPrograms(@PathVariable Integer trainerId, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "startDate") ProgramOrderByEnum sortBy, @RequestParam(defaultValue = "asc") OrderTypeEnum order) {
-        return Response.success(programService.getProgramsForTrainer(trainerId, pageNum, pageSize, sortBy.getValue(), order.getValue()));
+    public ResponseEntity<?> getPrograms(@PathVariable Integer trainerId, @RequestParam(required = false) Integer traineeId,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "START_DATE") ProgramOrderByEnum sortBy, @RequestParam(defaultValue = "ASC") OrderTypeEnum order) {
+        ProgramExample programExample = new ProgramExample();
+        programExample.createCriteria().andTrainerIdEqualTo(trainerId).andTraineeIdEqualTo(traineeId);
+        return Response.success(programService.getProgramsForTrainer(programExample, pageNum, pageSize, sortBy.getValue(), order.getValue()));
     }
 }

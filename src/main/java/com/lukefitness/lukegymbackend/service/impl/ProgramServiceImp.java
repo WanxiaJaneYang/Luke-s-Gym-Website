@@ -7,12 +7,11 @@ import com.lukefitness.lukegymbackend.dao.ProgramDao;
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.exception.UnauthorizedException;
-import com.lukefitness.lukegymbackend.models.Program;
-import com.lukefitness.lukegymbackend.models.ProgramExample;
-import com.lukefitness.lukegymbackend.models.ProgramStatusEnum;
+import com.lukefitness.lukegymbackend.models.*;
 import com.lukefitness.lukegymbackend.service.ProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,9 +23,7 @@ public class ProgramServiceImp implements ProgramService {
     @Autowired
     ProgramCardDao programCardDao;
     @Override
-    public PageInfo<Program> getProgramsForTrainer(Integer trainerId, Integer pageNum, Integer pageSize, String sortBy, String order) {
-        ProgramExample programExample = new ProgramExample();
-        programExample.createCriteria().andTrainerIdEqualTo(trainerId);
+    public PageInfo<Program> getProgramsForTrainer(ProgramExample programExample, Integer pageNum, Integer pageSize, String sortBy, String order) {
         PageHelper.startPage(pageNum, pageSize, sortBy + " " + order);
         List<Program> programs = programDao.selectByExample(programExample);
         return new PageInfo<>(programs);
@@ -42,6 +39,7 @@ public class ProgramServiceImp implements ProgramService {
     }
 
     @Override
+    @Transactional
     public void cancelProgram(Integer programId, Integer trainerId) {
         Program programFromDb = programDao.selectByPrimaryKey(programId);
         if(programFromDb==null) {
@@ -59,5 +57,10 @@ public class ProgramServiceImp implements ProgramService {
         // change the status of the program to cancelled
         programFromDb.setStatus(ProgramStatusEnum.CANCELLED.getValue());
         programDao.updateByPrimaryKeySelective(programFromDb);
+
+        // change the related card status to cancelled
+        ProgramCard programCard = programCardDao.selectByPrimaryKey(programFromDb.getCardId());
+        programCard.setStatus(ProgramCardStatusEnum.CANCELLED.getValue());
+        programCardDao.updateByPrimaryKeySelective(programCard);
     }
 }

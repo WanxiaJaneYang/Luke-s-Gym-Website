@@ -62,8 +62,8 @@ public class GetExerciseController {
     )
     public ResponseEntity<?> getAllExercisesByPage(@RequestParam(defaultValue = "1") Integer pageNo,
                                                    @RequestParam(defaultValue = "10") Integer pageSize,
-                                                   @RequestParam(defaultValue = "update_at") ExerciseOrderByEnum orderBy,
-                                                   @RequestParam(defaultValue = "desc")OrderTypeEnum orderType
+                                                   @RequestParam(defaultValue = "UPDATE_AT") ExerciseOrderByEnum orderBy,
+                                                   @RequestParam(defaultValue = "DESC")OrderTypeEnum orderType
                                                    ) {
         return Response.success(exerciseService.getExercisesByPage(pageNo, pageSize,orderBy.getValue(),orderType.getValue()));
     }
