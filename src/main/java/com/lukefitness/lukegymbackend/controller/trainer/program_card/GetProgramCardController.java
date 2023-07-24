@@ -81,10 +81,10 @@ public class GetProgramCardController {
                                                            defaultValue = "DRAFT") ProgramCardStatusEnum statusEnum
                                                    ) {
         ProgramCardExample programCardExample = new ProgramCardExample();
-        programCardExample.createCriteria()
-                .andTrainerIdEqualTo(trainerId)
-                .andStatusEqualTo(statusEnum.getValue())
-                .andTraineeIdEqualTo(traineeId);
+        ProgramCardExample.Criteria criteria=programCardExample.createCriteria().andTrainerIdEqualTo(trainerId)
+                .andStatusEqualTo(statusEnum.getValue());
+        if(traineeId != null)
+            criteria.andTraineeIdEqualTo(traineeId);
         return Response.success(programCardService.getProgramCardsByExample(programCardExample, page, size, orderBy.getValue(), orderType.getValue()));
     }
 }
