@@ -24,7 +24,8 @@ public class ProgramServiceImp implements ProgramService {
     ProgramCardDao programCardDao;
     @Override
     public PageInfo<Program> getProgramsForTrainer(ProgramExample programExample, Integer pageNum, Integer pageSize, String sortBy, String order) {
-        PageHelper.startPage(pageNum, pageSize, sortBy + " " + order);
+        programExample.setOrderByClause(sortBy + " " + order);
+        PageHelper.startPage(pageNum, pageSize);
         List<Program> programs = programDao.selectByExample(programExample);
         return new PageInfo<>(programs);
     }
@@ -33,7 +34,8 @@ public class ProgramServiceImp implements ProgramService {
     public PageInfo<Program> getProgramsForTrainee(Integer traineeId, Integer pageNum, Integer pageSize, String sortBy, String order) {
         ProgramExample programExample = new ProgramExample();
         programExample.createCriteria().andTraineeIdEqualTo(traineeId);
-        PageHelper.startPage(pageNum, pageSize, sortBy + " " + order);
+        programExample.setOrderByClause(sortBy + " " + order);
+        PageHelper.startPage(pageNum, pageSize);
         List<Program> programs = programDao.selectByExample(programExample);
         return new PageInfo<>(programs);
     }
