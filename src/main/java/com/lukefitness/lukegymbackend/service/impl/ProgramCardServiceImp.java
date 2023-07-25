@@ -133,7 +133,8 @@ public class ProgramCardServiceImp implements ProgramCardService {
 
     @Override
     public PageInfo<ProgramCard> getProgramCardsByExample(ProgramCardExample programCardExample, Integer pageNum, Integer pageSize, String sortBy, String order) {
-        PageHelper.startPage(pageNum, pageSize, sortBy + " " + order);
+        programCardExample.setOrderByClause(sortBy + " " + order);
+        PageHelper.startPage(pageNum, pageSize);
         List<ProgramCard> programCards = programCardDao.selectByExample(programCardExample);
         return new PageInfo<>(programCards);
     }
