@@ -31,9 +31,7 @@ public class ProgramServiceImp implements ProgramService {
     }
 
     @Override
-    public PageInfo<Program> getProgramsForTrainee(Integer traineeId, Integer pageNum, Integer pageSize, String sortBy, String order) {
-        ProgramExample programExample = new ProgramExample();
-        programExample.createCriteria().andTraineeIdEqualTo(traineeId);
+    public PageInfo<Program> getProgramsForTrainee(ProgramExample programExample, Integer pageNum, Integer pageSize, String sortBy, String order) {
         programExample.setOrderByClause(sortBy + " " + order);
         PageHelper.startPage(pageNum, pageSize);
         List<Program> programs = programDao.selectByExample(programExample);
