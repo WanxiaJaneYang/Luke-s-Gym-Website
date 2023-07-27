@@ -2,10 +2,10 @@ package com.lukefitness.lukegymbackend.dto.orderby;
 
 public enum ProgramOrderByEnum {
     STATUS("status"),
-    START_DATE("startDate"),
-    END_DATE("endDate"),
-    TRAINER_ID("trainerId"),
-    TRAINEE_ID("traineeId");
+    START_DATE("start_date"),
+    END_DATE("end_date"),
+    TRAINER_ID("trainer_id"),
+    TRAINEE_ID("trainee_id");
 
     private final String value;
 
