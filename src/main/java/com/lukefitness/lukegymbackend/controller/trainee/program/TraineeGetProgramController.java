@@ -8,7 +8,6 @@ import com.lukefitness.lukegymbackend.models.ProgramExample;
 import com.lukefitness.lukegymbackend.service.ProgramService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,21 +18,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/trainer/{trainerId}/program")
-@Tag(name="Trainer - Program")
-public class GetProgramController {
+@RequestMapping("/trainee/{trainerId}/program")
+@Tag(name="Trainee - Program")
+public class TraineeGetProgramController{
     @Autowired
     ProgramService programService;
     @GetMapping
     @Operation(summary = "Get programs for trainer",
             parameters = {
-                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Trainer ID", required = true,in= ParameterIn.PATH),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "traineeId", description = "Trainee ID", required = true,in= ParameterIn.PATH),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageNum", description = "Page number"),
                     @io.swagger.v3.oas.annotations.Parameter(name = "pageSize", description = "Page size"),
                     @io.swagger.v3.oas.annotations.Parameter(name = "sortBy", description = "Sort by",
                             schema=@Schema(implementation = ProgramOrderByEnum.class)),
                     @io.swagger.v3.oas.annotations.Parameter(name = "order", description = "Order",
-                            schema=@Schema(implementation = OrderTypeEnum.class))},
+                            schema=@Schema(implementation = OrderTypeEnum.class)),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Trainer ID")
+            },
             security = @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "bearer-key"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "Programs retrieved successfully",
@@ -45,11 +46,11 @@ public class GetProgramController {
             }
 
     )
-    public ResponseEntity<?> getPrograms(@PathVariable Integer trainerId, @RequestParam(required = false) Integer traineeId,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(required = false,defaultValue = "START_DATE") ProgramOrderByEnum sortBy, @RequestParam(required = false,defaultValue = "ASC") OrderTypeEnum order) {
+    public ResponseEntity<?> getPrograms(@PathVariable Integer traineeId, @RequestParam(required = false) Integer trainerId,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(required = false,defaultValue = "START_DATE") ProgramOrderByEnum sortBy, @RequestParam(required = false,defaultValue = "ASC") OrderTypeEnum order) {
         ProgramExample programExample = new ProgramExample();
-        ProgramExample.Criteria criteria=programExample.createCriteria().andTrainerIdEqualTo(trainerId);
-        if(traineeId!=null)
-            criteria.andTraineeIdEqualTo(traineeId);
+        ProgramExample.Criteria criteria=programExample.createCriteria().andTraineeIdEqualTo(traineeId);
+        if(trainerId!=null)
+            criteria.andTrainerIdEqualTo(trainerId);
         return Response.success(programService.getProgramsForTrainer(programExample, pageNum, pageSize, sortBy.getValue(), order.getValue()));
     }
 }

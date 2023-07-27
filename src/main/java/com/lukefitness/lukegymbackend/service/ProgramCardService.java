@@ -11,4 +11,6 @@ public interface ProgramCardService {
     void sendProgramCard(Integer cardId, Integer trainerId);
     ProgramCard getProgramCard(Integer cardId, Integer trainerId);
     PageInfo<ProgramCard> getProgramCardsByExample(ProgramCardExample programCardExample, Integer pageNum, Integer pageSize, String sortBy, String order);
+
+    ProgramCard getProgramCardByExample(ProgramCardExample example);
 }

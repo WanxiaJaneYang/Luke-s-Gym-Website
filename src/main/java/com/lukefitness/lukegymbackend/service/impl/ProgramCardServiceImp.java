@@ -138,4 +138,13 @@ public class ProgramCardServiceImp implements ProgramCardService {
         List<ProgramCard> programCards = programCardDao.selectByExample(programCardExample);
         return new PageInfo<>(programCards);
     }
+
+    @Override
+    public ProgramCard getProgramCardByExample(ProgramCardExample example) {
+        List<ProgramCard> programCards = programCardDao.selectByExample(example);
+        if(programCards.size()==0) {
+            throw new NotFoundException("Program card not found");
+        }
+        return programCards.get(0);
+    }
 }
