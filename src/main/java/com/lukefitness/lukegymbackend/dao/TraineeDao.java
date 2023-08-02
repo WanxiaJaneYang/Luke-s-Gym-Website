@@ -20,6 +20,7 @@ public interface TraineeDao {
     void updateTraineeEmail(Trainee trainee);
     void deleteNotActiveTrainees();
     void deactivateTrainee(int id);
+    int deleteTrainee(int id);
 
     int linkTraineeToTrainer(@Param("traineeId") int traineeId, @Param("trainerId") int trainerId);
     boolean isTraineeLinkedToTrainer(@Param("traineeId") int traineeId, @Param("trainerId") int trainerId);

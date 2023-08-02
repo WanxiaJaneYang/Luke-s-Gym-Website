@@ -63,6 +63,10 @@
         WHERE id = #{traineeId}
     </update>
 
+    <delete id="deleteTrainee" parameterType="int">
+        DELETE FROM trainee WHERE id = #{id}
+    </delete>
+
     <delete id="deleteNotActiveTrainees">
         DELETE FROM trainee WHERE is_active = false
         AND last_used_date &lt; NOW() - INTERVAL 2 YEAR

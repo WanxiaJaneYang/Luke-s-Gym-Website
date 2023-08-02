@@ -35,12 +35,7 @@ public class TraineeDeletionController {
             }
     )
     public ResponseEntity<?> deleteTrainee(@PathVariable int traineeId) throws NotFoundException {
-        Trainee trainee=traineeService.getTraineeById(traineeId);
-        if (trainee == null)
-            throw new NotFoundException("Trainee not found");
-
-        traineeService.deactivateTrainee(traineeId);
-        emailService.sendTraineeDeletionEmail(trainee);
+        traineeService.deleteTrainee(traineeId);
         return Response.success();
     }
 }

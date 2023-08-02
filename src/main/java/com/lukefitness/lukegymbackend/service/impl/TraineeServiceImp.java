@@ -137,6 +137,14 @@ public class TraineeServiceImp implements TraineeService {
     }
 
     @Override
+    public void deleteTrainee(int traineeId) {
+        int rows=traineeDao.deleteTrainee(traineeId);
+        if (rows==0){
+            throw new NotFoundException("Trainee id not found");
+        }
+    }
+
+    @Override
     public void deactivateTrainee(int traineeId) {
         traineeDao.deactivateTrainee(traineeId);
     }
