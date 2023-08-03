@@ -5,10 +5,9 @@ import com.lukefitness.lukegymbackend.dto.OrderTypeEnum;
 import com.lukefitness.lukegymbackend.dto.orderby.ProgramOrderByEnum;
 import com.lukefitness.lukegymbackend.models.Program;
 import com.lukefitness.lukegymbackend.models.ProgramExample;
-import com.lukefitness.lukegymbackend.service.ProgramService;
+import com.lukefitness.lukegymbackend.service.program.ProgramService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,6 +49,6 @@ public class GetProgramController {
         ProgramExample.Criteria criteria=programExample.createCriteria().andTrainerIdEqualTo(trainerId);
         if(traineeId!=null)
             criteria.andTraineeIdEqualTo(traineeId);
-        return Response.success(programService.getProgramsForTrainer(programExample, pageNum, pageSize, sortBy.getValue(), order.getValue()));
+        return Response.success(programService.getProgramsForTrainee(programExample,pageNum,pageSize,sortBy.getValue(),order.getValue()));
     }
 }

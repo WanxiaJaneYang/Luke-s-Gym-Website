@@ -36,8 +36,8 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
 
-        <table schema="gym" tableName="program"
-               domainObjectName="Program"
+        <table schema="gym" tableName="program_feedback"
+               domainObjectName="ProgramFeedback"
         >
         </table>
 

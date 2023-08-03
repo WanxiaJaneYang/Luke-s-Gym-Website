@@ -654,6 +654,146 @@ public class ProgramExample {
             addCriterion("trainer_id not between", value1, value2, "trainerId");
             return (Criteria) this;
         }
+
+        public Criteria andSessionFocus1IsNull() {
+            addCriterion("session_focus1 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1IsNotNull() {
+            addCriterion("session_focus1 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1EqualTo(String value) {
+            addCriterion("session_focus1 =", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1NotEqualTo(String value) {
+            addCriterion("session_focus1 <>", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1GreaterThan(String value) {
+            addCriterion("session_focus1 >", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1GreaterThanOrEqualTo(String value) {
+            addCriterion("session_focus1 >=", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1LessThan(String value) {
+            addCriterion("session_focus1 <", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1LessThanOrEqualTo(String value) {
+            addCriterion("session_focus1 <=", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1Like(String value) {
+            addCriterion("session_focus1 like", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1NotLike(String value) {
+            addCriterion("session_focus1 not like", value, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1In(List<String> values) {
+            addCriterion("session_focus1 in", values, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1NotIn(List<String> values) {
+            addCriterion("session_focus1 not in", values, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1Between(String value1, String value2) {
+            addCriterion("session_focus1 between", value1, value2, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus1NotBetween(String value1, String value2) {
+            addCriterion("session_focus1 not between", value1, value2, "sessionFocus1");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2IsNull() {
+            addCriterion("session_focus2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2IsNotNull() {
+            addCriterion("session_focus2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2EqualTo(String value) {
+            addCriterion("session_focus2 =", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2NotEqualTo(String value) {
+            addCriterion("session_focus2 <>", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2GreaterThan(String value) {
+            addCriterion("session_focus2 >", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2GreaterThanOrEqualTo(String value) {
+            addCriterion("session_focus2 >=", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2LessThan(String value) {
+            addCriterion("session_focus2 <", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2LessThanOrEqualTo(String value) {
+            addCriterion("session_focus2 <=", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2Like(String value) {
+            addCriterion("session_focus2 like", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2NotLike(String value) {
+            addCriterion("session_focus2 not like", value, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2In(List<String> values) {
+            addCriterion("session_focus2 in", values, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2NotIn(List<String> values) {
+            addCriterion("session_focus2 not in", values, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2Between(String value1, String value2) {
+            addCriterion("session_focus2 between", value1, value2, "sessionFocus2");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionFocus2NotBetween(String value1, String value2) {
+            addCriterion("session_focus2 not between", value1, value2, "sessionFocus2");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

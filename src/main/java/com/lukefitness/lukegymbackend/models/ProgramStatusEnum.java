@@ -1,7 +1,6 @@
 package com.lukefitness.lukegymbackend.models;
 
 public enum ProgramStatusEnum {
-    ONGOING("ongoing"),
     PAST("past"),
     UPCOMING("upcoming"),
     CANCELLED("cancelled");

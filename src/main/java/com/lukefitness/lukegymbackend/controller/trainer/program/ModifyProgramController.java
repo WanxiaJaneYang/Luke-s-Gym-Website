@@ -1,6 +1,8 @@
 package com.lukefitness.lukegymbackend.controller.trainer.program;
 
-import com.lukefitness.lukegymbackend.service.ProgramService;
+import com.lukefitness.lukegymbackend.dto.response.ProgramAttendingRes;
+import com.lukefitness.lukegymbackend.models.Program;
+import com.lukefitness.lukegymbackend.service.program.ProgramService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -27,13 +29,31 @@ public class ModifyProgramController {
             },
             security = @SecurityRequirement(name = "bearer-key"),
             responses = {
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Program cancelled successfully"),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Program cancelled successfully",
+                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Program.class))),
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
                     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
     public ResponseEntity<?> cancelProgram(@PathVariable Integer trainerId, @PathVariable Integer programId) {
-        programService.cancelProgram(trainerId, programId);
-        return Response.success();
+        return Response.success(programService.cancelProgram(trainerId, programId));
+    }
+
+    @PatchMapping("/{programId}/attend")
+    @Operation(
+            security = @SecurityRequirement(name = "bearer-key"),
+            parameters = {
+                    @io.swagger.v3.oas.annotations.Parameter(name = "trainerId", description = "Trainer ID", required = true, in = ParameterIn.PATH),
+                    @io.swagger.v3.oas.annotations.Parameter(name = "programId", description = "Program ID", required = true, in=ParameterIn.PATH)
+            },
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Program attended successfully",
+                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProgramAttendingRes.class))),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+            }
+    )
+    public ResponseEntity<?> attendProgram(@PathVariable Integer trainerId, @PathVariable Integer programId) {
+        return Response.success(programService.attendProgram(trainerId, programId));
     }
 }

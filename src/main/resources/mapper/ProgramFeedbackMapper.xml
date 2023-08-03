@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lukefitness.lukegymbackend.dao.ProgramFeedbackDao">
+  <resultMap id="BaseResultMap" type="com.lukefitness.lukegymbackend.models.ProgramFeedback">
+    <id column="feedback_id" jdbcType="INTEGER" property="feedbackId" />
+    <result column="program_id" jdbcType="INTEGER" property="programId" />
+    <result column="score" jdbcType="REAL" property="score" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.lukefitness.lukegymbackend.models.ProgramFeedback">
+    <result column="trainee_feedback" jdbcType="LONGVARCHAR" property="traineeFeedback" />
+    <result column="trainer_feedback" jdbcType="LONGVARCHAR" property="trainerFeedback" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    feedback_id, program_id, score
+  </sql>
+  <sql id="Blob_Column_List">
+    trainee_feedback, trainer_feedback
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedbackExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from program_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedbackExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from program_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from program_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from program_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedbackExample">
+    delete from program_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedback">
+    insert into program_feedback (feedback_id, program_id, score, 
+      trainee_feedback, trainer_feedback
+      )
+    values (#{feedbackId,jdbcType=INTEGER}, #{programId,jdbcType=INTEGER}, #{score,jdbcType=REAL}, 
+      #{traineeFeedback,jdbcType=LONGVARCHAR}, #{trainerFeedback,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedback" useGeneratedKeys="true" keyProperty="feedbackId">
+    insert into program_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="feedbackId != null">
+        feedback_id,
+      </if>
+      <if test="programId != null">
+        program_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="traineeFeedback != null">
+        trainee_feedback,
+      </if>
+      <if test="trainerFeedback != null">
+        trainer_feedback,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="feedbackId != null">
+        #{feedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="programId != null">
+        #{programId,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="traineeFeedback != null">
+        #{traineeFeedback,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="trainerFeedback != null">
+        #{trainerFeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedbackExample" resultType="java.lang.Long">
+    select count(*) from program_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update program_feedback
+    <set>
+      <if test="row.feedbackId != null">
+        feedback_id = #{row.feedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="row.programId != null">
+        program_id = #{row.programId,jdbcType=INTEGER},
+      </if>
+      <if test="row.score != null">
+        score = #{row.score,jdbcType=REAL},
+      </if>
+      <if test="row.traineeFeedback != null">
+        trainee_feedback = #{row.traineeFeedback,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.trainerFeedback != null">
+        trainer_feedback = #{row.trainerFeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update program_feedback
+    set feedback_id = #{row.feedbackId,jdbcType=INTEGER},
+      program_id = #{row.programId,jdbcType=INTEGER},
+      score = #{row.score,jdbcType=REAL},
+      trainee_feedback = #{row.traineeFeedback,jdbcType=LONGVARCHAR},
+      trainer_feedback = #{row.trainerFeedback,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update program_feedback
+    set feedback_id = #{row.feedbackId,jdbcType=INTEGER},
+      program_id = #{row.programId,jdbcType=INTEGER},
+      score = #{row.score,jdbcType=REAL}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedback">
+    update program_feedback
+    <set>
+      <if test="programId != null">
+        program_id = #{programId,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="traineeFeedback != null">
+        trainee_feedback = #{traineeFeedback,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="trainerFeedback != null">
+        trainer_feedback = #{trainerFeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedback">
+    update program_feedback
+    set program_id = #{programId,jdbcType=INTEGER},
+      score = #{score,jdbcType=REAL},
+      trainee_feedback = #{traineeFeedback,jdbcType=LONGVARCHAR},
+      trainer_feedback = #{trainerFeedback,jdbcType=LONGVARCHAR}
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lukefitness.lukegymbackend.models.ProgramFeedback">
+    update program_feedback
+    set program_id = #{programId,jdbcType=INTEGER},
+      score = #{score,jdbcType=REAL}
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+</mapper>

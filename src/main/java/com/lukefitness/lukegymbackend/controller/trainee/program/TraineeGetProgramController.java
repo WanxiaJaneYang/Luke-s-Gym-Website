@@ -6,7 +6,7 @@ import com.lukefitness.lukegymbackend.dto.orderby.ProgramOrderByEnum;
 import com.lukefitness.lukegymbackend.models.Program;
 import com.lukefitness.lukegymbackend.models.ProgramExample;
 import com.lukefitness.lukegymbackend.models.ProgramStatusEnum;
-import com.lukefitness.lukegymbackend.service.ProgramService;
+import com.lukefitness.lukegymbackend.service.program.ProgramService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/trainee/{trainerId}/program")
+@RequestMapping("/trainee/{traineeId}/program")
 @Tag(name="Trainee - Program")
 public class TraineeGetProgramController{
     @Autowired

@@ -28,11 +28,17 @@ public class Program {
 
     private Integer trainerId;
 
+    private String sessionFocus1;
+
+    private String sessionFocus2;
+
     public Program(ProgramCard programCard) {
         this.cardId = programCard.getCardId();
         this.traineeId = programCard.getTraineeId();
         this.trainerId = programCard.getTrainerId();
         this.startDate = programCard.getDate();
+        this.sessionFocus1 = programCard.getSessionFocus1();
+        this.sessionFocus2 = programCard.getSessionFocus2();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(programCard.getDate());
         calendar.add(Calendar.MINUTE, programCard.getDuration());
