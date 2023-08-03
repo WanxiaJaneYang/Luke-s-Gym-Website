@@ -5,7 +5,7 @@ public enum ProgramStatusEnum {
     UPCOMING("upcoming"),
     CANCELLED("cancelled");
 
-    private String value;
+    private final String value;
 
     ProgramStatusEnum(String value) {
         this.value = value;

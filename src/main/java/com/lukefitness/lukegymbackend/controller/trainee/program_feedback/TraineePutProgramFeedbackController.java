@@ -1,7 +1,6 @@
 package com.lukefitness.lukegymbackend.controller.trainee.program_feedback;
 
 import com.lukefitness.lukegymbackend.dto.request.TraineeFeedbackReq;
-import com.lukefitness.lukegymbackend.dto.request.TrainerFeedbackReq;
 import com.lukefitness.lukegymbackend.service.program_feedback.ProgramFeedbackService;
 import com.lukefitness.lukegymbackend.utils.Response;
 import io.swagger.v3.oas.annotations.Operation;
