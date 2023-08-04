@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lukefitness.lukegymbackend.dao.ProgramCardDao;
 import com.lukefitness.lukegymbackend.dao.ProgramDao;
+import com.lukefitness.lukegymbackend.dto.response.SendProgramCardRes;
 import com.lukefitness.lukegymbackend.exception.BadRequestException;
 import com.lukefitness.lukegymbackend.exception.NotFoundException;
 import com.lukefitness.lukegymbackend.exception.UnauthorizedException;
@@ -51,7 +52,7 @@ public class ProgramCardServiceImp implements ProgramCardService {
 
     @Override
     @Transactional
-    public void updateProgramCard(ProgramCard programCard) {
+    public ProgramCard updateProgramCard(ProgramCard programCard) {
         ProgramCard programCardFromDb = programCardDao.selectByPrimaryKey(programCard.getCardId());
         if(programCardFromDb==null) {
             throw new NotFoundException("Program card not found");
@@ -84,12 +85,13 @@ public class ProgramCardServiceImp implements ProgramCardService {
             program.setProgramId(programFromDb.getProgramId());
             programDao.updateByPrimaryKeySelective(program);
         }
+        return programCardDao.selectByPrimaryKey(programCard.getCardId());
 
     }
 
     @Override
     @Transactional
-    public void sendProgramCard(Integer cardId, Integer trainerId) {
+    public SendProgramCardRes sendProgramCard(Integer cardId, Integer trainerId) {
         ProgramCard programCardFromDb = programCardDao.selectByPrimaryKey(cardId);
         if(programCardFromDb==null) {
             throw new NotFoundException("Program card not found");
@@ -114,7 +116,9 @@ public class ProgramCardServiceImp implements ProgramCardService {
         if(programCardFromDb.getDate()==null||programCardFromDb.getDuration()==null) {
             throw new BadRequestException("Missing date or duration");
         }
-        programDao.insertSelective(new Program(programCardFromDb));
+        Program program = new Program(programCardFromDb);
+        programDao.insertSelective(program);
+        return new SendProgramCardRes(programCardDao.selectByPrimaryKey(programCardFromDb.getCardId()), programDao.selectByPrimaryKey(program.getProgramId()));
     }
 
     @Override

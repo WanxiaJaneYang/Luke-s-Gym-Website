@@ -1,6 +1,7 @@
 package com.lukefitness.lukegymbackend.controller.trainer.program_card;
 
 import com.lukefitness.lukegymbackend.dto.request.ProgramCardCreateReq;
+import com.lukefitness.lukegymbackend.dto.response.SendProgramCardRes;
 import com.lukefitness.lukegymbackend.models.ProgramCard;
 import com.lukefitness.lukegymbackend.service.ProgramCardService;
 import com.lukefitness.lukegymbackend.utils.Response;
@@ -30,7 +31,10 @@ public class EditProgramCard {
                             schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProgramCardCreateReq.class))),
             security = @SecurityRequirement(name="bearer-key"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Program card edited successfully"),
+                    @ApiResponse(responseCode = "200", description = "Program card edited successfully",
+                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
+                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProgramCard.class))
+                    ),
                     @ApiResponse(responseCode = "400", description = "Bad request"),
                     @ApiResponse(responseCode = "401", description = "Unauthorized"),
                     @ApiResponse(responseCode = "404", description = "Program card not found"),
@@ -41,8 +45,7 @@ public class EditProgramCard {
         ProgramCard programCard = new ProgramCard(programCardCreateReq);
         programCard.setCardId(cardId);
         programCard.setTrainerId(trainerId);
-        programCardService.updateProgramCard(programCard);
-        return Response.success();
+        return Response.success(programCardService.updateProgramCard(programCard));
     }
 
     @PatchMapping("/send")
@@ -54,7 +57,10 @@ public class EditProgramCard {
             },
             security = @SecurityRequirement(name="bearer-key"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Program card sent successfully"),
+                    @ApiResponse(responseCode = "200", description = "Program card sent successfully",
+                            content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json",
+                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = SendProgramCardRes.class))
+                    ),
                     @ApiResponse(responseCode = "400", description = "Bad request"),
                     @ApiResponse(responseCode = "401", description = "Unauthorized"),
                     @ApiResponse(responseCode = "404", description = "Program card not found"),
@@ -62,7 +68,6 @@ public class EditProgramCard {
             }
     )
     public ResponseEntity<?> sendProgramCard(@PathVariable Integer trainerId, @PathVariable Integer cardId) {
-        programCardService.sendProgramCard(cardId, trainerId);
-        return Response.success();
+        return Response.success(programCardService.sendProgramCard(cardId, trainerId));
     }
 }
