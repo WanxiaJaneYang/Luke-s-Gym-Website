@@ -11,6 +11,8 @@
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="trainee_id" jdbcType="INTEGER" property="traineeId" />
     <result column="trainer_id" jdbcType="INTEGER" property="trainerId" />
+    <result column="session_focus1" jdbcType="VARCHAR" property="sessionFocus1" />
+    <result column="session_focus2" jdbcType="VARCHAR" property="sessionFocus2" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     program_id, card_id, attendance, feedback_given, start_date, end_date, status, trainee_id, 
-    trainer_id
+    trainer_id, session_focus1, session_focus2
   </sql>
   <select id="selectByExample" parameterType="com.lukefitness.lukegymbackend.models.ProgramExample" resultMap="BaseResultMap">
     select
@@ -107,12 +109,12 @@
   <insert id="insert" parameterType="com.lukefitness.lukegymbackend.models.Program">
     insert into program (program_id, card_id, attendance, 
       feedback_given, start_date, end_date, 
-      status, trainee_id, trainer_id
-      )
+      status, trainee_id, trainer_id, 
+      session_focus1, session_focus2)
     values (#{programId,jdbcType=INTEGER}, #{cardId,jdbcType=INTEGER}, #{attendance,jdbcType=BIT}, 
       #{feedbackGiven,jdbcType=BIT}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=CHAR}, #{traineeId,jdbcType=INTEGER}, #{trainerId,jdbcType=INTEGER}
-      )
+      #{status,jdbcType=CHAR}, #{traineeId,jdbcType=INTEGER}, #{trainerId,jdbcType=INTEGER}, 
+      #{sessionFocus1,jdbcType=VARCHAR}, #{sessionFocus2,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lukefitness.lukegymbackend.models.Program" useGeneratedKeys="true" keyProperty="programId">
     insert into program
@@ -144,6 +146,12 @@
       <if test="trainerId != null">
         trainer_id,
       </if>
+      <if test="sessionFocus1 != null">
+        session_focus1,
+      </if>
+      <if test="sessionFocus2 != null">
+        session_focus2,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="programId != null">
@@ -172,6 +180,12 @@
       </if>
       <if test="trainerId != null">
         #{trainerId,jdbcType=INTEGER},
+      </if>
+      <if test="sessionFocus1 != null">
+        #{sessionFocus1,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionFocus2 != null">
+        #{sessionFocus2,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -211,6 +225,12 @@
       <if test="row.trainerId != null">
         trainer_id = #{row.trainerId,jdbcType=INTEGER},
       </if>
+      <if test="row.sessionFocus1 != null">
+        session_focus1 = #{row.sessionFocus1,jdbcType=VARCHAR},
+      </if>
+      <if test="row.sessionFocus2 != null">
+        session_focus2 = #{row.sessionFocus2,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +246,9 @@
       end_date = #{row.endDate,jdbcType=TIMESTAMP},
       status = #{row.status,jdbcType=CHAR},
       trainee_id = #{row.traineeId,jdbcType=INTEGER},
-      trainer_id = #{row.trainerId,jdbcType=INTEGER}
+      trainer_id = #{row.trainerId,jdbcType=INTEGER},
+      session_focus1 = #{row.sessionFocus1,jdbcType=VARCHAR},
+      session_focus2 = #{row.sessionFocus2,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,6 +280,12 @@
       <if test="trainerId != null">
         trainer_id = #{trainerId,jdbcType=INTEGER},
       </if>
+      <if test="sessionFocus1 != null">
+        session_focus1 = #{sessionFocus1,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionFocus2 != null">
+        session_focus2 = #{sessionFocus2,jdbcType=VARCHAR},
+      </if>
     </set>
     where program_id = #{programId,jdbcType=INTEGER}
   </update>
@@ -270,7 +298,9 @@
       end_date = #{endDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=CHAR},
       trainee_id = #{traineeId,jdbcType=INTEGER},
-      trainer_id = #{trainerId,jdbcType=INTEGER}
+      trainer_id = #{trainerId,jdbcType=INTEGER},
+      session_focus1 = #{sessionFocus1,jdbcType=VARCHAR},
+      session_focus2 = #{sessionFocus2,jdbcType=VARCHAR}
     where program_id = #{programId,jdbcType=INTEGER}
   </update>
 </mapper>

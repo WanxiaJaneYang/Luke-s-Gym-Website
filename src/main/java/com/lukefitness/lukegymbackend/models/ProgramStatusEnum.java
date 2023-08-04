@@ -1,12 +1,11 @@
 package com.lukefitness.lukegymbackend.models;
 
 public enum ProgramStatusEnum {
-    ONGOING("ongoing"),
     PAST("past"),
     UPCOMING("upcoming"),
     CANCELLED("cancelled");
 
-    private String value;
+    private final String value;
 
     ProgramStatusEnum(String value) {
         this.value = value;
