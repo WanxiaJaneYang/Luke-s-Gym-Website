@@ -11,8 +11,8 @@
 	<groupId>com.lukefitness</groupId>
 	<artifactId>lukegymbackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Luke&apos;s Gym Backend</name>
-	<description>Backend for Luke&apos;s Gym Website</description>
+	<name>Luke's Gym Backend</name>
+	<description>Backend for Luke's Gym Website</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>3.1.1</version>
+			<version>3.1.5</version>
 		</dependency>
 
 		<dependency>
