@@ -49,5 +49,5 @@ http://localhost:8080
 Visit this URL in your web browser to interact with Luke's Gym Backend API:
 
 ```plaintext
-http://localhost:8080/swagger-ui
+http://localhost:8080/swagger-ui/index.html
 ```
