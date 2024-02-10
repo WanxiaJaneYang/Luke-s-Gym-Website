@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * This class contains the endpoints for adding trainee for admin.
+ * The trainee username, email and password are required to add the trainee.
+ *
+ */
 @RestController
 @RequestMapping("/admin/trainee")
 @Tag(name = "Admin-Trainee Controller")

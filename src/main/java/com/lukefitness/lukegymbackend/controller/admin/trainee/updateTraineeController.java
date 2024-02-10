@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class contains the endpoints for updating trainee for admin.
+ * The trainee id is required to update the trainee.
+ *
+ */
 @RestController
 @RequestMapping("/admin/trainee/{traineeId}")
 @Tag(name = "Admin-Trainee Controller")

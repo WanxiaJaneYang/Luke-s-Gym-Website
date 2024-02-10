@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * This class contains the endpoints for getting a specific exercise for admin and getting all exercises for admin.
+ * The exercise id is required to get a specific exercise.
+ *
+ */
 @RestController
 @RequestMapping("/admin/exercise")
 @Tag(name="Admin-Exercise")

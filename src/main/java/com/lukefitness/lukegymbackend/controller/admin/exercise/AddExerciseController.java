@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class contains the endpoints for adding exercise for admin.
+ * The exercise name is required to add the exercise.
+ *
+ */
 @RestController
 @RequestMapping("/admin/exercise")
 @Tag(name="Admin-Exercise")

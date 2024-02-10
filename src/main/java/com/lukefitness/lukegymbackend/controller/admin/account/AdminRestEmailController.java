@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class contains the endpoints for resetting the email of the admin account.
+ */
 @RestController
 @RequestMapping("/admin/reset-email")
 @Tag(name = "Admin-Account Controller")

@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class contains the endpoints for deleting exercise for admin.
+ * The exercise id is required to delete the exercise.
+ *
+ */
 @RestController
 @RequestMapping("/admin/exercise")
 @Tag(name="Admin-Exercise")

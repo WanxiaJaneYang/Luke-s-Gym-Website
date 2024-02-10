@@ -12,6 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class contains the endpoints for getting trainees for admin, including getting trainees by page number and page size and getting trainee by trainee id.
+ * also contains the endpoints for searching trainees by name and email.
+ * The page number and page size are required to get the trainees.
+ * The trainee id is required to get a specific trainee.
+ */
 @RestController
 @RequestMapping("/admin/trainee")
 @Tag(name = "Admin-Trainee Controller")

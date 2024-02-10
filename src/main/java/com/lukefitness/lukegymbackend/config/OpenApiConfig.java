@@ -7,10 +7,14 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+/**
+ * OpenAPI configuration class
+ */
 
 @Configuration
 public class OpenApiConfig {
 
+    // General OpenAPI configuration
     @Bean
     public OpenAPI usersMicroserviceOpenAPI() {
         return new OpenAPI()
@@ -27,6 +31,7 @@ public class OpenApiConfig {
                                                 .bearerFormat("JWT")));
     }
 
+    // GroupedOpenApi to group the RESTful service by the user role
     @Bean
     GroupedOpenApi adminApi() {
         String[] paths = {"/admin/**"};
@@ -34,6 +39,7 @@ public class OpenApiConfig {
                 .build();
     }
 
+    // GroupedOpenApi for the trainer RESTful service
     @Bean
     GroupedOpenApi trainerApi(){
         String[] paths = {"/trainer/{trainerId}/**","/send-verify-email/trainer/{trainerId}/**"};
@@ -41,6 +47,7 @@ public class OpenApiConfig {
                 .build();
     }
 
+    // GroupedOpenApi for the trainee RESTful service
     @Bean
     GroupedOpenApi traineeApi(){
         String[] paths = {"/trainee/{traineeId}/**","/send-verify-email/trainee/{traineeId}/**"};
@@ -48,6 +55,7 @@ public class OpenApiConfig {
                 .build();
     }
 
+    // GroupedOpenApi for the public RESTful service
     @Bean
     GroupedOpenApi loginApi(){
         String[] paths = {"/login/**","/register/**","/email/**","/verify/**"};

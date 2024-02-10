@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class contains the endpoints for deleting trainee for admin.
+ * The trainee id is required to delete the trainee.
+ *
+ */
 @RestController
 @RequestMapping("/admin/trainee")
 @Tag(name = "Admin-Trainee Controller")

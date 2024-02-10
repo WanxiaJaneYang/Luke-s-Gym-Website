@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class contains the endpoints for sending the verify email to the admin account.
+ */
 @RestController
 @RequestMapping("/admin/send-verify-email")
 @Tag(name = "Admin-Account Controller")
