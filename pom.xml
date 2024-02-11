@@ -11,8 +11,8 @@
 	<groupId>com.lukefitness</groupId>
 	<artifactId>lukegymbackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Luke&apos;s Gym Backend</name>
-	<description>Backend for Luke&apos;s Gym Website</description>
+	<name>Luke's Gym Backend</name>
+	<description>Backend for Luke's Gym Website</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>
@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.0.2</version>
+			<version>2.3.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
 		<dependency>
